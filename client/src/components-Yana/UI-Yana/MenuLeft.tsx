@@ -28,7 +28,9 @@ export default function MenuLeft(): JSX.Element {
       }}
     >
       <Toolbar />
-      <Box sx={{ overflow: 'auto' }}>
+      <Box 
+      sx={{ overflow: 'auto' }}
+      >
         <List>
           <ListItem key={1} style={{padding:'1px',alignItems:'center'}} disablePadding>
             <ListItemButton>
