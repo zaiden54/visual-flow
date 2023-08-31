@@ -32,15 +32,19 @@ function App(): JSX.Element {
   }, []);
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Container>
-        <Routes>
-          <Route path="/" element={<MainPage />} />
-          <Route path="/auth/:auth" element={<AuthPage />} />
-        </Routes>
-      </Container>
-    </ThemeProvider>
+    <div style={{ display: 'flex' }}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <NavBar/>
+        <MenuLeft />
+        <Container>
+          <Routes>
+            <Route path="/" element={<MainPage />} />
+            <Route path="/auth/:auth" element={<AuthPage />} />
+          </Routes>
+        </Container>
+      </ThemeProvider>
+    </div>
   );
 }
 

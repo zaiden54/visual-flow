@@ -82,7 +82,7 @@ export default function MainPage(): JSX.Element {
   return (
     <>
     {/* <NavBar /> */}
-      <MenuLeft />
+     
       <div style={{ marginTop: '5rem' }}>
         <VideoList videos={videos1} />
         <Divider />
