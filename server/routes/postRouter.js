@@ -21,7 +21,10 @@ postRouter.get('/subs', async (req, res) => {
 });
 
 postRouter.get('/random', async (req, res) => {
-  const randomVids = await Video.findAll({ order: sequelize.random(), limit: 8 });
+  const randomVids = await Video.findAll({
+    order: sequelize.random(),
+    limit: 8,
+  });
   res.json(randomVids);
 });
 
