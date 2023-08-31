@@ -16,6 +16,7 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Avatar from '@mui/material/Avatar';
 import ListItemButton from '@mui/material/ListItemButton'; 
+import { Container } from '@mui/material';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -134,7 +135,7 @@ export default function NavBar(): JSX.Element {
   return (
     <>
       <AppBar position="fixed">
-        <Toolbar>
+        <Toolbar sx={{ display: "flex", justifyContent: "space-between"}}>
           <Typography
             variant="h6"
             noWrap
@@ -143,14 +144,12 @@ export default function NavBar(): JSX.Element {
           >
             Kinda Logo/Visual Flow
           </Typography>
-          <Search>
-            <TextField id="outlined-basic" sx={{ width:'50vw', height:40}} variant="outlined" size="small"/>
-          </Search>
-             <Button variant="outlined" style={{height:40, marginLeft: 0}} >
-              <SearchIcon />
-            </Button>
-          <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+            <div style={{ marginLeft:"60px"}}>
+              <TextField id="outlined-basic" sx={{ width:'50vw', height:40}} variant="outlined" size="small"/>
+              <Button variant="outlined" style={{height:40, marginLeft: "20px"}} >
+                <SearchIcon />
+              </Button>
+            </div>
             <IconButton
               size="large"
               edge="end"
@@ -162,7 +161,6 @@ export default function NavBar(): JSX.Element {
             >
               <AccountCircle />
             </IconButton>
-          </Box>
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
