@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Container } from '@mui/material';
+import React, { useEffect, useMemo, useState } from 'react';
+import { Box, Container, CssBaseline, ThemeProvider, createTheme, useMediaQuery } from '@mui/material';
 import { Route, Routes } from 'react-router-dom';
 import axios from 'axios';
 import { useAppDispatch } from './redux/hooks/reduxHooks';
@@ -8,6 +8,20 @@ import AuthPage from './components/pages/AuthPage';
 import MainPage from './components-Yana/pages-Yana/MainPage';
 
 function App(): JSX.Element {
+
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+
+  const theme = useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode: prefersDarkMode ? 'dark' : 'light',
+        },
+      }),
+    [prefersDarkMode],
+  );
+
+
   const dispatch = useAppDispatch();
 
   axios.defaults.baseURL = "http://localhost:3001/api";
@@ -18,12 +32,15 @@ function App(): JSX.Element {
   }, []);
 
   return (
-    <Container>
-    <Routes>
-      <Route path='/' element={<MainPage/>}/>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+        <Container>
+          <Routes>
+            <Route path='/' element={<MainPage/>}/>
       <Route path="/auth/:auth" element={<AuthPage />} />
-    </Routes>
-  </Container>
+          </Routes>
+        </Container>
+    </ThemeProvider>
   );
 }
 
