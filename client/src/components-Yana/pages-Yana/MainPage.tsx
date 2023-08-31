@@ -1,6 +1,5 @@
 import { Divider } from '@mui/material';
 import React from 'react';
-import MenuLeft from '../UI-Yana/MenuLeft';
 import VideoList from '../UI-Yana/VideoList';
 import NavBar from '../../components-Erzhena/UI-Erzhena/NavBar';
 
