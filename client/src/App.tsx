@@ -6,6 +6,7 @@ import MainPage from './components/pages/MainPage';
 import AuthPage from './components/pages/AuthPage';
 import { useAppDispatch } from './redux/hooks/reduxHooks';
 import { checkUserThunk } from './redux/slices/user/userThunks';
+import VideoPage from './components/pages/VideoPage';
 
 function App(): JSX.Element {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
@@ -36,6 +37,7 @@ function App(): JSX.Element {
           <Routes>
             <Route path="/" element={<MainPage />} />
             <Route path="/auth/:auth" element={<AuthPage />} />
+            <Route path="/video" element={<VideoPage />} />
           </Routes>
           </div>
       </ThemeProvider>

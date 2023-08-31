@@ -92,6 +92,9 @@ export default function NavBar(): JSX.Element {
       <ListItemButton onClick={handleMenuClose}  >
           My Channel
         </ListItemButton>
+        <ListItemButton onClick={handleMenuClose}  >
+          Subscriptions
+        </ListItemButton>
         <Button onClick={handleMenuClose}>Log Out</Button>
       </Box>
       </CardActions>
