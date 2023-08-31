@@ -1,8 +1,10 @@
 import { Divider } from '@mui/material';
-import React from 'react';
+import React, { useEffect } from 'react';
 import VideoList from '../ui/VideoList';
 import MenuLeft from '../ui/MenuLeft';
 import NavBar from '../ui/NavBar';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks/reduxHooks';
+import getSubVideoThunk from '../../redux/slices/video/videoThunk';
 
 const videos1 = [
   {
@@ -80,12 +82,19 @@ const videos2 = [
   },
 ];
 export default function MainPage(): JSX.Element {
+  const dispatch = useAppDispatch();
+  const channelsAndVideos = useAppSelector((state) => state.videos);
+  useEffect(() => {
+    void dispatch(getSubVideoThunk());
+  }, []);
+  console.log(channelsAndVideos);
+
   return (
     <>
       <MenuLeft />
       <NavBar />
       <div style={{ marginTop: '5rem' }}>
-        <VideoList videos={videos1} />
+        <VideoList videos={channelsAndVideos} />
         <Divider />
         <VideoList videos={videos2} />
       </div>

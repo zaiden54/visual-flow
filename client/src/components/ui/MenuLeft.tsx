@@ -12,11 +12,13 @@ import ListItemText from '@mui/material/ListItemText';
 import AutoAwesomeMotionIcon from '@mui/icons-material/AutoAwesomeMotion';
 import { Divider } from '@mui/material';
 import Subscribes from './Subscribes';
+import { useAppSelector } from '../../redux/hooks/reduxHooks';
 
 const drawerWidth = 240;
 const users = ['Remy', 'Jane', 'Hannah'];
 
 export default function MenuLeft(): JSX.Element {
+  const channelsAndVideos= useAppSelector((state)=>state.videos)
   return (
     <Drawer
       variant="permanent"
@@ -58,10 +60,10 @@ export default function MenuLeft(): JSX.Element {
           </ListItem>
           <Divider />
           <List>
-            {users.map((el) => (
-              <ListItem key={el} disablePadding>
+            {channelsAndVideos.map((el) => (
+              <ListItem key={el.name} disablePadding>
                 <ListItemButton>
-                  <Subscribes name={el} />
+                  <Subscribes name={el.name} />
                 </ListItemButton>
               </ListItem>
             ))}
