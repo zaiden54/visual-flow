@@ -81,7 +81,7 @@ const videos2 = [
 export default function MainPage(): JSX.Element {
   return (
     <>
-      <MenuLeft />
+      {/* <MenuLeft /> */}
       <div style={{ marginTop: '5rem' }}>
         <VideoList videos={videos1} />
         <Divider />

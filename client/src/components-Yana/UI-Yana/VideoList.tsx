@@ -8,7 +8,7 @@ export type VideoListProps = { videos: VideoType[] };
 
 export default function VideoList({ videos }: VideoListProps): JSX.Element {
   return (
-    <Box sx={{ flexGrow: 1, marginTop:'2rem', marginBottom:'2rem' }}>
+    <Box sx={{ flexGrow: 1, marginTop:'2rem', marginBottom:'2rem', flexWrap:'wrap' }}>
       <Grid container spacing={2}>
         {videos.map((el) => (
           <Grid item xs={3}>
