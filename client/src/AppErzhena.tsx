@@ -1,6 +1,6 @@
 import React from 'react';
 import NavBar from './components-Erzhena/UI-Erzhena/NavBar'
-import './App.css';
+// import './App.css';
 
 function App(): JSX.Element {
 
