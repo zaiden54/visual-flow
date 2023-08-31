@@ -24,7 +24,7 @@ export default function MenuLeft(): JSX.Element {
         width: drawerWidth,
 
         flexShrink: 0,
-        [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box' },
+        [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box',zIndex:0 },
       }}
     >
       <Toolbar />
