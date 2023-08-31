@@ -1,10 +1,25 @@
-import React from 'react';
-import MainPage from './components-Yana/pages-Yana/MainPage';
+import React, { useEffect } from 'react';
+import { Container } from '@mui/material';
+import { Route, Routes } from 'react-router-dom';
+import { useAppDispatch } from './redux/hooks/reduxHooks';
+import { checkUserThunk } from './redux/slices/user/userThunks';
+import AuthPage from './components/pages/AuthPage';
 
 function App(): JSX.Element {
+  const dispatch = useAppDispatch();
 
+  useEffect(() => {
+    void dispatch(checkUserThunk());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  return <MainPage />;
+  return (
+    <Container>
+    <Routes>
+      <Route path="/auth/:auth" element={<AuthPage />} />
+    </Routes>
+  </Container>
+  );
 }
 
 export default App;
