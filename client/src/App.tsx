@@ -15,10 +15,10 @@ function App(): JSX.Element {
 
   return (
     <Container>
-    <Routes>
-      <Route path="/auth/:auth" element={<AuthPage />} />
-    </Routes>
-  </Container>
+      <Routes>
+        <Route path="/auth/:auth" element={<AuthPage />} />
+      </Routes>
+    </Container>
   );
 }
 
