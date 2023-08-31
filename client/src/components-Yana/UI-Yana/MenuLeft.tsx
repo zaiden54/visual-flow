@@ -39,7 +39,7 @@ export default function MenuLeft(): JSX.Element {
             </ListItemButton>
           </ListItem>
           <ListItem key={2} style={{padding:'1px',alignItems:'center'}} disablePadding>
-            <ListItemButton>
+            <ListItemButton href='/subs'>
               <ListItemIcon>
                 <AutoAwesomeMotionIcon />
               </ListItemIcon>

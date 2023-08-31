@@ -4,6 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 import { useAppDispatch } from './redux/hooks/reduxHooks';
 import { checkUserThunk } from './redux/slices/user/userThunks';
 import AuthPage from './components/pages/AuthPage';
+import MainPage from './components-Yana/pages-Yana/MainPage';
 
 function App(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -16,6 +17,7 @@ function App(): JSX.Element {
   return (
     <Container>
     <Routes>
+      <Route path='/' element={<MainPage/>}/>
       <Route path="/auth/:auth" element={<AuthPage />} />
     </Routes>
   </Container>
