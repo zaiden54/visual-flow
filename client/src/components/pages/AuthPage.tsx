@@ -1,6 +1,6 @@
 import { Box, Button, Grid, TextField } from '@mui/material';
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import type { UserLoginFormType, UserSignUpFormType } from '../../types/userTypes';
 import { loginUserThunk, signUpUserThunk } from '../../redux/slices/user/userThunks';
 import { useAppDispatch } from '../../redux/hooks/reduxHooks';
@@ -8,6 +8,10 @@ import { useAppDispatch } from '../../redux/hooks/reduxHooks';
 export default function AuthPage(): JSX.Element {
   const { auth } = useParams();
   const dispatch = useAppDispatch();
+
+  if (auth !== 'signup' && auth!=='signin') {
+    return <Navigate to='/' />
+  } 
 
   const submitHandler: React.ChangeEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
