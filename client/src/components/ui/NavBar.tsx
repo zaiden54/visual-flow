@@ -12,7 +12,6 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Avatar from '@mui/material/Avatar';
@@ -62,7 +61,6 @@ export default function NavBar(): JSX.Element {
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
       <Menu
-    //   sx={{zIndex: 1100}}
       anchorEl={anchorEl}
       anchorOrigin={{
           vertical: 'top',
@@ -77,11 +75,8 @@ export default function NavBar(): JSX.Element {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-        <MenuItem>
-        <Card >
         <Box sx={{display:'flex', flexDirection:'column'}} alignItems="center">
       <Avatar style={{marginTop: '3vh'}} alt='avatar'
-      //avatar here src
         title="userpic"
       />
       <CardContent >
@@ -101,8 +96,6 @@ export default function NavBar(): JSX.Element {
       </Box>
       </CardActions>
       </Box>
-    </Card>
-        </MenuItem>
     </Menu> 
   );
 
@@ -139,7 +132,7 @@ export default function NavBar(): JSX.Element {
   );
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <>
       <AppBar position="fixed">
         <Toolbar>
           <Typography
@@ -186,6 +179,6 @@ export default function NavBar(): JSX.Element {
       </AppBar>
       {renderMobileMenu}
       {renderMenu}
-    </Box>
+      </>
   );
 }

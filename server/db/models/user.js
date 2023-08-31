@@ -10,7 +10,11 @@ module.exports = (sequelize, DataTypes) => {
     static associate({ Role, Channel, Comment, Video }) {
       this.belongsTo(Role, { foreignKey: 'roleId' });
       this.hasOne(Channel, { foreignKey: 'userId' });
-      this.belongsToMany(Channel, { as: 'subscribers', through: 'Subscriptions' });
+      this.belongsToMany(Channel, {
+        as: 'subscriptions',
+        through: 'Subscriptions',
+        foreignKey: 'userId',
+      });
       this.belongsToMany(Video, { as: 'likes', through: 'Likes' });
       this.hasMany(Comment, { foreignKey: 'userId' });
     }

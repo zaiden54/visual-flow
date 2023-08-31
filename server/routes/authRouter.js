@@ -41,13 +41,6 @@ authRouter.post('/signup', async (req, res) => {
     res.status(400).json({ message: 'Такой пользователь уже существует' });
   }
 
-  // const userInfo = {
-  //   id: user.id,
-  //   name: user.name,
-  //   email: user.email,
-  //   isActivated: user.isActivated,
-  // };
-
   req.session.user = {
     id: user.id,
     email: user.email,
