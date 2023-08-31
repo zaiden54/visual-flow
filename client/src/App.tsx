@@ -1,18 +1,11 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import {
-  Box,
-  Container,
-  CssBaseline,
-  ThemeProvider,
-  createTheme,
-  useMediaQuery,
-} from '@mui/material';
-import { Route, Routes } from 'react-router-dom';
+import { Container, CssBaseline, ThemeProvider, createTheme, useMediaQuery } from '@mui/material';
 import axios from 'axios';
+import React, { useEffect, useMemo } from 'react';
+import { Route, Routes } from 'react-router-dom';
+import MainPage from './components-Yana/pages-Yana/MainPage';
+import AuthPage from './components/pages/AuthPage';
 import { useAppDispatch } from './redux/hooks/reduxHooks';
 import { checkUserThunk } from './redux/slices/user/userThunks';
-import AuthPage from './components/pages/AuthPage';
-import MainPage from './components-Yana/pages-Yana/MainPage';
 
 function App(): JSX.Element {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
