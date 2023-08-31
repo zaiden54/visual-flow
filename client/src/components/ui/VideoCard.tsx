@@ -14,8 +14,6 @@ export type VideoCardProps = {
 
 export default function VideoCard({ video }: VideoCardProps): JSX.Element {
   return (
-    <>
-      {/* {video && ( */}
       <Card sx={{ display: 'flex', flexDirection: 'column', margin: '2' }}>
         <CardMedia
           component="img"
@@ -41,6 +39,5 @@ export default function VideoCard({ video }: VideoCardProps): JSX.Element {
           </CardContent>
         </Box>
       </Card>
-    </>
   );
 }

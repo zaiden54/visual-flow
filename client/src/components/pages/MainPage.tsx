@@ -1,7 +1,8 @@
 import { Divider } from '@mui/material';
 import React from 'react';
-import VideoList from '../UI-Yana/VideoList';
-import NavBar from '../../components-Erzhena/UI-Erzhena/NavBar';
+import VideoList from '../ui/VideoList';
+import MenuLeft from '../ui/MenuLeft';
+import NavBar from '../ui/NavBar';
 
 const videos1 = [
   {
@@ -79,11 +80,11 @@ const videos2 = [
   },
 ];
 export default function MainPage(): JSX.Element {
-  return (
+  return ( 
     <>
-    {/* <NavBar /> */}
-     
-      <div style={{ marginTop: '5rem' }}>
+        <MenuLeft />
+        <NavBar/>
+      <div style={{ marginTop: '5rem'}}>
         <VideoList videos={videos1} />
         <Divider />
         <VideoList videos={videos2} />
