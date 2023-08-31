@@ -17,6 +17,8 @@ import CardContent from '@mui/material/CardContent';
 import Avatar from '@mui/material/Avatar';
 import ListItemButton from '@mui/material/ListItemButton'; 
 import { Container } from '@mui/material';
+import { useAppDispatch } from '../../redux/hooks/reduxHooks';
+import { swapModal } from '../../redux/slices/modals/modalSlice';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -35,6 +37,9 @@ const Search = styled('div')(({ theme }) => ({
 }));
 
 export default function NavBar(): JSX.Element {
+
+  const dispatch = useAppDispatch()
+
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
@@ -75,7 +80,7 @@ export default function NavBar(): JSX.Element {
         }}
       open={isMenuOpen}
       onClose={handleMenuClose}
-    >
+      >
         <Box sx={{display:'flex', flexDirection:'column'}} alignItems="center">
       <Avatar style={{marginTop: '3vh'}} alt='avatar'
         title="userpic"
@@ -161,6 +166,7 @@ export default function NavBar(): JSX.Element {
             >
               <AccountCircle />
             </IconButton>
+              <Button type="button" onClick={() => dispatch(swapModal({value: true}))}>+</Button>
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"

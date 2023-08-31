@@ -3,6 +3,7 @@ import React from 'react';
 import VideoList from '../ui/VideoList';
 import MenuLeft from '../ui/MenuLeft';
 import NavBar from '../ui/NavBar';
+import ModalWindow from '../ui/ModalWindow';
 
 const videos1 = [
   {
@@ -82,6 +83,7 @@ const videos2 = [
 export default function MainPage(): JSX.Element {
   return ( 
     <>
+        <ModalWindow/>
         <MenuLeft />
         <NavBar/>
       <div style={{ marginTop: '5rem'}}>
