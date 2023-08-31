@@ -107,7 +107,7 @@ authRouter.get('/logout', (req, res) => {
 authRouter.get('/activate/:activationLink', async (req, res) => {
   const { activationLink } = req.params;
 
-  const user = await User.findOne({ where: { activationLink } });
+  const user = await User.findOne({ where: { link: activationLink } });
 
   if (!user) {
     res.json({ message: 'Такого пользователя не существует или ссылка ошибочная' });
