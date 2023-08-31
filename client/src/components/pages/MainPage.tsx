@@ -4,7 +4,7 @@ import VideoList from '../ui/VideoList';
 import MenuLeft from '../ui/MenuLeft';
 import NavBar from '../ui/NavBar';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/reduxHooks';
-import getSubVideoThunk from '../../redux/slices/video/videoThunk';
+import { getRandomVideoThunk, getSubVideoThunk } from '../../redux/slices/video/videoThunk';
 
 const videos1 = [
   {
@@ -89,6 +89,14 @@ export default function MainPage(): JSX.Element {
   }, []);
   console.log(channelsAndVideos);
 
+  const random = useAppSelector((state) => state.random);
+  useEffect(() => {
+    void dispatch(getRandomVideoThunk());
+  });
+console.log('-------',random);
+
+
+  
   return (
     <>
       <MenuLeft />
@@ -96,7 +104,7 @@ export default function MainPage(): JSX.Element {
       <div style={{ marginTop: '5rem' }}>
         <VideoList videos={channelsAndVideos} />
         <Divider />
-        <VideoList videos={videos2} />
+        <VideoList videos={random} />
       </div>
     </>
   );
