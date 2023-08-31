@@ -15,8 +15,9 @@ import TextField from '@mui/material/TextField';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Avatar from '@mui/material/Avatar';
-import ListItemButton from '@mui/material/ListItemButton'; 
-import { Container } from '@mui/material';
+import ListItemButton from '@mui/material/ListItemButton';
+import { useAppDispatch } from '../../redux/hooks/reduxHooks';
+import { logoutUserThunk } from '../../redux/slices/user/userThunks'; 
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -36,8 +37,7 @@ const Search = styled('div')(({ theme }) => ({
 
 export default function NavBar(): JSX.Element {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
-    React.useState<null | HTMLElement>(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -59,45 +59,42 @@ export default function NavBar(): JSX.Element {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+  const dispatch = useAppDispatch();
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
-      <Menu
+    <Menu
       anchorEl={anchorEl}
       anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
+        vertical: 'top',
+        horizontal: 'right',
+      }}
       id={menuId}
       keepMounted
       transformOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
+        vertical: 'top',
+        horizontal: 'right',
+      }}
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-        <Box sx={{display:'flex', flexDirection:'column'}} alignItems="center">
-      <Avatar style={{marginTop: '3vh'}} alt='avatar'
-        title="userpic"
-      />
-      <CardContent >
-        <Typography gutterBottom variant="h5" component="div">
-          User/Channel Name
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          много подпешникафф
+      <Box sx={{ display: 'flex', flexDirection: 'column' }} alignItems="center">
+        <Avatar style={{ marginTop: '3vh' }} alt="avatar" title="userpic" />
+        <CardContent>
+          <Typography gutterBottom variant="h5" component="div">
+            User/Channel Name
           </Typography>
-      </CardContent>
-      <CardActions >
-      <Box sx={{display:'flex', flexDirection:'column'}} >
-      <ListItemButton onClick={handleMenuClose}  >
-          My Channel
-        </ListItemButton>
-        <Button onClick={handleMenuClose}>Log Out</Button>
+          <Typography variant="body2" color="text.secondary">
+            много подпешникафф
+          </Typography>
+        </CardContent>
+        <CardActions>
+          <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+            <ListItemButton onClick={handleMenuClose}>My Channel</ListItemButton>
+            <Button onClick={() => void dispatch(logoutUserThunk())}>Log Out</Button>
+          </Box>
+        </CardActions>
       </Box>
-      </CardActions>
-      </Box>
-    </Menu> 
+    </Menu>
   );
 
   const mobileMenuId = 'primary-search-account-menu-mobile';
@@ -144,12 +141,14 @@ export default function NavBar(): JSX.Element {
           >
             Kinda Logo/Visual Flow
           </Typography>
-            <div style={{ marginLeft:"60px"}}>
-              <TextField id="outlined-basic" sx={{ width:'50vw', height:40}} variant="outlined" size="small"/>
-              <Button variant="outlined" style={{height:40, marginLeft: "20px"}} >
-                <SearchIcon />
-              </Button>
-            </div>
+          <Search>
+            <TextField id="outlined-basic" sx={{ width:'50vw', height:40}} variant="outlined" size="small"/>
+          </Search>
+             <Button variant="outlined" style={{height:40, marginLeft: 0}} >
+              <SearchIcon />
+            </Button>
+          <Box sx={{ flexGrow: 1 }} />
+          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             <IconButton
               size="large"
               edge="end"
@@ -161,6 +160,7 @@ export default function NavBar(): JSX.Element {
             >
               <AccountCircle />
             </IconButton>
+            </Box>
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
@@ -177,6 +177,6 @@ export default function NavBar(): JSX.Element {
       </AppBar>
       {renderMobileMenu}
       {renderMenu}
-      </>
-  );
+    </>
+  )
 }

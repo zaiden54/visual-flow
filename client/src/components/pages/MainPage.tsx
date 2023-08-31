@@ -1,8 +1,10 @@
 import { Divider } from '@mui/material';
-import React from 'react';
+import React, { useEffect } from 'react';
 import VideoList from '../ui/VideoList';
 import MenuLeft from '../ui/MenuLeft';
 import NavBar from '../ui/NavBar';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks/reduxHooks';
+import { getRandomVideoThunk, getSubVideoThunk } from '../../redux/slices/video/videoThunk';
 
 const videos1 = [
   {
@@ -80,14 +82,29 @@ const videos2 = [
   },
 ];
 export default function MainPage(): JSX.Element {
-  return ( 
+  const dispatch = useAppDispatch();
+  const channelsAndVideos = useAppSelector((state) => state.videos);
+  useEffect(() => {
+    void dispatch(getSubVideoThunk());
+  }, []);
+  console.log(channelsAndVideos);
+
+  const random = useAppSelector((state) => state.random);
+  useEffect(() => {
+    void dispatch(getRandomVideoThunk());
+  });
+console.log('-------',random);
+
+
+  
+  return (
     <>
-        <MenuLeft />
-        <NavBar/>
-      <div style={{ marginTop: '5rem'}}>
-        <VideoList videos={videos1} />
+      <MenuLeft />
+      <NavBar />
+      <div style={{ marginTop: '5rem' }}>
+        <VideoList videos={channelsAndVideos} />
         <Divider />
-        <VideoList videos={videos2} />
+        <VideoList videos={random} />
       </div>
     </>
   );
