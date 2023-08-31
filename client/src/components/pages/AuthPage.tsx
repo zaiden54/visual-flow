@@ -21,38 +21,42 @@ export default function AuthPage(): JSX.Element {
   };
 
   return (
-    <Grid container direction="row">
-      <Grid item xs={3} />
+    <Grid container direction="row" justifyContent="center">
       <Grid item xs={6}>
         <Box
           component="form"
           display="flex"
           flexDirection="column"
           alignItems="center"
-          justifyContent="space-around"
           py={5}
           onSubmit={submitHandler}
         >
+        <div style={{marginBottom: "30px"}}>
+          <img style={{width: "70px"}} alt='error' src="../../../pngwing.com.png"/>
+        </div>
           {auth === 'signup' && (
             <TextField
+              sx={{ mb: 4}}
               variant="outlined"
               name="username"
-              label="Username"
+              label="Name"
             />
           )}
           <TextField
+            sx={{ mb: 4}}
             variant="outlined"
             name="email"
             label="Email"
             type="email"
           />
           <TextField
+            sx={{ mb: 4}}
             variant="outlined"
             name="password"
             label="Password"
             type="password"
           />
-          <Button variant="outlined" type="submit">
+          <Button variant="contained" type="submit">
             {auth === 'signup' ? 'Sign Up' : 'Login'}
           </Button>
         </Box>

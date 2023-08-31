@@ -7,14 +7,14 @@ import type {
 } from '../../../types/userTypes';
 
 export const checkUserThunk = createAsyncThunk<UserModelType>('user/checkUser', async () => {
-  const { data } = await axios<UserModelType>('/user/check');
+  const { data } = await axios<UserModelType>('/auth/check');
   return data;
 });
 
 export const signUpUserThunk = createAsyncThunk<UserModelType, UserSignUpFormType>(
   'user/signup',
   async (formData) => {
-    const { data } = await axios.post<UserModelType>('/user/signup', formData);
+    const { data } = await axios.post<UserModelType>('/auth/signup', formData);
     return data;
   },
 );
@@ -22,9 +22,9 @@ export const signUpUserThunk = createAsyncThunk<UserModelType, UserSignUpFormTyp
 export const loginUserThunk = createAsyncThunk<UserModelType, UserLoginFormType>(
   'user/login',
   async (formData) => {
-    const { data } = await axios.post<UserModelType>('/user/login', formData);
+    const { data } = await axios.post<UserModelType>('/auth/signin', formData);
     return data;
   },
 );
 
-export const logoutUserThunk = createAsyncThunk('user/logout', async () => axios('/user/logout'));
+export const logoutUserThunk = createAsyncThunk('auth/logout', async () => axios('/auth/logout'));
