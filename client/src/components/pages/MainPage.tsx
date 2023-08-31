@@ -1,6 +1,8 @@
 import { Divider } from '@mui/material';
 import React from 'react';
 import VideoList from '../ui/VideoList';
+import MenuLeft from '../ui/MenuLeft';
+import NavBar from '../ui/NavBar';
 
 const videos1 = [
   {
@@ -80,8 +82,8 @@ const videos2 = [
 export default function MainPage(): JSX.Element {
   return (
     <>
-    {/* <NavBar /> */}
-      {/* <MenuLeft /> */}
+      <MenuLeft />
+      <NavBar />
       <div style={{ marginTop: '5rem' }}>
         <VideoList videos={videos1} />
         <Divider />
