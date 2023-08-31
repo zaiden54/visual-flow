@@ -6,6 +6,7 @@ import MainPage from './components-Yana/pages-Yana/MainPage';
 import AuthPage from './components/pages/AuthPage';
 import { useAppDispatch } from './redux/hooks/reduxHooks';
 import { checkUserThunk } from './redux/slices/user/userThunks';
+import NavBar from './components-Erzhena/UI-Erzhena/NavBar';
 
 function App(): JSX.Element {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
@@ -32,6 +33,7 @@ function App(): JSX.Element {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <NavBar />
       <Container>
         <Routes>
           <Route path="/" element={<MainPage />} />

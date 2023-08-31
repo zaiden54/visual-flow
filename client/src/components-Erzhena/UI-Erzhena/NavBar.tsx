@@ -61,7 +61,8 @@ export default function NavBar(): JSX.Element {
 
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
-      <Menu 
+      <Menu
+    //   sx={{zIndex: 1100}}
       anchorEl={anchorEl}
       anchorOrigin={{
           vertical: 'top',
