@@ -1,5 +1,12 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Box, Container, CssBaseline, ThemeProvider, createTheme, useMediaQuery } from '@mui/material';
+import {
+  Box,
+  Container,
+  CssBaseline,
+  ThemeProvider,
+  createTheme,
+  useMediaQuery,
+} from '@mui/material';
 import { Route, Routes } from 'react-router-dom';
 import axios from 'axios';
 import { useAppDispatch } from './redux/hooks/reduxHooks';
@@ -8,7 +15,6 @@ import AuthPage from './components/pages/AuthPage';
 import MainPage from './components-Yana/pages-Yana/MainPage';
 
 function App(): JSX.Element {
-
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 
   const theme = useMemo(
@@ -21,10 +27,9 @@ function App(): JSX.Element {
     [prefersDarkMode],
   );
 
-
   const dispatch = useAppDispatch();
 
-  axios.defaults.baseURL = "http://localhost:3001/api";
+  axios.defaults.baseURL = 'http://localhost:3001/api';
   axios.defaults.withCredentials = true;
   useEffect(() => {
     void dispatch(checkUserThunk());
@@ -34,12 +39,12 @@ function App(): JSX.Element {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-        <Container>
-          <Routes>
-            <Route path='/' element={<MainPage/>}/>
-      <Route path="/auth/:auth" element={<AuthPage />} />
-          </Routes>
-        </Container>
+      <Container>
+        <Routes>
+          <Route path="/" element={<MainPage />} />
+          <Route path="/auth/:auth" element={<AuthPage />} />
+        </Routes>
+      </Container>
     </ThemeProvider>
   );
 }
