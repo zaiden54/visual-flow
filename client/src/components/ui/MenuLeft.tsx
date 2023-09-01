@@ -1,7 +1,7 @@
 import AutoAwesomeMotionIcon from '@mui/icons-material/AutoAwesomeMotion';
 import HomeIcon from '@mui/icons-material/Home';
 import LeaderboardIcon from '@mui/icons-material/Leaderboard';
-import { Divider } from '@mui/material';
+import { Button, Divider } from '@mui/material';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
@@ -10,10 +10,14 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Toolbar from '@mui/material/Toolbar';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/reduxHooks';
 import Subscribes from './Subscribes';
+import {
+  getSubChannelThunk,
+  getFirstSubChannelThunk,
+} from '../../redux/slices/subChannels/subChannelsThunk';
 
 const drawerWidth = 240;
 const users = ['Remy', 'Jane', 'Hannah'];
@@ -21,11 +25,20 @@ const users = ['Remy', 'Jane', 'Hannah'];
 export default function MenuLeft(): JSX.Element {
   const channelsAndVideos = useAppSelector((state) => state.videos);
   const dispatch = useAppDispatch();
-  const [count,setCount]=useState(0)
-  // const subs = useAppSelector((state)=>state.subs.content)
-  // useEffect(()=>{
-  //   void dispatch(getSubChannelThunk(1))
-  // },[])
+  const subs = useAppSelector((state) => state.subs);
+  // const [count,setCount]=useState(0)
+  // const subs = useAppSelector((state)=>state.subs.row)
+
+  const user = useAppSelector((store) => store.user);
+
+  // useEffect(() => {
+  //   if (user.data.status === 'logged') {
+  //     void dispatch(getFirstSubChannelThunk(0));
+  //   }
+  // }, [user]);
+
+  // console.log(subs.rows);
+
   // const remain = useAppSelector((state)=>state.subs.count)
   return (
     <Drawer
@@ -71,8 +84,27 @@ export default function MenuLeft(): JSX.Element {
             </ListItem>
           </Link>
           <Divider />
-
-          <List>
+          {subs.rows && (
+            <List>
+              {subs.rows.map((el) => (
+                <ListItem key={el.id} disablePadding>
+                  <ListItemButton>
+                    <Subscribes name={el.name} />
+                  </ListItemButton>
+                </ListItem>
+              ))}
+              {/* <ListItemButton> */}
+              <Button
+                type="button"
+                onClick={() => void dispatch(getSubChannelThunk(subs.rows.length))}
+              >
+                {' '}
+                more
+              </Button>
+              {/* </ListItemButton> */}
+            </List>
+          )}
+          {/* <List>
             <ListItem key={4} style={{ padding: '1px', alignItems: 'center' }} disablePadding>
               <ListItemText primary="Subscribes" />
             </ListItem>
@@ -83,20 +115,25 @@ export default function MenuLeft(): JSX.Element {
                 </ListItemButton>
               </ListItem>
             ))}
-          </List>
+          </List> */}
+          {/* <List>
+            {subs.rows.map((el) => (
+              <ListItem key={el} disablePadding>
+                <ListItemButton>
+                  <Subscribes name={el.name} />
+                </ListItemButton>
+              </ListItem>
+            ))}
+            <ListItemButton
+              type="button"
+              onClick={() => dispatch(getSubChannelThunk(subs.rows.length - 1))}
+            >
+              {' '}
+              more
+            </ListItemButton>
+          </List> */}
         </List>
       </Box>
     </Drawer>
-
-    /* <List>
-  {subs.map((el) => (
-    <ListItem key={el.name} disablePadding>
-      <ListItemButton>
-        <Subscribes name={el.name} />
-      </ListItemButton>
-    </ListItem>
-  ))}
-  <ListItemButton type='button' onClick={()=> {dispatch(getSubChannelThunk(subs.length+1))}>{remain} more</ListItemButton>
-  </List> */
   );
 }
