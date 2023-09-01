@@ -1,7 +1,7 @@
 import { Divider } from '@mui/material';
 import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/reduxHooks';
-import { getSubVideoThunk } from '../../redux/slices/video/videoThunk';
+import { getRandomVideoThunk, getSubVideoThunk } from '../../redux/slices/video/videoThunk';
 import VideoList from './VideoList';
 
 export default function VideosMap(): JSX.Element {
@@ -12,13 +12,13 @@ export default function VideosMap(): JSX.Element {
   }, []);
   console.log(channelsAndVideos);
 
-  //   const random = useAppSelector((state) => state.random);
-  //   useEffect(() => {
-  //     void dispatch(getRandomVideoThunk());
-  //   }, []);
+  const random = useAppSelector((state) => state.random);
+  useEffect(() => {
+    void dispatch(getRandomVideoThunk());
+  }, []);
 
   return (
-    <div style={{ marginTop: '5rem' }}>
+    <div style={{ marginTop: '5rem', flexWrap: 'wrap' }}>
       <VideoList videos={channelsAndVideos} />
       <Divider />
       <VideoList videos={channelsAndVideos} />

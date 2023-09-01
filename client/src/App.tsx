@@ -2,8 +2,11 @@ import { CssBaseline, ThemeProvider, createTheme, useMediaQuery } from '@mui/mat
 import axios from 'axios';
 import React, { useEffect, useMemo } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import MainPage from './components/pages/MainPage';
 import AuthPage from './components/pages/AuthPage';
+import MainPage from './components/pages/MainPage';
+import MostViewedPage from './components/pages/MostViewedPage';
+import RoomsPage from './components/pages/RoomsPage';
+import SubscriptionsPage from './components/pages/SubscriptionsPage';
 import { useAppDispatch } from './redux/hooks/reduxHooks';
 import { checkUserThunk } from './redux/slices/user/userThunks';
 
@@ -34,6 +37,9 @@ function App(): JSX.Element {
       <CssBaseline />
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         <Routes>
+          <Route path='/subs' element={<SubscriptionsPage/>}/>
+          <Route path='/rooms' element={<RoomsPage/>}/>
+          <Route path='/mostViewed' element={<MostViewedPage/>}/>
           <Route path="/" element={<MainPage />} />
           <Route path="/auth/:auth" element={<AuthPage />} />
         </Routes>
