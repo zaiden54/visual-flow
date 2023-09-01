@@ -36,7 +36,7 @@ function App(): JSX.Element {
       <CssBaseline />
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         <Routes>
-          <Route path="/subs" element={<SubscriptionsPage />} />
+          <Route path="/watch/:link" element={<SubscriptionsPage />} />
           <Route path="/rooms" element={<RoomsPage />} />
           <Route path="/mostViewed" element={<MostViewedPage />} />
           <Route path="/" element={<MainPage />} />

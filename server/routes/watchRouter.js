@@ -1,22 +1,28 @@
 const router = require('express').Router;
 const fs = require('fs');
+const { Video } = require('../db/models');
 
-const videoRouter = router();
+const watchRouter = router();
 
-videoRouter.get('/', (req, res) => {
+watchRouter.get('/', (req, res) => {
   // res.sendFile(__dirname + '../public/video/index.html');
   res.sendFile(`${__dirname}/index.html`);
 });
 
-videoRouter.get('/watch', async (req, res) => {
+watchRouter.get('/:link', async (req, res) => {
   const { range } = req.headers;
+  const { link } = req.params;
 
-  if (!range) {
-    res.status(400).send('Requires Range Header');
+  if (!range || !link) {
+    res.status(400).send('Requires Range Header or Link is Invalid');
   }
 
-  const fileName = 'shit.mp4';
-  const fullPath = `${__dirname}/${fileName}`;
+  const video = await Video.findOne({ where: { link } });
+
+  // const fileName = 'shit.mp4';
+  const fullPath = (`${__dirname}/${video.fileName}`).replace('routes', 'uploads');
+
+  // console.log(fullPath)
 
   const videoSize = fs.statSync(fullPath).size;
   // console.log(videoSize);
@@ -40,4 +46,4 @@ videoRouter.get('/watch', async (req, res) => {
   videoStream.pipe(res);
 });
 
-module.exports = videoRouter;
+module.exports = watchRouter;

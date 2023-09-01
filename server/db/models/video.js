@@ -19,6 +19,7 @@ module.exports = (sequelize, DataTypes) => {
       description: DataTypes.TEXT,
       views: DataTypes.INTEGER,
       link: DataTypes.STRING,
+      fileName: DataTypes.STRING,
       preview: DataTypes.STRING,
       channelId: DataTypes.INTEGER,
     },
