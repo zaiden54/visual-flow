@@ -8,7 +8,7 @@ postRouter.get('/subs/channels/:offset', async (req, res) => {
   const userId = req.session.user?.id;
 
   if (!userId) {
-    return res.status(401).json({ message: 'Unathorized' });
+    return res.status(401).json({ message: 'Unauthorized' });
   }
 
   const channels = await Subscription.findAndCountAll({
@@ -21,6 +21,29 @@ postRouter.get('/subs/channels/:offset', async (req, res) => {
   });
 
   return res.json({ ...channels, rows: channels.rows.map((el) => el.Channel) });
+});
+
+postRouter.get('/subs', async (req, res) => {
+  const userId = req.session.user?.id;
+
+  console.log(userId);
+
+  if (!userId) {
+    return res.status(401).json({ message: 'Unauthorized' });
+  }
+
+  const videos = await Subscription.findAll({
+    where: { userId },
+    include: {
+      model: Channel,
+      include: {
+        model: Video,
+        include: Channel
+      },
+    },
+  });
+
+  return res.json(videos.map((el) => el.Channel.Videos).flat());
 });
 
 postRouter.get('/random', async (req, res) => {
