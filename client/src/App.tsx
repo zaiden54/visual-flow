@@ -24,6 +24,7 @@ function App(): JSX.Element {
 
   axios.defaults.baseURL = 'http://localhost:3001/api';
   axios.defaults.withCredentials = true;
+  
   useEffect(() => {
     void dispatch(checkUserThunk());
     // eslint-disable-next-line react-hooks/exhaustive-deps

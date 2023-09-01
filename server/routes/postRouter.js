@@ -1,6 +1,8 @@
 const router = require('express').Router;
 
-const { Video, Channel, User, sequelize } = require('../db/models');
+const {
+  Video, Channel, User, sequelize,
+} = require('../db/models');
 
 const postRouter = router();
 

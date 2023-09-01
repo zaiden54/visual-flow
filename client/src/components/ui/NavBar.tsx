@@ -77,7 +77,7 @@ export default function NavBar(): JSX.Element {
         <CardActions>
           <Box sx={{ display: 'flex', flexDirection: 'column' }}>
             <ListItemButton onClick={handleMenuClose}>My Channel</ListItemButton>
-            <Button onClick={() => void dispatch(logoutUserThunk())}>Log Out</Button>
+            <Button onClick={() => {void dispatch(logoutUserThunk())}}>Log Out</Button>
           </Box>
         </CardActions>
       </Box>

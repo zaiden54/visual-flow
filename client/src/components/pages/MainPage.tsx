@@ -11,15 +11,17 @@ import { getRandomVideoThunk, getSubVideoThunk } from '../../redux/slices/video/
 export default function MainPage(): JSX.Element {
   const dispatch = useAppDispatch();
   const channelsAndVideos = useAppSelector((state) => state.videos);
+  
   useEffect(() => {
     void dispatch(getSubVideoThunk());
   }, []);
   console.log(channelsAndVideos);
 
   const random = useAppSelector((state) => state.random);
+  
   useEffect(() => {
     void dispatch(getRandomVideoThunk());
-  });
+  }, []);
   
   return (
     <>
