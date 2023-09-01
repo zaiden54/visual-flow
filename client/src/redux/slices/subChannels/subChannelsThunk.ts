@@ -16,7 +16,7 @@ export const getFirstSubChannelThunk = createAsyncThunk<SubType, number>(
   'subChannels/getFirstChannels',
   async (offset): Promise<SubType> => {
     const { data } = await apiService.get<SubType>(`/videos/subs/channels/${offset}`);
-    
+
     console.log('SERVER----------', data);
 
     return data;
