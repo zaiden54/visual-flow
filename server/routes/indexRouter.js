@@ -1,7 +1,7 @@
 const router = require('express').Router;
-const videoRouter = require('../test/videoRouter');
 const authRouter = require('./authRouter');
 const postRouter = require('./postRouter');
+const videoRouter = require('./videoRouter');
 
 const indexRouter = router();
 
