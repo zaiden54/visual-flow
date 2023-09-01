@@ -15,9 +15,3 @@ export type ChannelType = {
   Videos: VideoType[];
   createdAt: string;
 };
-
-// export type VideosFromBackType = {
-//   Videos: VideoType[];
-//   name: string;
-//   createdAt: string;
-// };
