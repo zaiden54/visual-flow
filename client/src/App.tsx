@@ -1,13 +1,11 @@
-import { Container, CssBaseline, ThemeProvider, createTheme, useMediaQuery } from '@mui/material';
+import { CssBaseline, ThemeProvider, createTheme, useMediaQuery } from '@mui/material';
 import axios from 'axios';
 import React, { useEffect, useMemo } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import MainPage from './components-Yana/pages-Yana/MainPage';
+import MainPage from './components/pages/MainPage';
 import AuthPage from './components/pages/AuthPage';
 import { useAppDispatch } from './redux/hooks/reduxHooks';
 import { checkUserThunk } from './redux/slices/user/userThunks';
-import NavBar from './components-Erzhena/UI-Erzhena/NavBar';
-import MenuLeft from './components-Yana/UI-Yana/MenuLeft';
 
 function App(): JSX.Element {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
@@ -34,12 +32,12 @@ function App(): JSX.Element {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Container>
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/auth/:auth" element={<AuthPage />} />
         </Routes>
-      </Container>
+      </div>
     </ThemeProvider>
   );
 }
