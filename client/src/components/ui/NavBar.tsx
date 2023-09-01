@@ -155,6 +155,7 @@ export default function NavBar(): JSX.Element {
                 <SearchIcon />
               </Button>
             </div>
+            <div>
             <IconButton
               size="large"
               edge="end"
@@ -167,6 +168,7 @@ export default function NavBar(): JSX.Element {
               <AccountCircle />
             </IconButton>
               <Button type="button" onClick={() => dispatch(swapModal({value: true}))}>+</Button>
+            </div>
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
