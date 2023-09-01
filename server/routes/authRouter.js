@@ -8,18 +8,16 @@ const authRouter = router();
 
 authRouter.get('/check', (req, res) => {
   if (!req.session.user) {
-    res.status(401).json({ message: 'no cookies' });
+    return res.status(401).json({ message: 'no cookies' });
   }
-  setTimeout(() => {
-    res.json(req.session.user);
-  }, 2000);
+  return res.json(req.session.user);
 });
 
 authRouter.post('/signup', async (req, res) => {
   const { username, email, password } = req.body;
 
   if (!username || !email || !password) {
-    res.status(400).json({ message: 'Заполните все поля' });
+    return res.status(400).json({ message: 'Заполните все поля' });
   }
 
   const hash = await bcrypt.hash(password, 10);
@@ -35,11 +33,11 @@ authRouter.post('/signup', async (req, res) => {
     },
   });
 
-  await sendActivationMail(email, `${process.env.API_URL}/api/auth/activate/${activationLink}`);
-
   if (!created) {
-    res.status(400).json({ message: 'Такой пользователь уже существует' });
+    return res.status(400).json({ message: 'Такой пользователь уже существует' });
   }
+
+  await sendActivationMail(email, `${process.env.API_URL}/api/auth/activate/${activationLink}`);
 
   req.session.user = {
     id: user.id,
@@ -60,21 +58,14 @@ authRouter.post('/signin', async (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    res.status(400).json({ message: 'Заполните все поля' });
+    return res.status(400).json({ message: 'Заполните все поля' });
   }
 
   const user = await User.findOne({ where: { email } });
 
   if (!user || !(await bcrypt.compare(password, user?.password))) {
-    res.status(400).json({ message: 'Неверная электронная почта или пароль' });
+    return res.status(400).json({ message: 'Неверная электронная почта или пароль' });
   }
-
-  // const userInfo = {
-  //   id: user.id,
-  //   name: user.name,
-  //   email: user.email,
-  //   isActivated: user.isActivated,
-  // };
 
   req.session.user = {
     id: user.id,
