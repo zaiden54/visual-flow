@@ -4,8 +4,8 @@ import MenuLeft from '../ui/MenuLeft';
 import ModalWindow from '../ui/ModalWindow';
 import NavBar from '../ui/NavBar';
 import VideosMap from '../ui/VideosMap';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks/reduxHooks';
-import { getFirstSubChannelThunk } from '../../redux/slices/subChannels/subChannelsThunk';
+import { useAppDispatch } from '../../redux/hooks/reduxHooks';
+import { checkUserThunk } from '../../redux/slices/user/userThunks';
 
 export default function MainPage(): JSX.Element {
   // const dispatch = useAppDispatch();

@@ -7,7 +7,7 @@ postRouter.get('/subs/channels/:offset', async (req, res) => {
   const { offset } = req.params;
   const userId = req.session.user?.id;
 
-  console.log(userId)
+  console.log(userId);
 
   if (!userId) {
     return res.status(401).json({ message: 'Unathorized' });
@@ -21,8 +21,9 @@ postRouter.get('/subs/channels/:offset', async (req, res) => {
     offset,
     limit: 3,
   });
-
-  return res.json({ ...channels, rows: channels.rows.map((el) => el.Channel) });
+  setTimeout(() => {
+    return res.json({ ...channels, rows: channels.rows.map((el) => el.Channel) });
+  }, 3000);
   // res.sendStatus(200)
 });
 

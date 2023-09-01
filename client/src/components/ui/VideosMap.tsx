@@ -1,8 +1,6 @@
-import { Divider } from '@mui/material';
-import React, { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks/reduxHooks';
+import React from 'react';
+import { useAppDispatch } from '../../redux/hooks/reduxHooks';
 // import { getRandomVideoThunk, getSubVideoThunk } from '../../redux/slices/video/videoThunk';
-import VideoList from './VideoList';
 
 export default function VideosMap(): JSX.Element {
   const dispatch = useAppDispatch();

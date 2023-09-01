@@ -20,10 +20,8 @@ import {
 } from '../../redux/slices/subChannels/subChannelsThunk';
 
 const drawerWidth = 240;
-const users = ['Remy', 'Jane', 'Hannah'];
 
 export default function MenuLeft(): JSX.Element {
-  const channelsAndVideos = useAppSelector((state) => state.videos);
   const dispatch = useAppDispatch();
   const subs = useAppSelector((state) => state.subs);
   // const [count,setCount]=useState(0)
@@ -31,15 +29,12 @@ export default function MenuLeft(): JSX.Element {
 
   const user = useAppSelector((store) => store.user);
 
-  // useEffect(() => {
-  //   if (user.data.status === 'logged') {
-  //     void dispatch(getFirstSubChannelThunk(0));
-  //   }
-  // }, [user]);
+  useEffect(() => {
+    if (user.data.status === 'logged') {
+      void dispatch(getFirstSubChannelThunk(0));
+    }
+  }, [user]);
 
-  // console.log(subs.rows);
-
-  // const remain = useAppSelector((state)=>state.subs.count)
   return (
     <Drawer
       variant="permanent"
@@ -93,45 +88,23 @@ export default function MenuLeft(): JSX.Element {
                   </ListItemButton>
                 </ListItem>
               ))}
-              {/* <ListItemButton> */}
-              <Button
-                type="button"
-                onClick={() => void dispatch(getSubChannelThunk(subs.rows.length))}
-              >
-                {' '}
-                more
-              </Button>
-              {/* </ListItemButton> */}
+              {subs.count - subs.rows.length > 0 ? (
+                <Button
+                  type="button"
+                  onClick={() => void dispatch(getSubChannelThunk(subs.rows.length))}
+                >
+                  {subs.count - subs.rows.length} more
+                </Button>
+              ) : (
+                <Button
+                  type="button"
+                  onClick={() => void dispatch(getSubChannelThunk(subs.rows.length))}
+                >
+                  hide
+                </Button>
+              )}
             </List>
           )}
-          {/* <List>
-            <ListItem key={4} style={{ padding: '1px', alignItems: 'center' }} disablePadding>
-              <ListItemText primary="Subscribes" />
-            </ListItem>
-            {channelsAndVideos.map((el) => (
-              <ListItem key={el.name} disablePadding>
-                <ListItemButton>
-                  <Subscribes name={el.name} />
-                </ListItemButton>
-              </ListItem>
-            ))}
-          </List> */}
-          {/* <List>
-            {subs.rows.map((el) => (
-              <ListItem key={el} disablePadding>
-                <ListItemButton>
-                  <Subscribes name={el.name} />
-                </ListItemButton>
-              </ListItem>
-            ))}
-            <ListItemButton
-              type="button"
-              onClick={() => dispatch(getSubChannelThunk(subs.rows.length - 1))}
-            >
-              {' '}
-              more
-            </ListItemButton>
-          </List> */}
         </List>
       </Box>
     </Drawer>

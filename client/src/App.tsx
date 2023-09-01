@@ -35,12 +35,12 @@ function App(): JSX.Element {
     void dispatch(checkUserThunk());
   }, []);
 
-  useEffect(() => {
-    if (user.data.status === 'logged') {
-      void dispatch(getFirstSubChannelThunk(0));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user]);
+  // useEffect(() => {
+  //   if (user.data.status === 'logged') {
+  //     void dispatch(getFirstSubChannelThunk(0));
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [user.data]);
 
   return (
     <ThemeProvider theme={theme}>
