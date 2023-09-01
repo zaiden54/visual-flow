@@ -5,7 +5,13 @@ const { Video, Channel, User, sequelize } = require('../db/models');
 const postRouter = router();
 
 postRouter.get('/subs', async (req, res) => {
-  const userId = req.session.user.id;
+  const userId = req.session.user?.id;
+
+  // console.log(userId);
+
+  if (!userId) {
+    return res.status(401).json({ message: 'Unathorized' });
+  }
 
   const videos = await User.findOne({
     where: { id: userId },
@@ -18,7 +24,7 @@ postRouter.get('/subs', async (req, res) => {
     },
   });
 
-  res.json(videos.subscriptions);
+  return res.json(videos.subscriptions);
 });
 
 postRouter.get('/random', async (req, res) => {
