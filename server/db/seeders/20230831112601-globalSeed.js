@@ -14,6 +14,8 @@ module.exports = {
      * }], {});
      */
 
+    const date = new Date();
+
     await queryInterface.bulkInsert(
       'Roles',
       [
@@ -223,7 +225,7 @@ module.exports = {
           description: 'Feastables',
           views: 0,
           link: uuid.v4(),
-          channelId: 1,
+          channelId: 3,
           preview: '/previews/kitten-1.jpg',
           createdAt: new Date(),
           updatedAt: new Date(),
@@ -254,7 +256,7 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
-          userId: 2,
+          userId: 1,
           channelId: 3,
           createdAt: new Date(),
           updatedAt: new Date(),
