@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -16,26 +15,9 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Avatar from '@mui/material/Avatar';
 import ListItemButton from '@mui/material/ListItemButton'; 
-import { Container } from '@mui/material';
 import { swapModal } from '../../redux/slices/modals/modalSlice';
 import { useAppDispatch } from '../../redux/hooks/reduxHooks';
 import { logoutUserThunk } from '../../redux/slices/user/userThunks'; 
-
-const Search = styled('div')(({ theme }) => ({
-  position: 'relative',
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  '&:hover': {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginRight: theme.spacing(0),
-  marginLeft: 0,
-  width: '100%',
-  [theme.breakpoints.up('sm')]: {
-    marginLeft: theme.spacing(10),
-    width: 'auto',
-  },
-}));
 
 export default function NavBar(): JSX.Element {
 
