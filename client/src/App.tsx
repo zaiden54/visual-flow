@@ -8,7 +8,6 @@ import RoomsPage from './components/pages/RoomsPage';
 import SubscriptionsPage from './components/pages/SubscriptionsPage';
 import { useAppDispatch, useAppSelector } from './redux/hooks/reduxHooks';
 import { checkUserThunk } from './redux/slices/user/userThunks';
-import { getFirstSubChannelThunk } from './redux/slices/subChannels/subChannelsThunk';
 
 function App(): JSX.Element {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
