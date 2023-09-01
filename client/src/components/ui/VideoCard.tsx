@@ -14,11 +14,14 @@ export type VideoCardProps = {
 };
 
 export default function VideoCard({ video, Channel }: VideoCardProps): JSX.Element {
-  console.log('===============',video.preview);
-  
   return (
     <Card sx={{ display: 'flex', flexDirection: 'column', margin: '2' }}>
-      <CardMedia component="img" sx={{ width: 151 }} image={`http://localhost:3001${video.preview}`} alt={video.title} />
+      <CardMedia
+        component="img"
+        sx={{ width: 151 }}
+        image={`http://localhost:3001${video.preview}`}
+        alt={video.title}
+      />
       <Box sx={{ display: 'flex', flexDirection: 'column' }}>
         <CardContent sx={{ flex: '1 0 auto' }}>
           <Typography component="div" variant="h5">
@@ -26,8 +29,13 @@ export default function VideoCard({ video, Channel }: VideoCardProps): JSX.Eleme
           </Typography>
           <Typography variant="subtitle1" color="text.secondary" component="div">
             <Stack direction="row" spacing={2} style={{ padding: '1px', alignItems: 'center' }}>
-              <Avatar sx={{ width: 24, height: 24 }} alt="AVA" src="#" />
-              <Stack direction="column">{Channel}</Stack>
+              <Avatar sx={{ width: 24, height: 24 }} alt={Channel} src="#" />
+              <Stack direction="column">
+                {
+                  // video.Channel.name
+                  Channel
+                }
+              </Stack>
             </Stack>
           </Typography>
           <Typography variant="subtitle1" color="text.secondary" component="div">
