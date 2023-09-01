@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const sessionParser = require('./middlewares/sessionParser');
 const indexRouter = require('./routes/indexRouter');
+const postRouter = require('./routes/postRouter');
 
 const PORT = process.env.PORT || 3001;
 
@@ -14,6 +15,7 @@ app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 app.use(sessionParser);
 
 app.use('/api', indexRouter);
+app.use('/api/videos', postRouter)
 
 const start = async () => {
   try {
