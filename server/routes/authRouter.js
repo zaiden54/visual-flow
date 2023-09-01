@@ -10,7 +10,6 @@ authRouter.get('/check', (req, res) => {
   if (!req.session.user) {
     return res.status(401).json({ message: 'no cookies' });
   }
-
   return res.json(req.session.user);
 });
 
