@@ -6,6 +6,10 @@ const postRouter = router();
 postRouter.get('/subs', async (req, res) => {
   const userId = req.session.user.id;
 
+  if (!userId) {
+    res.status(401).json({ message: 'Unathorized' });
+  }
+
   const videos = await User.findOne({
     where: { id: userId },
     include: {
