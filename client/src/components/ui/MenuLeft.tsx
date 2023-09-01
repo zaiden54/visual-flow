@@ -10,7 +10,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Toolbar from '@mui/material/Toolbar';
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/reduxHooks';
 import Subscribes from './Subscribes';
@@ -21,6 +21,7 @@ const users = ['Remy', 'Jane', 'Hannah'];
 export default function MenuLeft(): JSX.Element {
   const channelsAndVideos = useAppSelector((state) => state.videos);
   const dispatch = useAppDispatch();
+  const [count,setCount]=useState(0)
   // const subs = useAppSelector((state)=>state.subs.content)
   // useEffect(()=>{
   //   void dispatch(getSubChannelThunk(1))
@@ -95,7 +96,7 @@ export default function MenuLeft(): JSX.Element {
       </ListItemButton>
     </ListItem>
   ))}
-  <ListItemButton type='button' onClick={()=> dispatch(getSubChannelThunk(subs.length+1))}>{remain} more</ListItemButton>
+  <ListItemButton type='button' onClick={()=> {dispatch(getSubChannelThunk(subs.length+1))}>{remain} more</ListItemButton>
   </List> */
   );
 }
