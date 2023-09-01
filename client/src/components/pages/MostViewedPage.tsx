@@ -1,7 +1,14 @@
-import React from 'react'
+import React from 'react';
+import ModalWindow from '../ui/ModalWindow';
+import MenuLeft from '../ui/MenuLeft';
+import NavBar from '../ui/NavBar';
 
-export default function MostViewedPage():JSX.Element {
+export default function MostViewedPage(): JSX.Element {
   return (
-    <div>MostViewedPage</div>
-  )
+    <>
+      <ModalWindow />
+      <MenuLeft />
+      <NavBar />
+    </>
+  );
 }
