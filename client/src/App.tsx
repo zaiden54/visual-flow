@@ -37,7 +37,7 @@ function App(): JSX.Element {
           <Routes>
             <Route path="/" element={<MainPage />} />
             <Route path="/auth/:auth" element={<AuthPage />} />
-            <Route path="/video" element={<VideoPage />} />
+            <Route path="/watch" element={<VideoPage />} />
           </Routes>
           </div>
       </ThemeProvider>

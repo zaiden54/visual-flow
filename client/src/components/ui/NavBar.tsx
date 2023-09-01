@@ -9,6 +9,7 @@ import Menu from '@mui/material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MoreIcon from '@mui/icons-material/MoreVert';
+import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import CardActions from '@mui/material/CardActions';
@@ -17,7 +18,7 @@ import Avatar from '@mui/material/Avatar';
 import ListItemButton from '@mui/material/ListItemButton'; 
 import { swapModal } from '../../redux/slices/modals/modalSlice';
 import { useAppDispatch } from '../../redux/hooks/reduxHooks';
-import { logoutUserThunk } from '../../redux/slices/user/userThunks'; 
+import { logoutUserThunk } from '../../redux/slices/user/userThunks';
 
 export default function NavBar(): JSX.Element {
 
@@ -77,9 +78,6 @@ export default function NavBar(): JSX.Element {
         <CardActions>
           <Box sx={{ display: 'flex', flexDirection: 'column' }}>
             <ListItemButton onClick={handleMenuClose}>My Channel</ListItemButton>
-            <ListItemButton onClick={handleMenuClose}  >
-          Subscriptions
-        </ListItemButton>
             <Button onClick={() => void dispatch(logoutUserThunk())}>Log Out</Button>
           </Box>
         </CardActions>
@@ -115,14 +113,18 @@ export default function NavBar(): JSX.Element {
           <AccountCircle />
         </IconButton>
         <p>Profile</p>
+        </MenuItem>
+        <MenuItem onClick={() => dispatch(swapModal({value: true}))}>
+        <IconButton ><AddCircleOutlinedIcon/></IconButton>
+        <p>Add video</p>
       </MenuItem>
     </Menu>
   );
 
   return (
     <>
-      <AppBar position="fixed">
-        <Toolbar sx={{ display: "flex", justifyContent: "space-between"}}>
+      <AppBar position="fixed" style={{ minWidth: '600px' }}>
+        <Toolbar sx={{ display: "flex", justifyContent: "space-between"}} style={{flexWrap: 'nowrap'}}>
           <Typography
             variant="h6"
             noWrap
@@ -131,13 +133,14 @@ export default function NavBar(): JSX.Element {
           >
             Kinda Logo/Visual Flow
           </Typography>
-            <div style={{ marginLeft:"60px"}}>
-              <TextField id="outlined-basic" sx={{ width:'50vw', height:40}} variant="outlined" size="small"/>
-              <Button variant="outlined" style={{height:40, marginLeft: "20px"}} >
+            <Box component="form" >
+              <TextField id="outlined-basic" sx={{ width:"50vw", height:40}} variant="outlined" style={{}} size="small"/>
+              <Button variant="outlined" style={{height:40}} type="submit" >
                 <SearchIcon />
               </Button>
-            </div>
-            <div>
+            </Box>
+            <Box sx={{display:{ xs: 'none',  sm: 'block' }}} >
+            <IconButton type="button" onClick={() => dispatch(swapModal({value: true}))}  ><AddCircleOutlinedIcon/></IconButton>
             <IconButton
               size="large"
               edge="end"
@@ -149,8 +152,8 @@ export default function NavBar(): JSX.Element {
             >
               <AccountCircle />
             </IconButton>
-              <Button type="button" onClick={() => dispatch(swapModal({value: true}))}>+</Button>
-            </div>
+            </Box>
+            
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"

@@ -5,6 +5,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -19,20 +20,21 @@ import NavBar from '../ui/NavBar'
 
 export default function VideoPage():JSX.Element {
   return (
-    <div>
+    <div >
  <MenuLeft />
  <NavBar />
- <div style={{display:'flex', flexDirection:'column'}}>
- <Card>
-      <CardContent>
-      <div style={{display:'flex', flexDirection:'column', alignContent: 'center'}}>
- <Stack style={{marginTop: 90}} spacing={1}>
-      <Skeleton variant="rounded" width={910} height={500} />
-    </Stack>
- </div>
+ <Stack style={{marginTop: 90, display:'flex', alignContent: 'center', zIndex:-3}} spacing={1} >
+ <div >
+ <Card style={{marginTop: 0}}>
+      <CardContent style={{display:'flex', flexDirection:'column', alignItems: 'start'}}>
+      <Skeleton variant="rounded" width={910} height={500} style={{alignSelf: 'center'}}/>
         <Typography  style={{marginTop: 30}} variant="h5" component="div">
          видевоооооооооооооо
         </Typography>
+       <Typography color="text.secondary">
+          54623754 просмотров | опубликовано когда-то
+        </Typography>
+        <Divider variant="inset" />
         <div style={{display:'flex', flexDirection:'row'}} >
         <ListItem>
         <ListItemAvatar>
@@ -45,24 +47,18 @@ export default function VideoPage():JSX.Element {
               <Typography color="text.secondary">
           54623754 subscribers
         </Typography>
-              <Button style={{justifyContent: 'end'}} variant="contained">Подписаться</Button>
             </ListItemText>
+              <Button style={{marginRight: '-147%'}} variant="contained">Подписаться</Button>
       </ListItem>
       </div>
       <Divider variant="inset" />
-      <Typography color="text.secondary">
-          54623754 просмотров
-        </Typography>
-        <Typography color="text.secondary">
-          опубликовано когда-то
-        </Typography>
         <div>
       <Accordion>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
           id="panel1a-header"
-        >
+          >
           <Typography>Read Description</Typography>
         </AccordionSummary>
         <AccordionDetails>
@@ -76,6 +72,7 @@ export default function VideoPage():JSX.Element {
       </CardContent>
     </Card>
     </div>
+          </Stack>
     </div>
   )
 }
