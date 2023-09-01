@@ -17,8 +17,9 @@ import CardContent from '@mui/material/CardContent';
 import Avatar from '@mui/material/Avatar';
 import ListItemButton from '@mui/material/ListItemButton'; 
 import { Container } from '@mui/material';
-import { useAppDispatch } from '../../redux/hooks/reduxHooks';
 import { swapModal } from '../../redux/slices/modals/modalSlice';
+import { useAppDispatch } from '../../redux/hooks/reduxHooks';
+import { logoutUserThunk } from '../../redux/slices/user/userThunks'; 
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -41,8 +42,7 @@ export default function NavBar(): JSX.Element {
   const dispatch = useAppDispatch()
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
-    React.useState<null | HTMLElement>(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -63,21 +63,20 @@ export default function NavBar(): JSX.Element {
   const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>): void => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
-
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
-      <Menu
+    <Menu
       anchorEl={anchorEl}
       anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
+        vertical: 'top',
+        horizontal: 'right',
+      }}
       id={menuId}
       keepMounted
       transformOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
+        vertical: 'top',
+        horizontal: 'right',
+      }}
       open={isMenuOpen}
       onClose={handleMenuClose}
       >
@@ -88,21 +87,19 @@ export default function NavBar(): JSX.Element {
       <CardContent >
         <Typography gutterBottom variant="h5" component="div">
           User/Channel Name
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          много подпешникафф
           </Typography>
-      </CardContent>
-      <CardActions >
-      <Box sx={{display:'flex', flexDirection:'column'}} >
-      <ListItemButton onClick={handleMenuClose}  >
-          My Channel
-        </ListItemButton>
-        <Button onClick={handleMenuClose}>Log Out</Button>
+          <Typography variant="body2" color="text.secondary">
+            много подпешникафф
+          </Typography>
+        </CardContent>
+        <CardActions>
+          <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+            <ListItemButton onClick={handleMenuClose}>My Channel</ListItemButton>
+            <Button onClick={() => void dispatch(logoutUserThunk())}>Log Out</Button>
+          </Box>
+        </CardActions>
       </Box>
-      </CardActions>
-      </Box>
-    </Menu> 
+    </Menu>
   );
 
   const mobileMenuId = 'primary-search-account-menu-mobile';
@@ -185,6 +182,6 @@ export default function NavBar(): JSX.Element {
       </AppBar>
       {renderMobileMenu}
       {renderMenu}
-      </>
-  );
+    </>
+  )
 }

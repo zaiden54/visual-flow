@@ -30,15 +30,15 @@ function App(): JSX.Element {
   }, []);
 
   return (
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-          <div style={{display:"flex", justifyContent: "center"}}>
-          <Routes>
-            <Route path="/" element={<MainPage />} />
-            <Route path="/auth/:auth" element={<AuthPage />} />
-          </Routes>
-          </div>
-      </ThemeProvider>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <Routes>
+          <Route path="/" element={<MainPage />} />
+          <Route path="/auth/:auth" element={<AuthPage />} />
+        </Routes>
+      </div>
+    </ThemeProvider>
   );
 }
 
