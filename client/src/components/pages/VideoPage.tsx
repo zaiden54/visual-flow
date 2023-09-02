@@ -17,8 +17,10 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import MenuLeft from '../ui/MenuLeft'
 import NavBar from '../ui/NavBar'
+import { useParams } from 'react-router-dom';
 
 export default function VideoPage():JSX.Element {
+  const { link } = useParams();
   return (
     <div >
  <MenuLeft />
@@ -27,10 +29,13 @@ export default function VideoPage():JSX.Element {
  <div >
  <Card style={{marginTop: 0}}>
       <CardContent style={{display:'flex', flexDirection:'column', alignItems: 'start'}}>
-      <Skeleton variant="rounded" width={910} height={500} style={{alignSelf: 'center'}}/>
-        <Typography  style={{marginTop: 30}} variant="h5" component="div">
-         видевоооооооооооооо
-        </Typography>
+      {/* <Skeleton variant="rounded" width={910} height={500} style={{alignSelf: 'center'}}/> */}
+      <video id="videoPlayer"  style={{alignSelf: 'center'}} 
+      // width="650px" 
+      width={910} height={500}
+      controls muted="muted" autoPlay>
+        {link && <source src={`http://localhost:3001/api/watch/${link}`} />}
+      </video>
        <Typography color="text.secondary">
           54623754 просмотров | опубликовано когда-то
         </Typography>
