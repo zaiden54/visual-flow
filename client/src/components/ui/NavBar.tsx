@@ -1,27 +1,30 @@
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MoreIcon from '@mui/icons-material/MoreVert';
+import SearchIcon from '@mui/icons-material/Search';
+import AppBar from '@mui/material/AppBar';
+import Avatar from '@mui/material/Avatar';
+import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import Avatar from '@mui/material/Avatar';
-import ListItemButton from '@mui/material/ListItemButton'; 
+import IconButton from '@mui/material/IconButton';
+import ListItemButton from '@mui/material/ListItemButton';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import TextField from '@mui/material/TextField';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import * as React from 'react';
+import { Link } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks/reduxHooks';
 import { swapModal } from '../../redux/slices/modals/modalSlice';
-import { useAppDispatch } from '../../redux/hooks/reduxHooks';
-import { logoutUserThunk } from '../../redux/slices/user/userThunks'; 
+import { logoutUserThunk } from '../../redux/slices/user/userThunks';
 
 export default function NavBar(): JSX.Element {
+  const user = useAppSelector((state) => state.user.data);
+  console.log(user);
 
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -61,25 +64,65 @@ export default function NavBar(): JSX.Element {
       }}
       open={isMenuOpen}
       onClose={handleMenuClose}
-      >
-        <Box sx={{display:'flex', flexDirection:'column'}} alignItems="center">
-      <Avatar style={{marginTop: '3vh'}} alt='avatar'
-        title="userpic"
-      />
-      <CardContent >
-        <Typography gutterBottom variant="h5" component="div">
-          User/Channel Name
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            много подпешникафф
-          </Typography>
-        </CardContent>
-        <CardActions>
-          <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-            <ListItemButton onClick={handleMenuClose}>My Channel</ListItemButton>
-            <Button onClick={() => {void dispatch(logoutUserThunk())}}>Log Out</Button>
-          </Box>
-        </CardActions>
+    >
+      <Box sx={{ display: 'flex', flexDirection: 'column' }} alignItems="center">
+        <Avatar style={{ marginTop: '3vh' }} alt="avatar" title="userpic" />
+        {user.status==='logged' ? (
+          <>
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="div">
+                {user.name}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                много подпешникафф
+              </Typography>
+            </CardContent>
+            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+              <ListItemButton onClick={handleMenuClose}>My Channel</ListItemButton>
+              <Button
+                onClick={() => {
+                  void dispatch(logoutUserThunk());
+                }}
+              >
+                Log Out
+              </Button>
+            </Box>
+          </>
+        ) : (
+          <>
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="div">
+                User/Channel Name
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                много подпешникафф
+              </Typography>
+            </CardContent>
+            <CardActions>
+              <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                {/* <ListItemButton onClick={handleMenuClose}>My Channel</ListItemButton> */}
+                <Link to="/auth/signin">
+                  <Button
+                    onClick={() => {
+                      void dispatch(logoutUserThunk());
+                    }}
+                  >
+                    Sign In
+                  </Button>
+                </Link>
+                <Link to="/auth/signup">
+                  <Button
+                    onClick={() => {
+                      void dispatch(logoutUserThunk());
+                    }}
+                  >
+                    Sign Up
+                  </Button>
+                </Link>
+              </Box>
+            </CardActions>
+          </>
+        )}
       </Box>
     </Menu>
   );
@@ -119,7 +162,7 @@ export default function NavBar(): JSX.Element {
   return (
     <>
       <AppBar position="fixed">
-        <Toolbar sx={{ display: "flex", justifyContent: "space-between"}}>
+        <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <Typography
             variant="h6"
             noWrap
@@ -128,13 +171,18 @@ export default function NavBar(): JSX.Element {
           >
             Kinda Logo/Visual Flow
           </Typography>
-            <div style={{ marginLeft:"60px"}}>
-              <TextField id="outlined-basic" sx={{ width:'50vw', height:40}} variant="outlined" size="small"/>
-              <Button variant="outlined" style={{height:40, marginLeft: "20px"}} >
-                <SearchIcon />
-              </Button>
-            </div>
-            <div>
+          <div style={{ marginLeft: '60px' }}>
+            <TextField
+              id="outlined-basic"
+              sx={{ width: '50vw', height: 40 }}
+              variant="outlined"
+              size="small"
+            />
+            <Button variant="outlined" style={{ height: 40, marginLeft: '20px' }}>
+              <SearchIcon />
+            </Button>
+          </div>
+          <div>
             <IconButton
               size="large"
               edge="end"
@@ -146,8 +194,10 @@ export default function NavBar(): JSX.Element {
             >
               <AccountCircle />
             </IconButton>
-              <Button type="button" onClick={() => dispatch(swapModal({value: true}))}>+</Button>
-            </div>
+            <Button type="button" onClick={() => dispatch(swapModal({ value: true }))}>
+              +
+            </Button>
+          </div>
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
@@ -165,5 +215,5 @@ export default function NavBar(): JSX.Element {
       {renderMobileMenu}
       {renderMenu}
     </>
-  )
+  );
 }

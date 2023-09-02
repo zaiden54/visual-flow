@@ -79,31 +79,35 @@ export default function MenuLeft(): JSX.Element {
             </ListItem>
           </Link>
           <Divider />
-          {subs.rows && (
-            <List>
-              {subs.rows.map((el) => (
-                <ListItem key={el.id} disablePadding>
-                  <ListItemButton>
-                    <Subscribes name={el.name} />
-                  </ListItemButton>
-                </ListItem>
-              ))}
-              {subs.count - subs.rows.length > 0 ? (
-                <Button
-                  type="button"
-                  onClick={() => void dispatch(getSubChannelThunk(subs.rows.length))}
-                >
-                  {subs.count - subs.rows.length} more
-                </Button>
-              ) : (
-                <Button
-                  type="button"
-                  onClick={() => void dispatch(getSubChannelThunk(subs.rows.length))}
-                >
-                  hide
-                </Button>
+          {user.data.status === 'logged' && (
+            <div>
+              {subs.rows && (
+                <List>
+                  {subs.rows.map((el) => (
+                    <ListItem key={el.id} disablePadding>
+                      <ListItemButton>
+                        <Subscribes name={el.name} />
+                      </ListItemButton>
+                    </ListItem>
+                  ))}
+                  {subs.count - subs.rows.length > 0 ? (
+                    <Button
+                      type="button"
+                      onClick={() => void dispatch(getSubChannelThunk(subs.rows.length))}
+                    >
+                      {subs.count - subs.rows.length} more
+                    </Button>
+                  ) : (
+                    <Button
+                      type="button"
+                      onClick={() => void dispatch(getSubChannelThunk(subs.rows.length))}
+                    >
+                      hide
+                    </Button>
+                  )}
+                </List>
               )}
-            </List>
+            </div>
           )}
         </List>
       </Box>

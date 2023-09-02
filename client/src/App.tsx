@@ -8,6 +8,7 @@ import RoomsPage from './components/pages/RoomsPage';
 import SubscriptionsPage from './components/pages/SubscriptionsPage';
 import { useAppDispatch, useAppSelector } from './redux/hooks/reduxHooks';
 import { checkUserThunk } from './redux/slices/user/userThunks';
+import PrivateRouter from './components/PrivateRouter';
 
 function App(): JSX.Element {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
@@ -24,10 +25,8 @@ function App(): JSX.Element {
 
   const dispatch = useAppDispatch();
 
-  
   const user = useAppSelector((state) => state.user);
-  
-  
+
   useEffect(() => {
     void dispatch(checkUserThunk());
   }, []);
@@ -40,7 +39,11 @@ function App(): JSX.Element {
           <Route path="/rooms" element={<RoomsPage />} />
           <Route path="/mostViewed" element={<MostViewedPage />} />
           <Route path="/" element={<MainPage />} />
-          <Route path="/auth/:auth" element={<AuthPage />} />
+          <Route
+            element={<PrivateRouter redirectTo="/" isAllowed={user.data.status !== 'logged'} />}
+          >
+            <Route path="/auth/:auth" element={<AuthPage />} />
+          </Route>
         </Routes>
       </div>
     </ThemeProvider>
