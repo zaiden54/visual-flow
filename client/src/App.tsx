@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from './redux/hooks/reduxHooks';
 import { checkUserThunk } from './redux/slices/user/userThunks';
 import VideoPage from './components/pages/VideoPage';
 import Comments from './components/ui/ButtonMenuLeftTest'
+import TestChatPage from './components/pages/TestChatPage';
 
 function App(): JSX.Element {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
@@ -48,6 +49,7 @@ function App(): JSX.Element {
           </Route>
           {/* <Route path="/watch" element={<VideoPage />} /> */}
           {/* <Route path="/ololo" element={<Comments />} />  */}
+          <Route path='/chat' element={<TestChatPage/>}/>
         </Routes>
       </div>
     </ThemeProvider>

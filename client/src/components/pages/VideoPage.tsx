@@ -1,23 +1,21 @@
-import React from 'react'
-import Stack from '@mui/material/Stack';
-import Skeleton from '@mui/material/Skeleton';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
-import ListItem from '@mui/material/ListItem';
-import Divider from '@mui/material/Divider';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
+import AccordionSummary from '@mui/material/AccordionSummary';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import MenuLeft from '../ui/MenuLeft'
-import NavBar from '../ui/NavBar'
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Divider from '@mui/material/Divider';
+import ListItem from '@mui/material/ListItem';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import ListItemText from '@mui/material/ListItemText';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
+import React from 'react';
 import { useParams } from 'react-router-dom';
+import MenuLeft from '../ui/MenuLeft';
+import NavBar from '../ui/NavBar';
 
 export default function VideoPage():JSX.Element {
   const { link } = useParams();

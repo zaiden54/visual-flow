@@ -173,6 +173,7 @@ export default function NavBar(): JSX.Element {
           sx={{ display: 'flex', justifyContent: 'space-between' }}
           style={{ flexWrap: 'nowrap' }}
         >
+          <Link to="/" style={{textDecoration: 'none', color: 'white'}}>
           <Typography
             variant="h6"
             noWrap
@@ -181,6 +182,7 @@ export default function NavBar(): JSX.Element {
           >
             Kinda Logo/Visual Flow
           </Typography>
+          </Link>
           <Box component="form">
             <TextField
               id="outlined-basic"
