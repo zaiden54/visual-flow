@@ -9,6 +9,8 @@ import RoomsPage from './components/pages/RoomsPage';
 import SubscriptionsPage from './components/pages/SubscriptionsPage';
 import { useAppDispatch, useAppSelector } from './redux/hooks/reduxHooks';
 import { checkUserThunk } from './redux/slices/user/userThunks';
+import VideoPage from './components/pages/VideoPage';
+import Comments from './components/ui/ButtonMenuLeftTest'
 
 function App(): JSX.Element {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
@@ -44,6 +46,8 @@ function App(): JSX.Element {
           >
             <Route path="/auth/:auth" element={<AuthPage />} />
           </Route>
+          <Route path="/watch" element={<VideoPage />} />
+          <Route path="/ololo" element={<Comments />} /> 
         </Routes>
       </div>
     </ThemeProvider>

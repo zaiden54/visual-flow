@@ -1,9 +1,6 @@
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MoreIcon from '@mui/icons-material/MoreVert';
-import SearchIcon from '@mui/icons-material/Search';
-import AppBar from '@mui/material/AppBar';
-import Avatar from '@mui/material/Avatar';
-import Box from '@mui/material/Box';
+import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
 import Button from '@mui/material/Button';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -18,7 +15,7 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/reduxHooks';
 import { swapModal } from '../../redux/slices/modals/modalSlice';
-import { logoutUserThunk } from '../../redux/slices/user/userThunks';
+import { logoutUserThunk } from '../../redux/slices/user/userThunks'; 
 
 export default function NavBar(): JSX.Element {
   const user = useAppSelector((state) => state.user.data);
@@ -155,14 +152,19 @@ export default function NavBar(): JSX.Element {
           <AccountCircle />
         </IconButton>
         <p>Profile</p>
+        </MenuItem>
+        <MenuItem onClick={() => dispatch(swapModal({value: true}))}>
+        <IconButton ><AddCircleOutlinedIcon/></IconButton>
+        <p>Add video</p>
       </MenuItem>
     </Menu>
   );
 
   return (
     <>
-      <AppBar position="fixed">
-        <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
+      <AppBar position="fixed" style={{ minWidth: '600px' }}>
+        <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }} style={{flexWrap: 'nowrap'}}>
+        
           <Typography
             variant="h6"
             noWrap
@@ -171,18 +173,14 @@ export default function NavBar(): JSX.Element {
           >
             Kinda Logo/Visual Flow
           </Typography>
-          <div style={{ marginLeft: '60px' }}>
-            <TextField
-              id="outlined-basic"
-              sx={{ width: '50vw', height: 40 }}
-              variant="outlined"
-              size="small"
-            />
-            <Button variant="outlined" style={{ height: 40, marginLeft: '20px' }}>
-              <SearchIcon />
-            </Button>
-          </div>
-          <div>
+            <Box component="form" >
+              <TextField id="outlined-basic" sx={{ width:"50vw", height:40}} variant="outlined" style={{}} size="small"/>
+              <Button variant="outlined" style={{height:40}} type="submit" >
+                <SearchIcon />
+              </Button>
+            </Box>
+            <Box sx={{display:{ xs: 'none',  sm: 'block' }}} >
+            <IconButton type="button" onClick={() => dispatch(swapModal({value: true}))}  ><AddCircleOutlinedIcon/></IconButton>
             <IconButton
               size="large"
               edge="end"
@@ -194,10 +192,8 @@ export default function NavBar(): JSX.Element {
             >
               <AccountCircle />
             </IconButton>
-            <Button type="button" onClick={() => dispatch(swapModal({ value: true }))}>
-              +
-            </Button>
-          </div>
+            </Box>
+            
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
