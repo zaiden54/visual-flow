@@ -125,6 +125,7 @@ export default function NavBar(): JSX.Element {
     <>
       <AppBar position="fixed" style={{ minWidth: '600px' }}>
         <Toolbar sx={{ display: "flex", justifyContent: "space-between"}} style={{flexWrap: 'nowrap'}}>
+        
           <Typography
             variant="h6"
             noWrap

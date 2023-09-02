@@ -18,7 +18,7 @@ import Subscribes from './Subscribes';
 const drawerWidth = 240;
 const users = ['Remy', 'Jane', 'Hannah'];
 
-export default function MenuLeft(): JSX.Element {
+export default function MenuLeft( { open, theme}): JSX.Element {
   const channelsAndVideos = useAppSelector((state) => state.videos);
   const dispatch = useAppDispatch();
   const [count,setCount]=useState(0)
@@ -42,7 +42,11 @@ export default function MenuLeft(): JSX.Element {
         <List>
           <Link style={{ textDecoration: 'none', color: 'white' }} to="/rooms">
             <ListItem key={1} style={{ padding: '1px', alignItems: 'center' }} disablePadding>
-              <ListItemButton>
+              <ListItemButton sx={{
+                  minHeight: 48,
+                  justifyContent: open ? 'initial' : 'center',
+                  px: 2.5,
+                }}>
                 <ListItemIcon>
                   <HomeIcon />
                 </ListItemIcon>
@@ -52,7 +56,11 @@ export default function MenuLeft(): JSX.Element {
           </Link>
           <Link style={{ textDecoration: 'none', color: 'white' }} to="/subs">
             <ListItem key={2} style={{ padding: '1px', alignItems: 'center' }} disablePadding>
-              <ListItemButton>
+              <ListItemButton sx={{
+                  minHeight: 48,
+                  justifyContent: open ? 'initial' : 'center',
+                  px: 2.5,
+                }}>
                 <ListItemIcon>
                   <AutoAwesomeMotionIcon />
                 </ListItemIcon>
@@ -62,7 +70,11 @@ export default function MenuLeft(): JSX.Element {
           </Link>
           <Link style={{ textDecoration: 'none', color: 'white' }} to="/mostViewed">
             <ListItem key={3} style={{ padding: '1px', alignItems: 'center' }} disablePadding>
-              <ListItemButton>
+              <ListItemButton sx={{
+                  minHeight: 48,
+                  justifyContent: open ? 'initial' : 'center',
+                  px: 2.5,
+                }}>
                 <ListItemIcon>
                   <LeaderboardIcon />
                 </ListItemIcon>
