@@ -1,6 +1,7 @@
 import { CssBaseline, ThemeProvider, createTheme, useMediaQuery } from '@mui/material';
 import React, { useEffect, useMemo } from 'react';
 import { Route, Routes } from 'react-router-dom';
+import PrivateRouter from './components/PrivateRouter';
 import AuthPage from './components/pages/AuthPage';
 import MainPage from './components/pages/MainPage';
 import MostViewedPage from './components/pages/MostViewedPage';
@@ -8,7 +9,6 @@ import RoomsPage from './components/pages/RoomsPage';
 import SubscriptionsPage from './components/pages/SubscriptionsPage';
 import { useAppDispatch, useAppSelector } from './redux/hooks/reduxHooks';
 import { checkUserThunk } from './redux/slices/user/userThunks';
-import PrivateRouter from './components/PrivateRouter';
 
 function App(): JSX.Element {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');

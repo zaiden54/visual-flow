@@ -1,25 +1,31 @@
-import React from 'react';
-import { useAppDispatch } from '../../redux/hooks/reduxHooks';
-// import { getRandomVideoThunk, getSubVideoThunk } from '../../redux/slices/video/videoThunk';
+import { Divider } from '@mui/material';
+import React, { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks/reduxHooks';
+import getRandomVideoThunk, { getSubVideoThunk } from '../../redux/slices/video/videoThunk';
+import VideoList from './VideoList';
 
 export default function VideosMap(): JSX.Element {
   const dispatch = useAppDispatch();
-  // const channelsAndVideos = useAppSelector((state) => state.videos);
-  // useEffect(() => {
-  //   void dispatch(getSubVideoThunk());
-  // }, []);
-  // // console.log(channelsAndVideos);
 
-  // const random = useAppSelector((state) => state.random);
-  // useEffect(() => {
-  //   void dispatch(getRandomVideoThunk());
-  // }, []);
+  const subVideos = useAppSelector((state) => state.videos);
+
+  useEffect(() => {
+    void dispatch(getSubVideoThunk());
+  }, []);
+
+  const random = useAppSelector((state) => state.random);
+  useEffect(() => {
+    void dispatch(getRandomVideoThunk());
+  }, []);
+
+  console.log(random);
 
   return (
     <div style={{ marginTop: '5rem', flexWrap: 'wrap' }}>
-      {/* <VideoList videos={channelsAndVideos} />
+      <VideoList videos={subVideos} />
+
       <Divider />
-      <VideoList videos={channelsAndVideos} /> */}
+      <VideoList videos={random} />
     </div>
   );
 }

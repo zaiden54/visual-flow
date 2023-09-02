@@ -22,7 +22,7 @@ import { logoutUserThunk } from '../../redux/slices/user/userThunks';
 
 export default function NavBar(): JSX.Element {
   const user = useAppSelector((state) => state.user.data);
-  console.log(user);
+  // console.log(user);
 
   const dispatch = useAppDispatch();
 
@@ -67,7 +67,7 @@ export default function NavBar(): JSX.Element {
     >
       <Box sx={{ display: 'flex', flexDirection: 'column' }} alignItems="center">
         <Avatar style={{ marginTop: '3vh' }} alt="avatar" title="userpic" />
-        {user.status==='logged' ? (
+        {user.status === 'logged' ? (
           <>
             <CardContent>
               <Typography gutterBottom variant="h5" component="div">

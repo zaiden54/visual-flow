@@ -10,10 +10,9 @@ import type { VideoType } from '../../types/videotypes';
 
 export type VideoCardProps = {
   video: VideoType;
-  Channel: string;
 };
 
-export default function VideoCard({ video, Channel }: VideoCardProps): JSX.Element {
+export default function VideoCard({ video }: VideoCardProps): JSX.Element {
   return (
     <Card sx={{ display: 'flex', flexDirection: 'column', margin: '2' }}>
       <CardMedia
@@ -29,11 +28,11 @@ export default function VideoCard({ video, Channel }: VideoCardProps): JSX.Eleme
           </Typography>
           <Typography variant="subtitle1" color="text.secondary" component="div">
             <Stack direction="row" spacing={2} style={{ padding: '1px', alignItems: 'center' }}>
-              <Avatar sx={{ width: 24, height: 24 }} alt={Channel} src="#" />
+              <Avatar sx={{ width: 24, height: 24 }} alt={video.Channel.name} src="#" />
               <Stack direction="column">
                 {
                   // video.Channel.name
-                  Channel
+                  video.Channel.name
                 }
               </Stack>
             </Stack>

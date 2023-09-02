@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { VideoType } from '../../../types/videotypes';
-// import { getRandomVideoThunk } from './videoThunk';
+import getRandomVideoThunk from './videoThunk';
 
 const initialState: VideoType[] = [];
 
@@ -9,7 +9,7 @@ const randomVideoSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    // builder.addCase(getRandomVideoThunk.fulfilled, (state, action) => action.payload);
+    builder.addCase(getRandomVideoThunk.fulfilled, (state, action) => action.payload);
   },
 });
 
