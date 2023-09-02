@@ -6,7 +6,7 @@ import VideoList from './VideoList';
 
 export default function VideosMap(): JSX.Element {
   const dispatch = useAppDispatch();
-
+  const user = useAppSelector((store) => store.user);
   const subVideos = useAppSelector((state) => state.videos);
 
   useEffect(() => {
@@ -18,13 +18,17 @@ export default function VideosMap(): JSX.Element {
     void dispatch(getRandomVideoThunk());
   }, []);
 
-  console.log(random);
-
   return (
     <div style={{ marginTop: '5rem', flexWrap: 'wrap' }}>
-      <VideoList videos={subVideos} />
+      {user.data.status === 'logged' && (
+        <>
+          <h4>Подписки</h4>
+          <VideoList videos={subVideos} />
+          <Divider />
+        </>
+      )}
 
-      <Divider />
+      <h4>Рекомендации</h4>
       <VideoList videos={random} />
     </div>
   );
