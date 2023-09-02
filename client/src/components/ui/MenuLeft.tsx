@@ -10,21 +10,20 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Toolbar from '@mui/material/Toolbar';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/reduxHooks';
-import Subscribes from './Subscribes';
 import {
-  getSubChannelThunk,
   getFirstSubChannelThunk,
+  getSubChannelThunk,
 } from '../../redux/slices/subChannels/subChannelsThunk';
+import Subscribes from './Subscribes';
 
 const drawerWidth = 240;
 
 export default function MenuLeft(): JSX.Element {
   const dispatch = useAppDispatch();
   const subs = useAppSelector((state) => state.subs);
-  
 
   const user = useAppSelector((store) => store.user);
 

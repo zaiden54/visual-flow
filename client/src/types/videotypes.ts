@@ -1,11 +1,12 @@
 export type VideoType = {
-  id:number,
+  id: number;
   title: string;
   description: string;
   channelId: number;
   views: number;
   createdAt: string;
   preview: string;
+  link: string;
   Channel: ChannelType;
 };
 

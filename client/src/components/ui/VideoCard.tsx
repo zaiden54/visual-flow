@@ -7,14 +7,18 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import React from 'react';
 import type { VideoType } from '../../types/videotypes';
+import { redirect } from 'react-router';
 
-export type VideoCardProps = {
+type VideoCardProps = {
   video: VideoType;
 };
 
 export default function VideoCard({ video }: VideoCardProps): JSX.Element {
   return (
-    <Card sx={{ display: 'flex', flexDirection: 'column', margin: '2' }}>
+    <Card
+      sx={{ display: 'flex', flexDirection: 'column', margin: '2' }}
+      onClick={() => (window.location.href = `/watch/${video.link}`)}
+    >
       <CardMedia
         component="img"
         sx={{ width: 151 }}
