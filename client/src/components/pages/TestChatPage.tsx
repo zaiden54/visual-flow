@@ -13,12 +13,18 @@ import ListItemText from '@mui/material/ListItemText';
 import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import React from 'react';
+import React, { useEffect } from 'react';
 import MenuLeft from '../ui/MenuLeft';
 import NavBar from '../ui/NavBar';
 import Chat from '../ui/Chat/RoomChat';
 
 export default function TestChatPage(): JSX.Element {
+  const ws = new WebSocket('ws://localhost:3001');
+  useEffect(() => {
+    ws.addEventListener('message', (e) => {
+      console.log(e);
+    });
+  }, []);
   return (
     <div>
       <MenuLeft />
