@@ -36,17 +36,18 @@ export default function VideoPage(): JSX.Element {
         <div>
           <Card style={{ marginTop: 0 }}>
             <CardContent style={{ display: 'flex', flexDirection: 'column', alignItems: 'start' }}>
+              <div id="player"/>
               {/* <Skeleton variant="rounded" width={910} height={500} style={{alignSelf: 'center'}}/> */}
               <video
-                id="player"
+                id="videoplayer"
                 style={{ alignSelf: 'center' }}
                 width={910}
                 height={500}
-                // controls
-                // muted="muted"
-                // autoPlay
+                controls
+                muted="muted"
+                autoPlay
               >
-                {/* {link && <source src={`http://localhost:3001/api/watch/${link}`} />} */}
+                {link && <source src={`http://localhost:3001/api/watch/${link}`} />}
               </video>
 <br />
 <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%'}}>

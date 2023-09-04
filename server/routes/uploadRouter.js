@@ -1,9 +1,9 @@
 const router = require('express').Router;
 const multer = require('multer');
 const path = require('path');
-const { Video, User, Channel } = require('../db/models');
 const uuid = require('uuid');
 const ffmpeg = require('fluent-ffmpeg');
+const { Video, User, Channel } = require('../db/models');
 
 const uploadRouter = router();
 
@@ -31,11 +31,11 @@ const storage = multer.diskStorage({
 
 function fileFilter(req, file, cb) {
   if (
-    file.mimetype !== 'video/mp4' &&
-    file.mimetype !== 'video/x-m4v' &&
-    file.mimetype !== 'video/webm' &&
-    file.mimetype !== 'video/mpeg' &&
-    file.mimetype !== 'image/png'
+    file.mimetype !== 'video/mp4'
+    && file.mimetype !== 'video/x-m4v'
+    && file.mimetype !== 'video/webm'
+    && file.mimetype !== 'video/mpeg'
+    && file.mimetype !== 'image/png'
   ) {
     cb(null, false);
   } else cb(null, true);
