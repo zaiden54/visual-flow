@@ -19,7 +19,7 @@ export default function VideosMap(): JSX.Element {
   }, []);
 
   return (
-    <div style={{ display: 'flex', marginTop: '5rem', flexWrap: 'wrap', flexDirection: 'column'}}>
+    <div style={{ display: 'flex', marginTop: '5rem', flexWrap: 'wrap', flexDirection: 'column' }}>
       {user.data.status === 'logged' && (
         <>
           <h4>Подписки</h4>
