@@ -16,7 +16,7 @@ export default function ChannelPage(): JSX.Element {
         style={{ display: 'flex', marginTop: '5rem', flexWrap: 'wrap', flexDirection: 'column' }}
       >
         <div>{channel.name} channel</div>
-        <div>{channel.Subscriptions.length} subscribers</div>
+        <div>{channel.Subscriptions?.length} subscribers</div>
         <VideoList videos={channel?.Videos} />
       </div>
     </>
