@@ -10,10 +10,19 @@ export type VideoType = {
   Channel: ChannelType;
 };
 
+export type SubscriptionsType = {
+  id:number;
+  userId:number,
+  channelId:number
+}
+
 export type ChannelType = {
   id: number;
   name: string;
   userId: number;
   Videos: VideoType[];
   createdAt: string;
+  Subscriptions:SubscriptionsType[]
 };
+
+

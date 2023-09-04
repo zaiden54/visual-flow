@@ -20,10 +20,10 @@ import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/reduxHooks';
 import { swapModal } from '../../redux/slices/modals/modalSlice';
 import { logoutUserThunk } from '../../redux/slices/user/userThunks';
+import { getChannelThunk } from '../../redux/slices/channel/channelThunk';
 
 export default function NavBar(): JSX.Element {
   const user = useAppSelector((state) => state.user.data);
-  // console.log(user);
 
   const dispatch = useAppDispatch();
 
@@ -79,7 +79,17 @@ export default function NavBar(): JSX.Element {
               </Typography>
             </CardContent>
             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-              <ListItemButton onClick={handleMenuClose}>My Channel</ListItemButton>
+              <Link style={{ textDecoration: 'none', color: 'white' }} to={`/channel/${user.id}`}>
+                <ListItemButton
+                  onClick={() => {
+                    void dispatch(getChannelThunk(user.id));
+
+                    handleMenuClose();
+                  }}
+                >
+                  My Channel
+                </ListItemButton>
+              </Link>
               <Button
                 onClick={() => {
                   void dispatch(logoutUserThunk());
@@ -173,15 +183,15 @@ export default function NavBar(): JSX.Element {
           sx={{ display: 'flex', justifyContent: 'space-between' }}
           style={{ flexWrap: 'nowrap' }}
         >
-          <Link to="/" style={{textDecoration: 'none', color: 'white'}}>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ display: { xs: 'none', sm: 'block' } }}
-          >
-            Kinda Logo/Visual Flow
-          </Typography>
+          <Link to="/" style={{ textDecoration: 'none', color: 'white' }}>
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{ display: { xs: 'none', sm: 'block' } }}
+            >
+              Kinda Logo/Visual Flow
+            </Typography>
           </Link>
           <Box component="form">
             <TextField
