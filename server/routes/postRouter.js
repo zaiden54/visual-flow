@@ -54,6 +54,27 @@ postRouter.get('/subs', async (req, res) => {
   return res.json(videos.map((el) => el.Channel.Videos).flat());
 });
 
+postRouter.get('/subs/all', async (req, res) => {
+  const userId = req.session.user?.id;
+
+  if (!userId) {
+    return res.status(401).json({ message: 'Unauthorized' });
+  }
+
+  const videos = await Subscription.findAll({
+    where: { userId },
+    include: {
+      model: Channel,
+      include: {
+        model: Video,
+        include: Channel,
+      },
+    },
+  });
+
+  return res.json(videos.map((el) => el.Channel.Videos).flat());
+});
+
 postRouter.get('/random', async (req, res) => {
   const randomVids = await Video.findAll({
     order: sequelize.random(),

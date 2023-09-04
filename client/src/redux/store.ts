@@ -4,6 +4,7 @@ import modalReducer from './slices/modals/modalSlice';
 import videoReducer from './slices/video/videoSlice';
 import randomVideoReducer from './slices/video/randomVideoSlice';
 import subChannelReducer from './slices/subChannels/subChannelSlice';
+import videoSubReducer from './slices/video/subAllSlice';
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     videos: videoReducer,
     random: randomVideoReducer,
     subs: subChannelReducer,
+    subVideos: videoSubReducer,
   },
 });
 
