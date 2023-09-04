@@ -7,15 +7,21 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import React from 'react';
 import type { VideoType } from '../../types/videotypes';
+import { redirect } from 'react-router';
 
-export type VideoCardProps = {
+type VideoCardProps = {
   video: VideoType;
-  Channel: string;
 };
 
-export default function VideoCard({ video, Channel }: VideoCardProps): JSX.Element {
+export default function VideoCard({ video }: VideoCardProps): JSX.Element {
   return (
-    <Card sx={{ display: 'flex', flexDirection: 'column', margin: '2' }}>
+    <Card
+      sx={{ display: 'flex', flexDirection: 'column', margin: '2' }}
+      onClick={() => 
+        (window.location.href = `/watch/${video.link}`)
+      
+      }
+    >
       <CardMedia
         component="img"
         sx={{ width: 151 }}
@@ -29,11 +35,11 @@ export default function VideoCard({ video, Channel }: VideoCardProps): JSX.Eleme
           </Typography>
           <Typography variant="subtitle1" color="text.secondary" component="div">
             <Stack direction="row" spacing={2} style={{ padding: '1px', alignItems: 'center' }}>
-              <Avatar sx={{ width: 24, height: 24 }} alt={Channel} src="#" />
+              <Avatar sx={{ width: 24, height: 24 }} alt={video.Channel.name} src="#" />
               <Stack direction="column">
                 {
                   // video.Channel.name
-                  Channel
+                  video.Channel.name
                 }
               </Stack>
             </Stack>

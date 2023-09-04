@@ -6,7 +6,7 @@ import NavBar from '../ui/NavBar';
 import VideosMap from '../ui/VideosMap';
 
 export default function MainPage(): JSX.Element {
-
+ 
   return (
     <>
       <ModalWindow />

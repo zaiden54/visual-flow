@@ -10,22 +10,20 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Toolbar from '@mui/material/Toolbar';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/reduxHooks';
-import Subscribes from './Subscribes';
 import {
-  getSubChannelThunk,
   getFirstSubChannelThunk,
+  getSubChannelThunk,
 } from '../../redux/slices/subChannels/subChannelsThunk';
+import Subscribes from './Subscribes';
 
 const drawerWidth = 240;
 
 export default function MenuLeft(): JSX.Element {
   const dispatch = useAppDispatch();
   const subs = useAppSelector((state) => state.subs);
-  // const [count,setCount]=useState(0)
-  // const subs = useAppSelector((state)=>state.subs.row)
 
   const user = useAppSelector((store) => store.user);
 
@@ -50,7 +48,11 @@ export default function MenuLeft(): JSX.Element {
         <List>
           <Link style={{ textDecoration: 'none', color: 'white' }} to="/rooms">
             <ListItem key={1} style={{ padding: '1px', alignItems: 'center' }} disablePadding>
-              <ListItemButton>
+              <ListItemButton sx={{
+                  minHeight: 48,
+                  justifyContent: open ? 'initial' : 'center',
+                  px: 2.5,
+                }}>
                 <ListItemIcon>
                   <HomeIcon />
                 </ListItemIcon>
@@ -60,7 +62,11 @@ export default function MenuLeft(): JSX.Element {
           </Link>
           <Link style={{ textDecoration: 'none', color: 'white' }} to="/subs">
             <ListItem key={2} style={{ padding: '1px', alignItems: 'center' }} disablePadding>
-              <ListItemButton>
+              <ListItemButton sx={{
+                  minHeight: 48,
+                  justifyContent: open ? 'initial' : 'center',
+                  px: 2.5,
+                }}>
                 <ListItemIcon>
                   <AutoAwesomeMotionIcon />
                 </ListItemIcon>
@@ -70,7 +76,11 @@ export default function MenuLeft(): JSX.Element {
           </Link>
           <Link style={{ textDecoration: 'none', color: 'white' }} to="/mostViewed">
             <ListItem key={3} style={{ padding: '1px', alignItems: 'center' }} disablePadding>
-              <ListItemButton>
+              <ListItemButton sx={{
+                  minHeight: 48,
+                  justifyContent: open ? 'initial' : 'center',
+                  px: 2.5,
+                }}>
                 <ListItemIcon>
                   <LeaderboardIcon />
                 </ListItemIcon>
@@ -79,31 +89,35 @@ export default function MenuLeft(): JSX.Element {
             </ListItem>
           </Link>
           <Divider />
-          {subs.rows && (
-            <List>
-              {subs.rows.map((el) => (
-                <ListItem key={el.id} disablePadding>
-                  <ListItemButton>
-                    <Subscribes name={el.name} />
-                  </ListItemButton>
-                </ListItem>
-              ))}
-              {subs.count - subs.rows.length > 0 ? (
-                <Button
-                  type="button"
-                  onClick={() => void dispatch(getSubChannelThunk(subs.rows.length))}
-                >
-                  {subs.count - subs.rows.length} more
-                </Button>
-              ) : (
-                <Button
-                  type="button"
-                  onClick={() => void dispatch(getSubChannelThunk(subs.rows.length))}
-                >
-                  hide
-                </Button>
+          {user.data.status === 'logged' && (
+            <div>
+              {subs.rows && (
+                <List>
+                  {subs.rows.map((el) => (
+                    <ListItem key={el.id} disablePadding>
+                      <ListItemButton>
+                        <Subscribes name={el.name} />
+                      </ListItemButton>
+                    </ListItem>
+                  ))}
+                  {subs.count - subs.rows.length > 0 ? (
+                    <Button
+                      type="button"
+                      onClick={() => void dispatch(getSubChannelThunk(subs.rows.length))}
+                    >
+                      {subs.count - subs.rows.length} more
+                    </Button>
+                  ) : (
+                    <Button
+                      type="button"
+                      onClick={() => void dispatch(getSubChannelThunk(subs.rows.length))}
+                    >
+                      hide
+                    </Button>
+                  )}
+                </List>
               )}
-            </List>
+            </div>
           )}
         </List>
       </Box>
