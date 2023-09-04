@@ -5,7 +5,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Stack from '@mui/material/Stack';
-// import { redirect } from 'react-router';
+
 import Typography from '@mui/material/Typography';
 import { format, formatDistance, subDays } from 'date-fns';
 import type { VideoType } from '../../types/videotypes';
@@ -15,6 +15,8 @@ type VideoCardProps = {
 };
 
 export default function VideoCard({ video }: VideoCardProps): JSX.Element {
+  console.log(+video.createdAt);
+  
   return (
     <Card
       sx={{
