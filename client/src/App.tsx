@@ -12,6 +12,7 @@ import { checkUserThunk } from './redux/slices/user/userThunks';
 import VideoPage from './components/pages/VideoPage';
 import Comments from './components/ui/ButtonMenuLeftTest'
 import TestChatPage from './components/pages/TestChatPage';
+import ModalWindow from './components/ui/ModalWindow';
 
 function App(): JSX.Element {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
@@ -36,6 +37,7 @@ function App(): JSX.Element {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <ModalWindow />
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         <Routes>
           <Route path="/watch/:link" element={<VideoPage />} />
