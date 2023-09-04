@@ -1,9 +1,9 @@
 const router = require('express').Router;
 const multer = require('multer');
 const path = require('path');
-const { Video, User, Channel } = require('../db/models');
 const uuid = require('uuid');
 const ffmpeg = require('fluent-ffmpeg');
+const { Video, User, Channel } = require('../db/models');
 
 const uploadRouter = router();
 
@@ -89,7 +89,7 @@ uploadRouter.post(
         : `/previews/thumbnail-${req.files.video[0].filename.split('.')[0]}.png`,
     });
 
-    res.sendStatus(200);
+    return res.sendStatus(200);
   },
 );
 
