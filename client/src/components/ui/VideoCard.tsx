@@ -1,11 +1,13 @@
+import React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Stack from '@mui/material/Stack';
+// import { redirect } from 'react-router';
 import Typography from '@mui/material/Typography';
-import React from 'react';
+import { format, formatDistance, subDays } from 'date-fns';
 import type { VideoType } from '../../types/videotypes';
 
 type VideoCardProps = {
@@ -21,13 +23,13 @@ export default function VideoCard({ video }: VideoCardProps): JSX.Element {
         margin: 2,
         borderRadius: '10px',
         minWidth: '350px',
-        minHeight: '350px',
+        maxHeight: '350px',
       }}
       onClick={() => (window.location.href = `/watch/${video.link}`)}
     >
       <CardMedia
         component="img"
-        sx={{ width: '350px', height: '200px', objectFit: 'cover' }}
+        sx={{ width: '100%', height: '200px', objectFit: 'cover' }}
         image={`http://localhost:3001${video.preview}`}
         alt={video.title}
       />
@@ -49,6 +51,7 @@ export default function VideoCard({ video }: VideoCardProps): JSX.Element {
           </Typography>
           <Typography variant="subtitle1" color="text.secondary" component="div">
             <Stack direction="row">{video.views} views</Stack>
+            {/* <Stack direction="row">{formatDistance(subDays(new Date(), 3), video.createdAt, { addSuffix: true })}</Stack> */}
             <Stack direction="row">{video.createdAt}</Stack>
           </Typography>
         </CardContent>
