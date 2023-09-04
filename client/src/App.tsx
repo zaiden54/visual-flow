@@ -35,10 +35,9 @@ function App(): JSX.Element {
     void dispatch(checkUserThunk());
   }, []);
   return (
-    <>
-    <ModalWindow />
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <ModalWindow />
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         <Routes>
           <Route path="/watch/:link" element={<VideoPage />} />
@@ -56,7 +55,6 @@ function App(): JSX.Element {
         </Routes>
       </div>
     </ThemeProvider>
-    </>
   );
 }
 
