@@ -17,9 +17,9 @@ export default function VideoList({ videos }: VideoListProps): JSX.Element {
         marginBottom: '2rem',
       }}
     >
-      <Grid style={{display:'flex',flexWrap:'wrap'}}  container spacing={2}>
+      <Grid container spacing={2}>
         {videos.map((el) => (
-          <Grid key={el.id} style={{display:'flex',flexWrap:'wrap'}}  item xs={3} md={3}>
+          <Grid key={el.id} item xs={3} md={3}>
             <VideoCard video={el} />
           </Grid>
         ))}

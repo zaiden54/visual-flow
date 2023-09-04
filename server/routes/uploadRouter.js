@@ -9,7 +9,18 @@ const uploadRouter = router();
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'uploads');
+    console.log(file.fieldname);
+    switch (file.fieldname) {
+      case 'video':
+        cb(null, 'uploads');
+        break;
+      case 'preview':
+        cb(null, 'public/previews');
+        break;
+      default:
+        break;
+    }
+    // cb(null, 'uploads');
   },
   filename: (req, file, cb) => {
     // console.log(req.body.event)
@@ -23,7 +34,8 @@ function fileFilter(req, file, cb) {
     file.mimetype !== 'video/mp4' &&
     file.mimetype !== 'video/x-m4v' &&
     file.mimetype !== 'video/webm' &&
-    file.mimetype !== 'video/mpeg'
+    file.mimetype !== 'video/mpeg' &&
+    file.mimetype !== 'image/png'
   ) {
     cb(null, false);
   } else cb(null, true);
@@ -31,7 +43,7 @@ function fileFilter(req, file, cb) {
 
 const upload = multer({
   storage,
-  // fileFilter,
+  fileFilter,
   limites: {
     fileSize: 1024 * 1024 * 1024 * 8,
   },
@@ -52,7 +64,11 @@ uploadRouter.post(
       include: Channel,
     });
 
-    if (!req.files.preview[0].filename) {
+    if (!req.files.video) {
+      return res.json({ message: 'Пожалуйста, приложите видеофайл!' });
+    }
+
+    if (!req.files.preview) {
       ffmpeg(path.join(__dirname, '..', 'uploads', `${req.files.video[0].filename}`))
         .on('end', () => {
           console.log('Screenshot taken!');
@@ -70,9 +86,9 @@ uploadRouter.post(
       link: uuid.v4(),
       fileName: req.files.video[0].filename,
       channelId: user.Channel.id,
-      preview: req.files.preview[0].filename
-        ? `/uploads/${req.files.preview[0].filename}`
-        : `/previews/thumbnail-${req.file.filename.split('.')[0]}.png`,
+      preview: req.files.preview
+        ? `/previews/${req.files.preview[0].filename}`
+        : `/previews/thumbnail-${req.files.video[0].filename.split('.')[0]}.png`,
     });
 
     res.sendStatus(200);
