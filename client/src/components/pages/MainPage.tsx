@@ -9,7 +9,7 @@ export default function MainPage(): JSX.Element {
  
   return (
     <>
-      <ModalWindow />
+      {/* <ModalWindow /> */}
       <MenuLeft />
       <NavBar />
       <VideosMap />

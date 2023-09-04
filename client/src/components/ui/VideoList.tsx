@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import React from 'react';
-import type { ChannelType, VideoType } from '../../types/videotypes';
+import type { VideoType } from '../../types/videotypes';
 import VideoCard from './VideoCard';
 
 type VideoListProps = { videos: VideoType[] };

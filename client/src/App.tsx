@@ -12,6 +12,7 @@ import { checkUserThunk } from './redux/slices/user/userThunks';
 import VideoPage from './components/pages/VideoPage';
 import Comments from './components/ui/ButtonMenuLeftTest'
 import TestChatPage from './components/pages/TestChatPage';
+import ModalWindow from './components/ui/ModalWindow';
 
 function App(): JSX.Element {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
@@ -34,6 +35,8 @@ function App(): JSX.Element {
     void dispatch(checkUserThunk());
   }, []);
   return (
+    <>
+    <ModalWindow />
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <div style={{ display: 'flex', justifyContent: 'center' }}>
@@ -53,6 +56,7 @@ function App(): JSX.Element {
         </Routes>
       </div>
     </ThemeProvider>
+    </>
   );
 }
 
