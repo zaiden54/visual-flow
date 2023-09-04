@@ -1,4 +1,4 @@
-import { Divider } from '@mui/material';
+import { Button, Divider } from '@mui/material';
 import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/reduxHooks';
 import getRandomVideoThunk, { getSubVideoThunk } from '../../redux/slices/video/videoThunk';
@@ -24,6 +24,9 @@ export default function VideosMap(): JSX.Element {
         <>
           <h4>Подписки</h4>
           <VideoList videos={subVideos} />
+          <Button type="button" onClick={() => (window.location.href = '/subs')}>
+            ЕЩЕ
+          </Button>
           <Divider />
         </>
       )}

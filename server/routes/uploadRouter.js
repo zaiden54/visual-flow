@@ -31,13 +31,14 @@ function fileFilter(req, file, cb) {
 
 const upload = multer({
   storage,
-  fileFilter,
+  // fileFilter,
   limites: {
     fileSize: 1024 * 1024 * 1024 * 8,
   },
 });
 
-uploadRouter.post('/video', upload.single('video'), async (req, res) => {
+uploadRouter.post('/video', upload.fields([{ name: 'video', maxCount: 1 }, { name: 'preview', maxCount: 1 }]), async (req, res) => {
+  // console.log(req.files);
   const { title, description } = req.body;
   const { id } = req.session.user;
 
@@ -61,9 +62,10 @@ uploadRouter.post('/video', upload.single('video'), async (req, res) => {
     title,
     description,
     link: uuid.v4(),
-    fileName: req.file.filename,
+    fileName: req.files.video[0].filename,
     channelId: user.Channel.id,
-    preview: `/previews/thumbnail-${req.file.filename.split('.')[0]}.png`,
+    // preview: req.files.preview[0].filename
+    preview: req.files.preview[0].filename || `/previews/thumbnail-${req.file.filename.split('.')[0]}.png`,
   });
 
   console.log(path.join(__dirname, '..', 'uploads'));

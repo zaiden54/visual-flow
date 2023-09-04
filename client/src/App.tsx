@@ -10,7 +10,7 @@ import SubscriptionsPage from './components/pages/SubscriptionsPage';
 import { useAppDispatch, useAppSelector } from './redux/hooks/reduxHooks';
 import { checkUserThunk } from './redux/slices/user/userThunks';
 import VideoPage from './components/pages/VideoPage';
-import Comments from './components/ui/ButtonMenuLeftTest'
+import Comments from './components/ui/ButtonMenuLeftTest';
 import TestChatPage from './components/pages/TestChatPage';
 import ModalWindow from './components/ui/ModalWindow';
 
@@ -44,6 +44,7 @@ function App(): JSX.Element {
           <Route path="/rooms" element={<RoomsPage />} />
           <Route path="/mostViewed" element={<MostViewedPage />} />
           <Route path="/" element={<MainPage />} />
+          <Route path="/subs" element={<SubscriptionsPage />} />
           <Route
             element={<PrivateRouter redirectTo="/" isAllowed={user.data.status !== 'logged'} />}
           >
@@ -51,7 +52,7 @@ function App(): JSX.Element {
           </Route>
           {/* <Route path="/watch" element={<VideoPage />} /> */}
           {/* <Route path="/ololo" element={<Comments />} />  */}
-          <Route path='/chat' element={<TestChatPage/>}/>
+          <Route path="/chat" element={<TestChatPage />} />
         </Routes>
       </div>
     </ThemeProvider>

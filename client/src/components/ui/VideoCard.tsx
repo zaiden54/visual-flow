@@ -6,7 +6,6 @@ import CardMedia from '@mui/material/CardMedia';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import React from 'react';
-import { redirect } from 'react-router';
 import type { VideoType } from '../../types/videotypes';
 
 type VideoCardProps = {
@@ -16,18 +15,25 @@ type VideoCardProps = {
 export default function VideoCard({ video }: VideoCardProps): JSX.Element {
   return (
     <Card
-      sx={{ display: 'flex', flexDirection: 'column', margin: '2' }}
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        margin: 2,
+        borderRadius: '10px',
+        minWidth: '350px',
+        minHeight: '350px',
+      }}
       onClick={() => (window.location.href = `/watch/${video.link}`)}
     >
       <CardMedia
         component="img"
-        sx={{ width: '100%' }}
+        sx={{ width: '350px', height: '200px', objectFit: 'cover' }}
         image={`http://localhost:3001${video.preview}`}
         alt={video.title}
       />
       <Box sx={{ display: 'flex', flexDirection: 'column' }}>
         <CardContent sx={{ flex: '1 0 auto' }}>
-          <Typography component="div" variant="h5">
+          <Typography component="div" variant="h6">
             {video.title}
           </Typography>
           <Typography variant="subtitle1" color="text.secondary" component="div">

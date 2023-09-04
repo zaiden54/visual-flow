@@ -8,3 +8,5 @@ const subGetAllService = (offset: number): Promise<SubType> =>
     .catch((err) => Promise.reject(err));
 
 export default subGetAllService;
+
+
