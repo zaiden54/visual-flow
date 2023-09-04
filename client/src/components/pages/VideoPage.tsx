@@ -24,6 +24,7 @@ import Comments from '../ui/Comments';
 
 export default function VideoPage(): JSX.Element {
   const { link } = useParams();
+
   return (
     <div>
       <MenuLeft />
@@ -37,15 +38,15 @@ export default function VideoPage(): JSX.Element {
             <CardContent style={{ display: 'flex', flexDirection: 'column', alignItems: 'start' }}>
               {/* <Skeleton variant="rounded" width={910} height={500} style={{alignSelf: 'center'}}/> */}
               <video
-                id="videoPlayer"
+                id="player"
                 style={{ alignSelf: 'center' }}
                 width={910}
                 height={500}
-                controls
-                muted="muted"
-                autoPlay
+                // controls
+                // muted="muted"
+                // autoPlay
               >
-                {link && <source src={`http://localhost:3001/api/watch/${link}`} />}
+                {/* {link && <source src={`http://localhost:3001/api/watch/${link}`} />} */}
               </video>
 <br />
 <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%'}}>
