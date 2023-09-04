@@ -44,6 +44,7 @@ jspm_packages/
 sessions/
 public/
 test/
+uploads/
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/
 
