@@ -49,7 +49,7 @@ postRouter.get('/subs', async (req, res) => {
 
   // const videos = rows.map((el) => el.Channel.Videos).flat();
 
-  console.log();
+  // console.log();
 
   return res.json(videos.map((el) => el.Channel.Videos).flat());
 });

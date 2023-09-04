@@ -11,17 +11,20 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button'
 
 export default function Comments(): JSX.Element {
+  
   return (
-    <div >
-    <Box component="form" sx={{ width: '100%'}}>
+    <div style={{marginLeft: '5%'}}>
+      <Typography variant="subtitle1">Add a comment: </Typography>
+    <Box component="form" style={{ display: 'flex', flexDirection: 'row' }} sx={{ width: '100%'}}>
             <TextField
               id="outlined-basic"
-              sx={{ width:'100%', height: 40 }}
+              sx={{ width:'85%', height: 40 }}
               variant="outlined"
               size="small"
+
             />
-            <Button variant="outlined" style={{ height: 40 }} type="submit">
-              huhu
+            <Button variant="outlined" style={{ height: 40, marginRight: '5%' }} type="submit">
+              Comment
             </Button>
           </Box>
     <List sx={{ width: '100%'}}>
