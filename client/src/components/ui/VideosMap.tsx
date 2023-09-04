@@ -19,10 +19,11 @@ export default function VideosMap(): JSX.Element {
   }, []);
 
   return (
-    <div style={{ marginTop: '5rem', flexWrap: 'wrap' }}>
+    <div style={{ display: 'flex', marginTop: '5rem', flexWrap: 'wrap', flexDirection: 'column', flexFlow:"wrap"}}>
       {user.data.status === 'logged' && (
         <>
           <h4>Подписки</h4>
+
           <VideoList videos={subVideos} />
           <Button type="button" onClick={() => (window.location.href = '/subs')}>
             ЕЩЕ
