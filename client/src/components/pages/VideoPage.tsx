@@ -1,4 +1,5 @@
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -12,18 +13,22 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import ButtonGroup from '@mui/material/ButtonGroup';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 // import FavoriteIcon from '@mui/icons-material/Favorite';
 import IconButton from '@mui/material/IconButton';
-import React from 'react';
+import React, { ReactEventHandler } from 'react';
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import Comments from '../ui/Comments';
 import MenuLeft from '../ui/MenuLeft';
 import NavBar from '../ui/NavBar';
-import Comments from '../ui/Comments';
 
 export default function VideoPage(): JSX.Element {
   const { link } = useParams();
+
+  const likeHandler = (e) => {
+    // const data = {req.session.userId, }
+    axios.patch('/api/like', )
+  }
 
   return (
     <div>
@@ -36,15 +41,15 @@ export default function VideoPage(): JSX.Element {
         <div>
           <Card style={{ marginTop: 0 }}>
             <CardContent style={{ display: 'flex', flexDirection: 'column', alignItems: 'start' }}>
-              <div id="player"/>
               {/* <Skeleton variant="rounded" width={910} height={500} style={{alignSelf: 'center'}}/> */}
               <video
-                id="videoplayer"
+                id="videoPlayer"
                 style={{ alignSelf: 'center' }}
                 width={910}
                 height={500}
                 controls
-                muted="muted"
+                // eslint-disable-next-line react/jsx-boolean-value
+                muted={true}
                 autoPlay
               >
                 {link && <source src={`http://localhost:3001/api/watch/${link}`} />}
@@ -54,7 +59,7 @@ export default function VideoPage(): JSX.Element {
               <Typography color="text.secondary" style={{marginRight: '35%'}}>
                 54623754 просмотров | опубликовано когда-то
               </Typography>
-        <IconButton aria-label="add to favorites">
+        <IconButton aria-label="add to favorites" onClick={likeHandler}>
           <FavoriteBorderIcon />
         </IconButton>
   <Button>Create your Room +</Button>

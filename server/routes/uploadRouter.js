@@ -9,7 +9,6 @@ const uploadRouter = router();
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    console.log(file.fieldname);
     switch (file.fieldname) {
       case 'video':
         cb(null, 'uploads');
@@ -20,11 +19,8 @@ const storage = multer.diskStorage({
       default:
         break;
     }
-    // cb(null, 'uploads');
   },
   filename: (req, file, cb) => {
-    // console.log(req.body.event)
-    // console.log(file);
     cb(null, Date.now() + path.extname(file.originalname));
   },
 });
@@ -80,7 +76,7 @@ uploadRouter.post(
         });
     }
 
-    const video = await Video.create({
+    await Video.create({
       title,
       description,
       link: uuid.v4(),
@@ -91,7 +87,7 @@ uploadRouter.post(
         : `/previews/thumbnail-${req.files.video[0].filename.split('.')[0]}.png`,
     });
 
-    res.sendStatus(200);
+    return res.sendStatus(200);
   },
 );
 
