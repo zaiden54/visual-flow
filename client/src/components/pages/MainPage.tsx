@@ -11,7 +11,7 @@ export default function MainPage(): JSX.Element {
       {/* <ModalWindow /> */}
       <MenuLeft />
       <NavBar />
-      <div style={{ display:'flex',flexWrap: 'wrap' }}>
+      <div style={{ display:'flex',flexWrap: 'wrap',flexDirection:'column' }}>
         <VideosMap />
       </div>
     </>
