@@ -28,7 +28,7 @@ postRouter.get('/subs/channels/:offset', async (req, res) => {
 postRouter.get('/subs', async (req, res) => {
   const userId = req.session.user?.id;
 
-  console.log(userId);
+  // console.log(userId);
 
   if (!userId) {
     return res.status(401).json({ message: 'Unauthorized' });
@@ -44,7 +44,7 @@ postRouter.get('/subs', async (req, res) => {
       },
     },
   });
-console.log(videos.map((el) => el.Channel.Videos).flat());
+// console.log(videos.map((el) => el.Channel.Videos).flat());
   return res.json(videos.map((el) => el.Channel.Videos).flat());
 });
 
