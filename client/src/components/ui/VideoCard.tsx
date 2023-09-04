@@ -17,14 +17,11 @@ export default function VideoCard({ video }: VideoCardProps): JSX.Element {
   return (
     <Card
       sx={{ display: 'flex', flexDirection: 'column', margin: '2' }}
-      onClick={() => 
-        (window.location.href = `/watch/${video.link}`)
-      
-      }
+      onClick={() => (window.location.href = `/watch/${video.link}`)}
     >
       <CardMedia
         component="img"
-        sx={{ width: 151 }}
+        sx={{ width: '100%' }}
         image={`http://localhost:3001${video.preview}`}
         alt={video.title}
       />
