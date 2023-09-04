@@ -4,11 +4,6 @@ const { Video } = require('../db/models');
 
 const watchRouter = router();
 
-watchRouter.get('/', (req, res) => {
-  // res.sendFile(__dirname + '../public/video/index.html');
-  res.sendFile(`${__dirname}/index.html`);
-});
-
 watchRouter.get('/:link', async (req, res) => {
   const { range } = req.headers;
   const { link } = req.params;
@@ -18,14 +13,8 @@ watchRouter.get('/:link', async (req, res) => {
   }
 
   const video = await Video.findOne({ where: { link } });
-
-  // const fileName = 'shit.mp4';
   const fullPath = (`${__dirname}/${video.fileName}`).replace('routes', 'uploads');
-
-  // console.log(fullPath)
-
   const videoSize = fs.statSync(fullPath).size;
-  // console.log(videoSize);
 
   const CHUNK_SIZE = 10 ** 6;
   const start = Number(range.replace(/\D/g, ''));

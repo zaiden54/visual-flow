@@ -46,7 +46,7 @@ uploadRouter.post('/video', upload.single('video'), async (req, res) => {
     include: Channel,
   });
 
-  console.log(req.file.filename);
+  // console.log(req.file.filename);
 
   const video = await Video.create({
     title,

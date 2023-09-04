@@ -16,8 +16,8 @@ app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 app.use(sessionParser);
 
 app.use('/api', indexRouter);
-app.use('/api/videos', postRouter)
-app.use('/api/watch', watchRouter)
+app.use('/api/videos', postRouter);
+app.use('/api/watch', watchRouter);
 
 const start = async () => {
   try {

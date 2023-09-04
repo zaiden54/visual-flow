@@ -11,6 +11,8 @@ import { useAppDispatch, useAppSelector } from './redux/hooks/reduxHooks';
 import { checkUserThunk } from './redux/slices/user/userThunks';
 import VideoPage from './components/pages/VideoPage';
 import Comments from './components/ui/ButtonMenuLeftTest'
+import TestChatPage from './components/pages/TestChatPage';
+import ModalWindow from './components/ui/ModalWindow';
 import AlignItemsList from './components/ui/Comments'
 
 function App(): JSX.Element {
@@ -36,6 +38,7 @@ function App(): JSX.Element {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <ModalWindow />
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         <Routes>
           <Route path="/watch/:link" element={<VideoPage />} />
@@ -48,7 +51,8 @@ function App(): JSX.Element {
             <Route path="/auth/:auth" element={<AuthPage />} />
           </Route>
           {/* <Route path="/watch" element={<VideoPage />} /> */}
-          <Route path="/ololo" element={<AlignItemsList />} /> 
+          {/* <Route path="/ololo" element={<AlignItemsList />} />  */}
+          <Route path='/chat' element={<TestChatPage/>}/>
         </Routes>
       </div>
     </ThemeProvider>

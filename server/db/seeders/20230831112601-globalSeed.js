@@ -250,12 +250,6 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
-          userId: 2,
-          channelId: 2,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-        {
           userId: 1,
           channelId: 3,
           createdAt: new Date(),

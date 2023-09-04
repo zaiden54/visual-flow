@@ -10,15 +10,21 @@ import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
+import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import React from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useEffect } from 'react';
 import MenuLeft from '../ui/MenuLeft';
 import NavBar from '../ui/NavBar';
+import Chat from '../ui/Chat/RoomChat';
 
-export default function VideoPage(): JSX.Element {
-  const { link } = useParams();
+export default function TestChatPage(): JSX.Element {
+  const ws = new WebSocket('ws://localhost:3001');
+  useEffect(() => {
+    ws.addEventListener('message', (e) => {
+      console.log(e);
+    });
+  }, []);
   return (
     <div>
       <MenuLeft />
@@ -30,19 +36,18 @@ export default function VideoPage(): JSX.Element {
         <div>
           <Card style={{ marginTop: 0 }}>
             <CardContent style={{ display: 'flex', flexDirection: 'column', alignItems: 'start' }}>
-              {/* <Skeleton variant="rounded" width={910} height={500} style={{alignSelf: 'center'}}/> */}
-              <video
-                id="videoPlayer"
-                style={{ alignSelf: 'center' }}
+              <Skeleton
+                variant="rounded"
                 width={910}
                 height={500}
-                controls
-                muted="muted"
-                autoPlay
-              >
-                {link && <source src={`http://localhost:3001/api/watch/${link}`} />}
-              </video>
-
+                style={{ alignSelf: 'center' }}
+              />
+              {/* <video id="videoPlayer"  style={{alignSelf: 'center'}} 
+         // width="650px" 
+         width={910} height={500}
+         controls muted="muted" autoPlay>
+           {link && <source src={`http://localhost:3001/api/watch/${link}`} />}
+         </video> */}
               <Typography color="text.secondary">
                 54623754 просмотров | опубликовано когда-то
               </Typography>
@@ -83,6 +88,7 @@ export default function VideoPage(): JSX.Element {
           </Card>
         </div>
       </Stack>
+      <Chat />
     </div>
   );
 }
