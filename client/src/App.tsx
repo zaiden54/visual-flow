@@ -14,6 +14,7 @@ import Comments from './components/ui/ButtonMenuLeftTest';
 import TestChatPage from './components/pages/TestChatPage';
 import ModalWindow from './components/ui/ModalWindow';
 import AlignItemsList from './components/ui/Comments'
+import MiniDrawer from './components/ui/ButtonMenuLeftTest';
 
 function App(): JSX.Element {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
@@ -42,6 +43,7 @@ function App(): JSX.Element {
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         <Routes>
           <Route path="/watch/:link" element={<VideoPage />} />
+          <Route path="/videos/:link" element={<Comments />} />
           <Route path="/rooms" element={<RoomsPage />} />
           <Route path="/mostViewed" element={<MostViewedPage />} />
           <Route path="/" element={<MainPage />} />
@@ -52,7 +54,7 @@ function App(): JSX.Element {
             <Route path="/auth/:auth" element={<AuthPage />} />
           </Route>
           {/* <Route path="/watch" element={<VideoPage />} /> */}
-          {/* <Route path="/ololo" element={<Comments />} />  */}
+          <Route path="/ololo" element={<MiniDrawer />} /> 
           <Route path="/chat" element={<TestChatPage />} />
         </Routes>
       </div>
