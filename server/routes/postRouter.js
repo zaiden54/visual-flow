@@ -38,6 +38,7 @@ postRouter.get('/subs', async (req, res) => {
         model: Video,
         include: Channel,
         limit: 8,
+        order: [['createdAt', 'DESC']],
       },
     },
   });
