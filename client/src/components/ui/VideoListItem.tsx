@@ -15,7 +15,10 @@ type VideoCardProps = {
 };
 export default function VideoListItem({ video }: VideoCardProps): JSX.Element {
   return (
-    <Card sx={{ display: 'flex', width: '100%' }}>
+    <Card
+      sx={{ display: 'flex', width: '100%' }}
+      onClick={() => (window.location.href = `/watch/${video.link}`)}
+    >
       <CardMedia
         component="img"
         sx={{ width: '400px', height: '200px', objectFit: 'cover' }}

@@ -6,13 +6,14 @@ import NavBar from '../ui/NavBar';
 import VideosMap from '../ui/VideosMap';
 
 export default function MainPage(): JSX.Element {
- 
   return (
     <>
       {/* <ModalWindow /> */}
       <MenuLeft />
       <NavBar />
-      <VideosMap />
+      <div style={{ display:'flex',flexWrap: 'wrap' }}>
+        <VideosMap />
+      </div>
     </>
   );
 }
