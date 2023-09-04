@@ -30,7 +30,7 @@ postRouter.get('/subs', async (req, res) => {
     return res.status(401).json({ message: 'Unauthorized' });
   }
 
-  const { count, rows } = await Subscription.findAndCountAll({
+  const videos = await Subscription.findAll({
     where: { userId },
     include: {
       model: Channel,
@@ -38,15 +38,16 @@ postRouter.get('/subs', async (req, res) => {
         model: Video,
         include: Channel,
         limit: 8,
+        order: [['createdAt', 'DESC']],
       },
     },
   });
 
-  const videos = rows.map((el) => el.Channel.Videos).flat();
+  // const videos = ;
 
-  console.log({count, rows: videos});
+  console.log(videos.map((el) => el.Channel.Videos).flat());
 
-  return res.json({ count, rows: videos });
+  return res.json(videos.map((el) => el.Channel.Videos).flat());
 });
 
 postRouter.get('/random', async (req, res) => {

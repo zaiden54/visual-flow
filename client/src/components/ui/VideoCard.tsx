@@ -6,8 +6,8 @@ import CardMedia from '@mui/material/CardMedia';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import React from 'react';
-import type { VideoType } from '../../types/videotypes';
 import { redirect } from 'react-router';
+import type { VideoType } from '../../types/videotypes';
 
 type VideoCardProps = {
   video: VideoType;

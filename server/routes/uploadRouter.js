@@ -3,6 +3,7 @@ const multer = require('multer');
 const path = require('path');
 const { Video, User, Channel } = require('../db/models');
 const uuid = require('uuid');
+const ffmpeg = require('fluent-ffmpeg');
 
 const uploadRouter = router();
 
@@ -37,7 +38,6 @@ const upload = multer({
 });
 
 uploadRouter.post('/video', upload.single('video'), async (req, res) => {
-  // console.log(req.file);
   const { title, description } = req.body;
   const { id } = req.session.user;
 
@@ -47,6 +47,15 @@ uploadRouter.post('/video', upload.single('video'), async (req, res) => {
   });
 
   // console.log(req.file.filename);
+  ffmpeg(path.join(__dirname, '..', 'uploads', `${req.file.filename}`))
+    .on('end', () => {
+      console.log('Screenshot taken!');
+    })
+    .screenshots({
+      folder: path.join(__dirname, '..', 'public', 'previews'),
+      count: 1,
+      filename: `thumbnail-${req.file.filename.split('.')[0]}.png`,
+    });
 
   const video = await Video.create({
     title,
@@ -54,7 +63,10 @@ uploadRouter.post('/video', upload.single('video'), async (req, res) => {
     link: uuid.v4(),
     fileName: req.file.filename,
     channelId: user.Channel.id,
+    preview: `/previews/thumbnail-${req.file.filename.split('.')[0]}.png`,
   });
+
+  console.log(path.join(__dirname, '..', 'uploads'));
 
   res.sendStatus(200);
 });
