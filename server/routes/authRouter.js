@@ -1,7 +1,7 @@
 const router = require('express').Router;
 const bcrypt = require('bcrypt');
 const uuid = require('uuid');
-const { User } = require('../db/models');
+const { User, Channel } = require('../db/models');
 const sendActivationMail = require('../service/mailService');
 
 const authRouter = router();
@@ -33,7 +33,14 @@ authRouter.post('/signup', async (req, res) => {
     },
   });
 
-  if (!created) {
+  const [channel, createdChannel] = await Channel.findOrCreate({
+    where: { userId: user.id },
+    defaults: {
+      name: user.name,
+    },
+  });
+
+  if (!created || !createdChannel) {
     return res.status(400).json({ message: 'Такой пользователь уже существует' });
   }
 

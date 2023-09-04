@@ -1,7 +1,5 @@
 const router = require('express').Router;
-const {
-  Video, Channel, sequelize, Subscription,
-} = require('../db/models');
+const { Video, Channel, sequelize, Subscription } = require('../db/models');
 
 const postRouter = router();
 
@@ -28,13 +26,11 @@ postRouter.get('/subs/channels/:offset', async (req, res) => {
 postRouter.get('/subs', async (req, res) => {
   const userId = req.session.user?.id;
 
-  console.log(userId);
-
   if (!userId) {
     return res.status(401).json({ message: 'Unauthorized' });
   }
 
-  const videos = await Subscription.findAll({
+  const { count, rows } = await Subscription.findAndCountAll({
     where: { userId },
     include: {
       model: Channel,
@@ -44,8 +40,12 @@ postRouter.get('/subs', async (req, res) => {
       },
     },
   });
-console.log(videos.map((el) => el.Channel.Videos).flat());
-  return res.json(videos.map((el) => el.Channel.Videos).flat());
+
+  const videos = rows.map((el) => el.Channel.Videos).flat()
+
+  console.log(videos);
+
+  return res.json(videos);
 });
 
 postRouter.get('/random', async (req, res) => {
