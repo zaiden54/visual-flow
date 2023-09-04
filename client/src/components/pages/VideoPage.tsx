@@ -12,15 +12,17 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import ButtonGroup from '@mui/material/ButtonGroup';
+// import ButtonGroup from '@mui/material/ButtonGroup';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 // import FavoriteIcon from '@mui/icons-material/Favorite';
 import IconButton from '@mui/material/IconButton';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import MenuLeft from '../ui/MenuLeft';
 import NavBar from '../ui/NavBar';
 import Comments from '../ui/Comments';
+
+import getWatchThunk from '../../redux/slices/video/watchThunk';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/reduxHooks';
 import { addSubThunk } from '../../redux/slices/subs/subThunk';
 
@@ -28,6 +30,16 @@ export default function VideoPage(): JSX.Element {
   const user = useAppSelector((state) => state.user.data);
   const { link } = useParams();
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (link) {
+      void dispatch(getWatchThunk(link));
+    }
+  }, []);
+
+  const video = useAppSelector((state) => state.currentVideo);
+  // console.log(video);
+
   return (
     <div>
       <MenuLeft />
@@ -75,8 +87,10 @@ export default function VideoPage(): JSX.Element {
                     <Avatar alt="Remy Sharp" src="" />
                   </ListItemAvatar>
                   <ListItemText>
-                    <Typography>Ali Connors</Typography>
-                    <Typography color="text.secondary">54623754 subscribers</Typography>
+                    <Typography>{video && video.Channel.name}</Typography>
+                    <Typography color="text.secondary">
+                      {video && video.Channel.Subscriptions.length} subscribers
+                    </Typography>
                   </ListItemText>
                   <Button
                     style={{ marginRight: '-147%' }}
@@ -98,10 +112,7 @@ export default function VideoPage(): JSX.Element {
                     <Typography>Read Description</Typography>
                   </AccordionSummary>
                   <AccordionDetails>
-                    <Typography>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada
-                      lacus ex, sit amet blandit leo lobortis eget.
-                    </Typography>
+                    <Typography>{video && video.description}</Typography>
                   </AccordionDetails>
                 </Accordion>
               </div>

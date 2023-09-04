@@ -7,17 +7,22 @@ import CardMedia from '@mui/material/CardMedia';
 import Stack from '@mui/material/Stack';
 
 import Typography from '@mui/material/Typography';
-import { format, formatDistance, subDays } from 'date-fns';
-import type { VideoType } from '../../types/videotypes';
+// import { format, formatDistance, subDays } from 'date-fns';
 import { Link } from 'react-router-dom';
+import type { VideoType } from '../../types/videotypes';
+import { useAppDispatch } from '../../redux/hooks/reduxHooks';
+// import { setCurrentVideo } from '../../redux/slices/video/watchSlice';
 
 type VideoCardProps = {
   video: VideoType;
 };
 
 export default function VideoCard({ video }: VideoCardProps): JSX.Element {
+  // console.log(+video.createdAt);
+  const dispatch = useAppDispatch();
+
   return (
-    <Link style={{ textDecoration: 'none' }} to={`/watch/${video.link}`}>
+    <Link to={`/watch/${video.link}`} style={{ textDecoration: 'none' }}>
       <Card
         sx={{
           display: 'flex',
@@ -27,6 +32,10 @@ export default function VideoCard({ video }: VideoCardProps): JSX.Element {
           minWidth: '350px',
           maxHeight: '350px',
         }}
+        // onClick={() => {
+        //   void dispatch(setCurrentVideo(video));
+        //   // window.location.href = `/watch/${video.link}`;
+        // }}
       >
         <CardMedia
           component="img"
