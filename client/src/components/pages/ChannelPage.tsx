@@ -1,12 +1,12 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
 import { useAppSelector } from '../../redux/hooks/reduxHooks';
-import VideoList from '../ui/VideoList';
 import MenuLeft from '../ui/MenuLeft';
 import NavBar from '../ui/NavBar';
+import VideoList from '../ui/VideoList';
 
 export default function ChannelPage(): JSX.Element {
   const channel = useAppSelector((state) => state.channel);
-
 
   return (
     <>
