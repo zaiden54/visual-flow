@@ -12,18 +12,31 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import ButtonGroup from '@mui/material/ButtonGroup';
+// import ButtonGroup from '@mui/material/ButtonGroup';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 // import FavoriteIcon from '@mui/icons-material/Favorite';
 import IconButton from '@mui/material/IconButton';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import MenuLeft from '../ui/MenuLeft';
 import NavBar from '../ui/NavBar';
 import Comments from '../ui/Comments';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks/reduxHooks';
+import getWatchThunk from '../../redux/slices/video/watchThunk';
 
 export default function VideoPage(): JSX.Element {
   const { link } = useParams();
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (link) {
+      void dispatch(getWatchThunk(link));
+    }
+  }, []);
+
+  const video = useAppSelector((state) => state.currentVideo);
+  // console.log(video);
+
   return (
     <div>
       <MenuLeft />
@@ -47,33 +60,40 @@ export default function VideoPage(): JSX.Element {
               >
                 {link && <source src={`http://localhost:3001/api/watch/${link}`} />}
               </video>
-<br />
-<div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%'}}>
-              <Typography color="text.secondary" style={{marginRight: '35%'}}>
-                54623754 просмотров | опубликовано когда-то
-              </Typography>
-        <IconButton aria-label="add to favorites">
-          <FavoriteBorderIcon />
-        </IconButton>
-  <Button>Create your Room +</Button>
+              <br />
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  width: '100%',
+                }}
+              >
+                <Typography color="text.secondary" style={{ marginRight: '35%' }}>
+                  {video && video?.views} просмотров | опубликовано когда-то
+                </Typography>
+                <IconButton aria-label="add to favorites">
+                  <FavoriteBorderIcon />
+                </IconButton>
+                <Button>Create your Room +</Button>
               </div>
-              <Divider/>
+              <Divider />
               <div style={{ display: 'flex', flexDirection: 'row' }}>
                 <ListItem>
                   <ListItemAvatar>
                     <Avatar alt="Remy Sharp" src="" />
                   </ListItemAvatar>
                   <ListItemText>
-                    <Typography>Ali Connors</Typography>
-                    <Typography color="text.secondary">54623754 subscribers</Typography>
+                    <Typography>{video && video.Channel.name}</Typography>
+                    <Typography color="text.secondary">{video && video.Channel.Subscriptions.length} subscribers</Typography>
                   </ListItemText>
                   <Button style={{ marginRight: '-147%' }} variant="contained">
                     Подписаться
                   </Button>
                 </ListItem>
               </div>
-              <Divider/>
-              <div>
+              <Divider />
+              <div style={{ width: '100%' }}>
                 <Accordion>
                   <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
@@ -83,15 +103,12 @@ export default function VideoPage(): JSX.Element {
                     <Typography>Read Description</Typography>
                   </AccordionSummary>
                   <AccordionDetails>
-                    <Typography>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada
-                      lacus ex, sit amet blandit leo lobortis eget.
-                    </Typography>
+                    <Typography>{video && video.description}</Typography>
                   </AccordionDetails>
                 </Accordion>
               </div>
             </CardContent>
-        < Comments />
+            <Comments />
           </Card>
         </div>
       </Stack>
