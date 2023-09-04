@@ -16,7 +16,7 @@ import Typography from '@mui/material/Typography';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 // import FavoriteIcon from '@mui/icons-material/Favorite';
 import IconButton from '@mui/material/IconButton';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import MenuLeft from '../ui/MenuLeft';
 import NavBar from '../ui/NavBar';
@@ -37,8 +37,12 @@ export default function VideoPage(): JSX.Element {
     }
   }, []);
 
+
+
   const video = useAppSelector((state) => state.currentVideo);
-  // console.log(video);
+  console.log(video?.channelId, user.id);
+  const userId = user.id;
+  const channelId = video?.Channel.id;
 
   return (
     <div>
@@ -95,7 +99,11 @@ export default function VideoPage(): JSX.Element {
                   <Button
                     style={{ marginRight: '-147%' }}
                     variant="contained"
-                    onClick={() => void dispatch(addSubThunk(user.id))}
+                    onClick={() => {
+                      if (user.status === 'logged') {
+                        void dispatch(addSubThunk({ userId, channelId }));
+                      }
+                    }}
                   >
                     Подписаться
                   </Button>

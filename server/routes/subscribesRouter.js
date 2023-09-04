@@ -5,7 +5,7 @@ const subRouter = router();
 
 subRouter.post('/', async (req, res) => {
   const { userId, channelId } = req.body;
-
+  //   console.log(req.body);
   const [newSub, subbed] = await Subscription.findOrCreate({
     where: { userId, channelId },
     defaults: { userId, channelId },
@@ -13,9 +13,9 @@ subRouter.post('/', async (req, res) => {
 
   if (!subbed) {
     await newSub.destroy();
-    return res.json({ message: 'отписка да' });
+    return res.sendStatus(200)
   }
-
+    console.log(newSub);
   return res.json(newSub);
 });
 

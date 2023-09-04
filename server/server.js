@@ -21,7 +21,7 @@ app.use('/api', indexRouter);
 app.use('/api/videos', postRouter);
 app.use('/api/watch', watchRouter);
 app.use('/api/channel', channelRouter);
-app.use('api/sub', subRouter);
+app.use('/api/subscription', subRouter);
 
 const start = async () => {
   try {
