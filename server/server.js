@@ -4,6 +4,7 @@ const sessionParser = require('./middlewares/sessionParser');
 const indexRouter = require('./routes/indexRouter');
 const postRouter = require('./routes/postRouter');
 const watchRouter = require('./routes/watchRouter');
+const channelRouter = require('./routes/channelRouter');
 
 const PORT = process.env.PORT || 3001;
 
@@ -18,6 +19,7 @@ app.use(sessionParser);
 app.use('/api', indexRouter);
 app.use('/api/videos', postRouter);
 app.use('/api/watch', watchRouter);
+app.use('/api/channel', channelRouter);
 
 const start = async () => {
   try {
