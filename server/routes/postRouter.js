@@ -42,12 +42,28 @@ postRouter.get('/subs', async (req, res) => {
     },
   });
 
-  // console.log(videos)
 
-  // const videos = rows.map((el) => el.Channel.Videos).flat();
+  return res.json(videos.map((el) => el.Channel.Videos).flat());
+});
 
-  // console.log(videos.map((el) => el.Channel.Videos).flat());
+postRouter.get('/subs/all', async (req, res) => {
+  const userId = req.session.user?.id;
 
+  if (!userId) {
+    return res.status(401).json({ message: 'Unauthorized' });
+  }
+
+  const videos = await Subscription.findAll({
+    where: { userId },
+    include: {
+      model: Channel,
+      include: {
+        model: Video,
+        include: Channel,
+      },
+    },
+  });
+  console.log('-------------------------',videos.map((el) => el.Channel.Videos).flat());
   return res.json(videos.map((el) => el.Channel.Videos).flat());
 });
 
