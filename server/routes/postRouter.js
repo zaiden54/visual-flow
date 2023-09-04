@@ -42,14 +42,6 @@ postRouter.get('/subs', async (req, res) => {
     },
   });
 
-  // const videos = await Subscription.findAll({
-  //   where: { userId },
-
-  // });
-
-  // const videos = rows.map((el) => el.Channel.Videos).flat();
-
-  console.log();
 
   return res.json(videos.map((el) => el.Channel.Videos).flat());
 });
