@@ -21,9 +21,13 @@ import { useParams } from 'react-router-dom';
 import MenuLeft from '../ui/MenuLeft';
 import NavBar from '../ui/NavBar';
 import Comments from '../ui/Comments';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks/reduxHooks';
+import { addSubThunk } from '../../redux/slices/subs/subThunk';
 
 export default function VideoPage(): JSX.Element {
+  const user = useAppSelector((state) => state.user.data);
   const { link } = useParams();
+  const dispatch = useAppDispatch();
   return (
     <div>
       <MenuLeft />
@@ -47,17 +51,24 @@ export default function VideoPage(): JSX.Element {
               >
                 {link && <source src={`http://localhost:3001/api/watch/${link}`} />}
               </video>
-<br />
-<div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%'}}>
-              <Typography color="text.secondary" style={{marginRight: '35%'}}>
-                54623754 просмотров | опубликовано когда-то
-              </Typography>
-        <IconButton aria-label="add to favorites">
-          <FavoriteBorderIcon />
-        </IconButton>
-  <Button>Create your Room +</Button>
+              <br />
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  width: '100%',
+                }}
+              >
+                <Typography color="text.secondary" style={{ marginRight: '35%' }}>
+                  54623754 просмотров | опубликовано когда-то
+                </Typography>
+                <IconButton aria-label="add to favorites">
+                  <FavoriteBorderIcon />
+                </IconButton>
+                <Button>Create your Room +</Button>
               </div>
-              <Divider/>
+              <Divider />
               <div style={{ display: 'flex', flexDirection: 'row' }}>
                 <ListItem>
                   <ListItemAvatar>
@@ -67,12 +78,16 @@ export default function VideoPage(): JSX.Element {
                     <Typography>Ali Connors</Typography>
                     <Typography color="text.secondary">54623754 subscribers</Typography>
                   </ListItemText>
-                  <Button style={{ marginRight: '-147%' }} variant="contained">
+                  <Button
+                    style={{ marginRight: '-147%' }}
+                    variant="contained"
+                    onClick={() => void dispatch(addSubThunk(user.id))}
+                  >
                     Подписаться
                   </Button>
                 </ListItem>
               </div>
-              <Divider/>
+              <Divider />
               <div>
                 <Accordion>
                   <AccordionSummary
@@ -91,7 +106,7 @@ export default function VideoPage(): JSX.Element {
                 </Accordion>
               </div>
             </CardContent>
-        < Comments />
+            <Comments />
           </Card>
         </div>
       </Stack>

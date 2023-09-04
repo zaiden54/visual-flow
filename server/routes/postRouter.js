@@ -23,6 +23,8 @@ postRouter.get('/subs/channels/:offset', async (req, res) => {
   return res.json({ ...channels, rows: channels.rows.map((el) => el.Channel) });
 });
 
+
+
 postRouter.get('/subs', async (req, res) => {
   const userId = req.session.user?.id;
 

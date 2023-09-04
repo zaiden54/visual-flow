@@ -6,6 +6,7 @@ import randomVideoReducer from './slices/video/randomVideoSlice';
 import subChannelReducer from './slices/subChannels/subChannelSlice';
 import videoSubReducer from './slices/video/subAllSlice';
 import channelReducer from './slices/channel/channelSlice';
+import subscriptionReduser from './slices/subs/subSlice';
 
 export const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ export const store = configureStore({
     subs: subChannelReducer,
     subVideos: videoSubReducer,
     channel: channelReducer,
+    subscriptions: subscriptionReduser,
   },
 });
 
