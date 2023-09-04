@@ -37,15 +37,16 @@ postRouter.get('/subs', async (req, res) => {
       include: {
         model: Video,
         include: Channel,
+        limit: 8,
       },
     },
   });
 
-  const videos = rows.map((el) => el.Channel.Videos).flat()
+  const videos = rows.map((el) => el.Channel.Videos).flat();
 
-  console.log(videos);
+  console.log({count, rows: videos});
 
-  return res.json(videos);
+  return res.json({ count, rows: videos });
 });
 
 postRouter.get('/random', async (req, res) => {
