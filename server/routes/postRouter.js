@@ -63,7 +63,6 @@ postRouter.get('/subs/all', async (req, res) => {
       },
     },
   });
-
   return res.json(videos.map((el) => el.Channel.Videos).flat());
 });
 

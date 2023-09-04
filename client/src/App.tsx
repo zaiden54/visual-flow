@@ -13,6 +13,8 @@ import VideoPage from './components/pages/VideoPage';
 import Comments from './components/ui/ButtonMenuLeftTest';
 import TestChatPage from './components/pages/TestChatPage';
 import ModalWindow from './components/ui/ModalWindow';
+import AlignItemsList from './components/ui/Comments';
+import ChannelPage from './components/pages/ChannelPage';
 import AlignItemsList from './components/ui/Comments'
 import MiniDrawer from './components/ui/ButtonMenuLeftTest';
 
@@ -53,6 +55,7 @@ function App(): JSX.Element {
           >
             <Route path="/auth/:auth" element={<AuthPage />} />
           </Route>
+          <Route path="/channel/:id" element={<ChannelPage />} />
           {/* <Route path="/watch" element={<VideoPage />} /> */}
           <Route path="/ololo" element={<MiniDrawer />} /> 
           <Route path="/chat" element={<TestChatPage />} />

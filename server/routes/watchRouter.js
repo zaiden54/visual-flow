@@ -1,6 +1,6 @@
 const router = require('express').Router;
 const fs = require('fs');
-const { Video } = require('../db/models');
+const { Video, Channel, Subscription, Like, Comment, User } = require('../db/models');
 
 const watchRouter = router();
 
@@ -13,7 +13,7 @@ watchRouter.get('/:link', async (req, res) => {
   }
 
   const video = await Video.findOne({ where: { link } });
-  const fullPath = (`${__dirname}/${video.fileName}`).replace('routes', 'uploads');
+  const fullPath = `${__dirname}/${video.fileName}`.replace('routes', 'uploads');
   const videoSize = fs.statSync(fullPath).size;
 
   const CHUNK_SIZE = 10 ** 6;
@@ -33,6 +33,57 @@ watchRouter.get('/:link', async (req, res) => {
   const videoStream = fs.createReadStream(fullPath, { start, end });
 
   videoStream.pipe(res);
+});
+
+watchRouter.get('/info/:link', async (req, res) => {
+  const { link } = req.params;
+
+  const userId = req.session.user?.id;
+
+  if (!userId) {
+    return res.status(401).json({ message: 'Unauthorized' });
+  }
+
+  // const videos = await Subscription.findAll({
+  //   where: { userId },
+  //   include: {
+  //     model: Channel,
+  //     include: {
+  //       model: Video,
+  //       include: Channel,
+  //       limit: 8,
+  //       order: [['createdAt', 'DESC']],
+  //     },
+  //   },
+  // });
+
+  const info = await Video.findOne({
+    where: { link },
+    include: [
+      {
+        model: Channel,
+        include: {
+          model: Subscription,
+        },
+      },
+      {
+        model: Like,
+      },
+      {
+        model: Comment,
+        include: {
+          model: User,
+          attributes: ['name'],
+        },
+      },
+    ],
+  });
+
+  // console.log(JSON.stringify(info, null, 1));
+
+  return res.json(info);
+
+  // res.sendStatus(200);
 });
 
 module.exports = watchRouter;

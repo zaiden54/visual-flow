@@ -5,6 +5,8 @@ import videoReducer from './slices/video/videoSlice';
 import randomVideoReducer from './slices/video/randomVideoSlice';
 import subChannelReducer from './slices/subChannels/subChannelSlice';
 import videoSubReducer from './slices/video/subAllSlice';
+import channelReducer from './slices/channel/channelSlice';
+import currentVideoReducer from './slices/video/watchSlice';
 import commentSlice from './slices/video/commentSlice';
 
 export const store = configureStore({
@@ -15,7 +17,8 @@ export const store = configureStore({
     random: randomVideoReducer,
     subs: subChannelReducer,
     subVideos: videoSubReducer,
-    comments: commentSlice
+    channel: channelReducer,
+    currentVideo: currentVideoReducer,
   },
 });
 

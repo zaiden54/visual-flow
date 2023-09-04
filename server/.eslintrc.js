@@ -22,6 +22,6 @@ module.exports = {
     ecmaVersion: 'latest',
   },
   rules: {
-    'object-curly-newline': false,
+    'object-curly-newline': 0,
   },
 };
