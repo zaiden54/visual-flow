@@ -24,9 +24,7 @@ import { getChannelThunk } from '../../redux/slices/channel/channelThunk';
 
 export default function NavBar(): JSX.Element {
   const user = useAppSelector((state) => state.user.data);
-  // console.log(user);
-  console.log(user.id);
-  const channel = useAppSelector((state) => state.channel);
+
   const dispatch = useAppDispatch();
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -81,16 +79,10 @@ export default function NavBar(): JSX.Element {
               </Typography>
             </CardContent>
             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-              <Link style={{ textDecoration: 'none', color:'white' }} to={`/channel/${user.id}`}>
+              <Link style={{ textDecoration: 'none', color: 'white' }} to={`/channel/${user.id}`}>
                 <ListItemButton
                   onClick={() => {
-                    // if (user.status === 'logged') {
                     void dispatch(getChannelThunk(user.id));
-
-                    console.log('--------------', user.id);
-
-                    // }
-                    console.log(channel);
 
                     handleMenuClose();
                   }}
