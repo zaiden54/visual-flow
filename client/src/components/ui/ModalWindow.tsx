@@ -1,4 +1,4 @@
-import { Box, Button, Modal, Typography } from '@mui/material';
+import { Box, Button, Modal, TextField, Typography } from '@mui/material';
 import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/reduxHooks';
 import { swapModal } from '../../redux/slices/modals/modalSlice';
@@ -51,9 +51,13 @@ export default function ModalWindow(): JSX.Element {
           Добавьте видео
         </Typography>
         <form encType="multipart/form-data" onSubmit={submitHandler}>
-          <input type="text" name="title" placeholder="Введите название видео" />
+        <TextField type="text" name="title" id="outlined-basic" label="Название" variant="outlined" />
+        <TextField type="text" name="description" id="outlined-basic" label="Описание" variant="outlined" />
+        <TextField type="file" name="video" id="outlined-basic" variant="outlined" />
+        <TextField type="file" name="preview" id="outlined-basic" variant="outlined" />
+          {/* <input type="text" name="title" placeholder="Введите название видео" />
           <input type="text" name="description" placeholder="Введите описание" />
-          <input type="file" name="video" />
+          <input type="file" name="video" /> */}
           <Button type="submit">Добавить</Button>
         </form>
         <Button type="button" onClick={() => dispatch(swapModal({ value: false }))}>

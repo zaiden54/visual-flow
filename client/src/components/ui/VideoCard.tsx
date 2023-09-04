@@ -22,8 +22,8 @@ export default function VideoCard({ video }: VideoCardProps): JSX.Element {
         flexDirection: 'column',
         margin: 2,
         borderRadius: '10px',
-        width: '350px',
-        height: '350px',
+        minWidth: '350px',
+        minHeight: '350px',
       }}
       onClick={() => (window.location.href = `/watch/${video.link}`)}
     >
