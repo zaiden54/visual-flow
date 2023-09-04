@@ -15,8 +15,7 @@ export const getAllSubVideoThunk = createAsyncThunk<VideoType[]>(
   '/videos/subs/all',
   async (): Promise<VideoType[]> => {
     const { data } = await apiService<VideoType[]>('/videos/subs/all');
-    console.log(data);
-    
+
     return data;
   },
 );
