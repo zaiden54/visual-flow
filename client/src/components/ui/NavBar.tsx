@@ -91,14 +91,14 @@ export default function NavBar(): JSX.Element {
           </>
         ) : (
           <>
-            <CardContent>
+            {/* <CardContent>
               <Typography gutterBottom variant="h5" component="div">
                 User/Channel Name
               </Typography>
               <Typography variant="body2" color="text.secondary">
                 много подпешникафф
               </Typography>
-            </CardContent>
+            </CardContent> */}
             <CardActions>
               <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                 {/* <ListItemButton onClick={handleMenuClose}>My Channel</ListItemButton> */}

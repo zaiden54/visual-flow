@@ -17,6 +17,7 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import MenuLeft from '../ui/MenuLeft'
 import NavBar from '../ui/NavBar'
+import Comments from '../ui/Comments';
 import { useParams } from 'react-router-dom';
 
 export default function VideoPage():JSX.Element {
@@ -74,6 +75,7 @@ export default function VideoPage():JSX.Element {
         </AccordionDetails>
       </Accordion>
     </div>
+    <Comments />
       </CardContent>
     </Card>
     </div>

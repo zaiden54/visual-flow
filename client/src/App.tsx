@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from './redux/hooks/reduxHooks';
 import { checkUserThunk } from './redux/slices/user/userThunks';
 import VideoPage from './components/pages/VideoPage';
 import Comments from './components/ui/ButtonMenuLeftTest'
+import AlignItemsList from './components/ui/Comments'
 
 function App(): JSX.Element {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
@@ -47,7 +48,7 @@ function App(): JSX.Element {
             <Route path="/auth/:auth" element={<AuthPage />} />
           </Route>
           {/* <Route path="/watch" element={<VideoPage />} /> */}
-          {/* <Route path="/ololo" element={<Comments />} />  */}
+          <Route path="/ololo" element={<AlignItemsList />} /> 
         </Routes>
       </div>
     </ThemeProvider>
