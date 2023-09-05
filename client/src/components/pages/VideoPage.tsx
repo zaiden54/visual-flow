@@ -90,7 +90,7 @@ export default function VideoPage(): JSX.Element {
                 style={{
                   display: 'flex',
                   flexDirection: 'row',
-                  justifyContent: 'space-between',
+                  justifyContent: 'space-around',
                   width: '100%',
 
                   alignItems: 'center',
@@ -104,7 +104,6 @@ export default function VideoPage(): JSX.Element {
                       locale: ru,
                     })}
                 </Typography>
-                {video?.Likes.length}
                 {video?.Likes.find((el) => el.userId === user.id) ? (
                   <IconButton
                     aria-label="add to favorites"
@@ -120,6 +119,7 @@ export default function VideoPage(): JSX.Element {
                     <FavoriteBorderIcon />
                   </IconButton>
                 )}
+                {video?.Likes.length}
                 <Button>Создать комнату +</Button>
               </div>
               <Divider />
