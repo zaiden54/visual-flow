@@ -14,18 +14,15 @@ import ListItemText from '@mui/material/ListItemText';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 // import ButtonGroup from '@mui/material/ButtonGroup';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 // import FavoriteIcon from '@mui/icons-material/Favorite';
 import IconButton from '@mui/material/IconButton';
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks/reduxHooks';
+import getWatchThunk from '../../redux/slices/video/watchThunk';
 import Comments from '../ui/Comments';
 import MenuLeft from '../ui/MenuLeft';
 import NavBar from '../ui/NavBar';
-import Comments from '../ui/Comments';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks/reduxHooks';
-import getWatchThunk from '../../redux/slices/video/watchThunk';
 
 export default function VideoPage(): JSX.Element {
   const { link } = useParams();
