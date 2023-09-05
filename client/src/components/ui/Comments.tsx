@@ -1,22 +1,20 @@
-import React, {useEffect} from 'react';
-import Typography from '@mui/material/Typography';
+import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import Divider from '@mui/material/Divider';
-import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
-import Avatar from '@mui/material/Avatar';
-import { useAppSelector } from '../../redux/hooks/reduxHooks';
+import ListItemText from '@mui/material/ListItemText';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
+import React from 'react';
 import useComments from '../../redux/hooks/commentHooks';
+import { useAppSelector } from '../../redux/hooks/reduxHooks';
 
 export default function Comments(): JSX.Element {
   const video = useAppSelector((state) => state.currentVideo);
-  // const comments = useAppSelector((state => state.currentVideo.co))
   const {addNewCommentHandler} = useComments();
-  console.log(video?.Comments);
   
   return (
     <div style={{ marginLeft: '5%' }}>
@@ -39,7 +37,6 @@ export default function Comments(): JSX.Element {
             <ListItem alignItems="flex-start">
               <ListItemAvatar>
                 <Avatar alt={`${el.User.name}`} src="" />
-                {/* /static/images/avatar/1.jpg */}
               </ListItemAvatar>
               <ListItemText
                 primary={`${el.User.name}`}

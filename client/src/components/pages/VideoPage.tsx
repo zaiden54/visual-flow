@@ -33,12 +33,10 @@ export default function VideoPage(): JSX.Element {
 
   const user = useAppSelector((state) => state.user.data);
   const video = useAppSelector((state) => state.currentVideo);
-  // console.log(video)
 
   useEffect(
     () => () => {
       if (Date.now() - start > 15 * 1000 && video) {
-        // console.log('first');
         apiService
           .put(`/watch/${video?.link}`)
           .then(({ data }) => console.log(data))

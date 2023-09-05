@@ -1,4 +1,6 @@
-import { Box, Card, CardContent } from '@mui/material';
+import { Box } from '@mui/material';
+import Avatar from '@mui/material/Avatar';
+import Stack from '@mui/material/Stack';
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/reduxHooks';
@@ -6,8 +8,6 @@ import { getChannelThunk } from '../../redux/slices/channel/channelThunk';
 import MenuLeft from '../ui/MenuLeft';
 import NavBar from '../ui/NavBar';
 import VideoList from '../ui/VideoList';
-import Avatar from '@mui/material/Avatar';
-import Stack from '@mui/material/Stack';
 
 export default function ChannelPage(): JSX.Element {
   const channel = useAppSelector((state) => state.channel);
@@ -42,8 +42,6 @@ export default function ChannelPage(): JSX.Element {
             justifyContent: 'center',
           }}
         >
-          {/* <Card style={{display:"flex",flexDirection:'column',justifyContent:'center'}}>
-            <CardContent> */}
           <Stack
             direction="row"
             spacing={2}
@@ -64,8 +62,6 @@ export default function ChannelPage(): JSX.Element {
               </Stack>
             </Stack>
           </Stack>
-          {/* </CardContent>
-          </Card> */}
           <VideoList videos={channel?.Videos} />
         </div>
       </Box>
