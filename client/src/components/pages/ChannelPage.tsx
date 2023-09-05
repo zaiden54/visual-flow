@@ -5,6 +5,7 @@ import MenuLeft from '../ui/MenuLeft';
 import NavBar from '../ui/NavBar';
 import VideoList from '../ui/VideoList';
 import { getChannelThunk } from '../../redux/slices/channel/channelThunk';
+import { Box } from '@mui/material';
 
 export default function ChannelPage(): JSX.Element {
   const channel = useAppSelector((state) => state.channel);
@@ -19,19 +20,29 @@ export default function ChannelPage(): JSX.Element {
     <>
       <MenuLeft />
       <NavBar />
-      <div
-        style={{
+      <Box
+        sx={{
           display: 'flex',
-          marginTop: '5rem',
           flexWrap: 'wrap',
-          flexDirection: 'column',
-          justifyContent: 'space-between',
+          flexDirection: 'row',
+          marginTop: '2rem',
+          marginBottom: '2rem',
+          justifyContent: 'flex-start',
         }}
       >
-        <div>{channel.name} channel</div>
-        <div>{channel.Subscriptions?.length} subscribers</div>
-        <VideoList videos={channel?.Videos} />
-      </div>
+        <div
+          style={{
+            display: 'flex',
+            marginTop: '5rem',
+            flexWrap: 'wrap',
+            flexDirection: 'column',
+          }}
+        >
+          <div>{channel.name} channel</div>
+          <div>{channel.Subscriptions?.length} subscribers</div>
+          <VideoList videos={channel?.Videos} />
+        </div>
+      </Box>
     </>
   );
 }
