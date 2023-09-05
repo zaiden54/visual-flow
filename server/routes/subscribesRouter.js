@@ -13,9 +13,10 @@ subRouter.post('/', async (req, res) => {
 
   if (!subbed) {
     await newSub.destroy();
-    return res.sendStatus(200)
+    console.log('----------------',newSub);
+    return res.json(newSub);
   }
-    console.log(newSub);
+  // console.log(newSub,'-----------',subbed);
   return res.json(newSub);
 });
 

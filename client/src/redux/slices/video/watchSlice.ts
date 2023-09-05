@@ -24,10 +24,17 @@ const watchSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getWatchThunk.fulfilled, (state, action) => action.payload);
     builder.addCase(addSubThunk.fulfilled, (state, action) => {
-      if (typeof (action.payload === 'object')) {
+      console.log(action.payload);
+
+      const ind = state?.Channel.Subscriptions.findIndex((el) => el.id === action.payload.id);
+      console.log('INDEX', ind);
+      if (ind >= 0) {
+        state?.Channel.Subscriptions.splice(ind, 1);
+      } else {
         state?.Channel.Subscriptions.push(action.payload);
       }
-      return state;
+
+      console.log(JSON.parse(JSON.stringify(state?.Channel.Subscriptions)));
     });
   },
 });
