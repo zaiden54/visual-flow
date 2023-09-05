@@ -19,7 +19,7 @@ const watchSlice = createSlice({
     builder.addCase(getWatchThunk.fulfilled, (state, action) => action.payload);
 
     builder.addCase(addSubThunk.fulfilled, (state, action) => {
-      console.log(action.payload);
+      // console.log(action.payload);
 
       const ind = state?.Channel.Subscriptions.findIndex(
         (el) => el.id === action.payload.id,

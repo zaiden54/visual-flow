@@ -35,20 +35,6 @@ export default function VideoPage(): JSX.Element {
   const user = useAppSelector((state) => state.user.data);
   const video = useAppSelector((state) => state.currentVideo);
 
-  // useEffect(() => {
-  //     setStart(Date.now())
-
-  //     return () => {}
-  //       if (Date.now() - start > 15 * 1000 && video) {
-  //         // console.log('first');
-  //         apiService
-  //           .put(`/watch/${video?.link}`)
-  //           .then(({ data }) => console.log(data))
-  //           .catch((err) => console.error(err));
-  //     }
-  //   },
-  // }, []);
-
   useEffect(() => {
     setStart(Date.now());
 
