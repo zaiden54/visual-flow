@@ -1,7 +1,6 @@
-import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
-import type { VideoPageType, VideoType, WatchChannelType, WatchType } from '../../../types/videotypes';
-import getWatchThunk from './watchThunk';
+import type { VideoPageType } from '../../../types/videotypes';
+import { getWatchThunk, setLikeThunk } from './watchThunk';
 
 const initialState: VideoPageType = null;
 
@@ -17,7 +16,13 @@ const watchSlice = createSlice({
 
   extraReducers: (builder) => {
     builder.addCase(getWatchThunk.fulfilled, (state, action) => action.payload);
-  },
+    builder.addCase(setLikeThunk.fulfilled, (state, action) => 
+    {
+      if (state?.Likes.findIndex((el) => el.id === action.payload.id) >= 0) {
+      state.Likes = state.Likes.filter((el) => el.id!==action.payload.id)
+    } else state?.Likes.push(action.payload)
+    }
+)},
 });
 
 export default watchSlice.reducer;

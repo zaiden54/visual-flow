@@ -1,7 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
-import type { ChannelType, VideoType } from '../../../types/videotypes';
 import apiService from '../../../services/config';
+import type { VideoType } from '../../../types/videotypes';
 
 export const getSubVideoThunk = createAsyncThunk<VideoType[]>(
   '/videos/subs',
@@ -14,19 +13,15 @@ export const getSubVideoThunk = createAsyncThunk<VideoType[]>(
 export const getAllSubVideoThunk = createAsyncThunk<VideoType[]>(
   '/videos/subs/all',
   async (): Promise<VideoType[]> => {
-    const { data } = await apiService<VideoType[]>('/videos/subs/all');
-    console.log(data);
-    
+    const { data } = await apiService<VideoType[]>('/videos/subs/all');    
     return data;
   },
 );
 
-const getRandomVideoThunk = createAsyncThunk<VideoType[]>(
+export const getRandomVideoThunk = createAsyncThunk<VideoType[]>(
   '/videos/random',
   async (): Promise<VideoType[]> => {
     const { data } = await apiService<VideoType[]>('/videos/random');
     return data;
   },
 );
-
-export default getRandomVideoThunk;

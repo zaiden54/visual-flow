@@ -9,17 +9,17 @@ import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
 import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import IconButton from '@mui/material/IconButton';
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/reduxHooks';
-import getWatchThunk from '../../redux/slices/video/watchThunk';
+import { getWatchThunk, setLikeThunk } from '../../redux/slices/video/watchThunk';
+import apiService from '../../services/config';
 import Comments from '../ui/Comments';
 import MenuLeft from '../ui/MenuLeft';
 import NavBar from '../ui/NavBar';
@@ -35,7 +35,16 @@ export default function VideoPage(): JSX.Element {
   }, []);
 
   const video = useAppSelector((state) => state.currentVideo);
-  // console.log(video);
+  const user = useAppSelector((state) => state.user);
+  console.log(video);
+  console.log(user)
+
+  const likeHandler = async (): Promise<void> => {
+    const videoId = video?.id
+    const userId = user.data.id
+    await dispatch(setLikeThunk({videoId, userId}))
+    // const response = await apiService.put('/videos/like', {videoId, userId})
+  }
 
   return (
     <div>
@@ -72,7 +81,8 @@ export default function VideoPage(): JSX.Element {
                 <Typography color="text.secondary" style={{ marginRight: '35%' }}>
                   {video && video?.views} просмотров | опубликовано когда-то
                 </Typography>
-                <IconButton aria-label="add to favorites">
+                  {video?.Likes.length}
+                <IconButton aria-label="add to favorites" onClick={likeHandler}>
                   <FavoriteBorderIcon />
                 </IconButton>
                 <Button>Create your Room +</Button>
