@@ -120,7 +120,7 @@ export default function VideoPage(): JSX.Element {
                   <FavoriteBorderIcon />
                 </IconButton>
                 }
-                <Button>Create your Room +</Button>
+                <Button>Создать комнату +</Button>
               </div>
               <Divider />
               <div style={{ display: 'flex', flexDirection: 'row' }}>
@@ -131,12 +131,11 @@ export default function VideoPage(): JSX.Element {
                   <ListItemText>
                     <Typography>{video && video.Channel.name}</Typography>
                     <Typography color="text.secondary">
-                      {video && video.Channel.Subscriptions.length} subscribers
+                      {video && video.Channel.Subscriptions.length} подписчиков
                     </Typography>
-                  </ListItemText>
-                  {user.id !== video?.channelId && (
+                  {user.id !== video?.channelId?
                     <Button
-                      style={{ marginRight: '-147%' }}
+                      style={{ width: '100px', height: '30px', fontSize:'11px' }}
                       variant="contained"
                       onClick={() => {
                         if (user.status === 'logged') {
@@ -144,9 +143,11 @@ export default function VideoPage(): JSX.Element {
                         }
                       }}
                     >
-                      Подписаться
+                    {video?.Channel.Subscriptions.find((el) => el.userId === user.id)? "Отписаться" : "Подписаться"}
                     </Button>
-                  )}
+                    : false
+                  }
+                  </ListItemText>
                 </ListItem>
               </div>
               <Divider />
@@ -157,7 +158,7 @@ export default function VideoPage(): JSX.Element {
                     aria-controls="panel1a-content"
                     id="panel1a-header"
                   >
-                    <Typography>Read Description</Typography>
+                    <Typography>Смотреть описание</Typography>
                   </AccordionSummary>
                   <AccordionDetails>
                     <Typography>{video && video.description}</Typography>
