@@ -34,7 +34,7 @@ const watchSlice = createSlice({
         state?.Channel.Subscriptions.push(action.payload);
       }
 
-      console.log(JSON.parse(JSON.stringify(state?.Channel.Subscriptions)));
+      
     });
   },
 });
