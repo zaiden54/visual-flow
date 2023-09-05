@@ -17,6 +17,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import { formatDistanceToNow } from 'date-fns';
 import ru from 'date-fns/locale/ru';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/reduxHooks';
@@ -33,6 +34,7 @@ export default function VideoPage(): JSX.Element {
 
   const user = useAppSelector((state) => state.user.data);
   const video = useAppSelector((state) => state.currentVideo);
+  // console.log(video)
 
   useEffect(
     () => () => {
@@ -57,7 +59,6 @@ export default function VideoPage(): JSX.Element {
     }
   }, []);
 
-  // console.log(video?.channelId, user.id);
   const videoId = video?.id;
   const userId = user.id;
   const channelId = video?.Channel.id;
@@ -91,6 +92,8 @@ export default function VideoPage(): JSX.Element {
                   flexDirection: 'row',
                   justifyContent: 'space-between',
                   width: '100%',
+
+                  alignItems: 'center',
                 }}
               >
                 <Typography color="text.secondary" style={{ marginRight: '35%' }}>
@@ -102,12 +105,21 @@ export default function VideoPage(): JSX.Element {
                     })}
                 </Typography>
                 {video?.Likes.length}
+                {video?.Likes.find((el) => el.userId === user.id)?
+                <IconButton
+                  aria-label="add to favorites"
+                  onClick={() => dispatch(setLikeThunk({ videoId, userId }))}
+                >
+                  <FavoriteIcon />
+                </IconButton>
+                :
                 <IconButton
                   aria-label="add to favorites"
                   onClick={() => dispatch(setLikeThunk({ videoId, userId }))}
                 >
                   <FavoriteBorderIcon />
                 </IconButton>
+                }
                 <Button>Create your Room +</Button>
               </div>
               <Divider />
@@ -122,22 +134,24 @@ export default function VideoPage(): JSX.Element {
                       {video && video.Channel.Subscriptions.length} subscribers
                     </Typography>
                   </ListItemText>
-                  <Button
-                    style={{ marginRight: '-147%' }}
-                    variant="contained"
-                    onClick={() => {
-                      if (user.status === 'logged') {
-                        void dispatch(addSubThunk({ userId, channelId }));
-                      }
-                    }}
-                  >
-                    Подписаться
-                  </Button>
+                  {user.id !== video?.channelId && (
+                    <Button
+                      style={{ marginRight: '-147%' }}
+                      variant="contained"
+                      onClick={() => {
+                        if (user.status === 'logged') {
+                          void dispatch(addSubThunk({ userId, channelId }));
+                        }
+                      }}
+                    >
+                      Подписаться
+                    </Button>
+                  )}
                 </ListItem>
               </div>
               <Divider />
-              <div>
-                <Accordion>
+              <div style={{ width: '100%' }}>
+                <Accordion style={{ width: '100%' }}>
                   <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
