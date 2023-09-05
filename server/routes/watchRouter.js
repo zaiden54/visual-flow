@@ -1,38 +1,45 @@
 const router = require('express').Router;
 const fs = require('fs');
+const path = require('path');
 const { Video, Channel, Subscription, Like, Comment, User } = require('../db/models');
 
 const watchRouter = router();
 
 watchRouter.get('/:link', async (req, res) => {
-  const { range } = req.headers;
-  const { link } = req.params;
+  try {
+    const { range } = req.headers;
+    const { link } = req.params;
 
-  if (!range || !link) {
-    res.status(400).send('Requires Range Header or Link is Invalid');
+    if (!range || !link) {
+      res.status(400).send('Requires Range Header or Link is Invalid');
+    }
+
+    const video = await Video.findOne({ where: { link } });
+
+    const fullPath = path.join(__dirname, '..', 'uploads', video.fileName);
+
+    const videoSize = fs.statSync(fullPath).size;
+
+    const CHUNK_SIZE = 10 ** 6;
+    const start = Number(range.replace(/\D/g, ''));
+    const end = Math.min(start + CHUNK_SIZE, videoSize - 1);
+
+    const contentLength = end - start + 1;
+    const headers = {
+      'Content-Range': `bytes ${start}-${end}/${videoSize}`,
+      'Accept-Ranges': 'bytes',
+      'Content-Length': contentLength,
+      'content-Type': 'video/mp4',
+    };
+
+    res.writeHead(206, headers);
+
+    const videoStream = fs.createReadStream(fullPath, { start, end });
+
+    videoStream.pipe(res);
+  } catch (error) {
+    return res.json({ error });
   }
-
-  const video = await Video.findOne({ where: { link } });
-  const fullPath = `${__dirname}/${video.fileName}`.replace('routes', 'uploads');
-  const videoSize = fs.statSync(fullPath).size;
-
-  const CHUNK_SIZE = 10 ** 6;
-  const start = Number(range.replace(/\D/g, ''));
-  const end = Math.min(start + CHUNK_SIZE, videoSize - 1);
-
-  const contentLength = end - start + 1;
-  const headers = {
-    'Content-Range': `bytes ${start}-${end}/${videoSize}`,
-    'Accept-Ranges': 'bytes',
-    'Content-Length': contentLength,
-    'content-Type': 'video/mp4',
-  };
-
-  res.writeHead(206, headers);
-
-  const videoStream = fs.createReadStream(fullPath, { start, end });
-
-  videoStream.pipe(res);
 });
 
 watchRouter.get('/info/:link', async (req, res) => {
@@ -43,19 +50,6 @@ watchRouter.get('/info/:link', async (req, res) => {
   if (!userId) {
     return res.status(401).json({ message: 'Unauthorized' });
   }
-
-  // const videos = await Subscription.findAll({
-  //   where: { userId },
-  //   include: {
-  //     model: Channel,
-  //     include: {
-  //       model: Video,
-  //       include: Channel,
-  //       limit: 8,
-  //       order: [['createdAt', 'DESC']],
-  //     },
-  //   },
-  // });
 
   const info = await Video.findOne({
     where: { link },
@@ -79,11 +73,7 @@ watchRouter.get('/info/:link', async (req, res) => {
     ],
   });
 
-  // console.log(JSON.stringify(info, null, 1));
-
   return res.json(info);
-
-  // res.sendStatus(200);
 });
 
 module.exports = watchRouter;

@@ -76,7 +76,7 @@ export default function VideoPage(): JSX.Element {
                 }}
               >
                 <Typography color="text.secondary" style={{ marginRight: '35%' }}>
-                  54623754 просмотров |{' '}
+                  {video?.views} просмотров |{' '}
                   {video &&
                     formatDistanceToNow(new Date(video?.createdAt), {
                       addSuffix: true,
