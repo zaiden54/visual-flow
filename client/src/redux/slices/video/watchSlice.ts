@@ -1,19 +1,13 @@
-import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
-import type {
-  VideoPageType,
-  VideoType,
-  WatchChannelType,
-  WatchType,
-} from '../../../types/videotypes';
-import getWatchThunk from './watchThunk';
+import type { VideoPageType } from '../../../types/videotypes';
 import { addSubThunk } from '../subs/subThunk';
+import { getWatchThunk, setLikeThunk } from './watchThunk';
 
 const initialState: VideoPageType = null;
 
 const watchSlice = createSlice({
   name: 'currentVideo',
-  initialState: initialState as VideoPageType,
+  initialState: initialState as VideoPageType | undefined,
   reducers: {
     // setCurrentVideo(state, action: PayloadAction<WatchType>) {
     //   // console.log(action.payload);
@@ -26,19 +20,26 @@ const watchSlice = createSlice({
     builder.addCase(addSubThunk.fulfilled, (state, action) => {
       console.log(action.payload);
 
-      const ind = state?.Channel.Subscriptions.findIndex((el) => el.id === action.payload.id);
+      const ind = state?.Channel.Subscriptions.findIndex(
+        (el) => el.id === action.payload.id,
+      ) as number;
       console.log('INDEX', ind);
       if (ind >= 0) {
         state?.Channel.Subscriptions.splice(ind, 1);
       } else {
         state?.Channel.Subscriptions.push(action.payload);
       }
-
-      console.log(JSON.parse(JSON.stringify(state?.Channel.Subscriptions)));
+    });
+    builder.addCase(setLikeThunk.fulfilled, (state, action) => {
+      if (state) {
+        if (state.Likes.findIndex((el) => el.id === action.payload.id) >= 0) {
+          state.Likes = state?.Likes.filter((el) => el.id !== action.payload.id)
+        } else {
+          state?.Likes.push(action.payload)
+        }
+      }
     });
   },
 });
 
 export default watchSlice.reducer;
-
-// export const { setCurrentVideo } = watchSlice.actions;

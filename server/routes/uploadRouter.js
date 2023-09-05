@@ -1,15 +1,14 @@
 const router = require('express').Router;
 const multer = require('multer');
 const path = require('path');
-const { Video, User, Channel } = require('../db/models');
 const uuid = require('uuid');
 const ffmpeg = require('fluent-ffmpeg');
+const { Video, User, Channel } = require('../db/models');
 
 const uploadRouter = router();
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    console.log(file.fieldname);
     switch (file.fieldname) {
       case 'video':
         cb(null, 'uploads');
@@ -20,7 +19,6 @@ const storage = multer.diskStorage({
       default:
         break;
     }
-    // cb(null, 'uploads');
   },
   filename: (req, file, cb) => {
     cb(null, Date.now() + path.extname(file.originalname));
@@ -29,11 +27,11 @@ const storage = multer.diskStorage({
 
 function fileFilter(req, file, cb) {
   if (
-    file.mimetype !== 'video/mp4' &&
-    file.mimetype !== 'video/x-m4v' &&
-    file.mimetype !== 'video/webm' &&
-    file.mimetype !== 'video/mpeg' &&
-    file.mimetype !== 'image/png'
+    file.mimetype !== 'video/mp4'
+    && file.mimetype !== 'video/x-m4v'
+    && file.mimetype !== 'video/webm'
+    && file.mimetype !== 'video/mpeg'
+    && file.mimetype !== 'image/png'
   ) {
     cb(null, false);
   } else cb(null, true);
@@ -66,19 +64,19 @@ uploadRouter.post(
       return res.json({ message: 'Пожалуйста, приложите видеофайл!' });
     }
 
-    if (!req.files.preview) {
-      ffmpeg(path.join(__dirname, '..', 'uploads', `${req.files.video[0].filename}`))
-        .on('end', () => {
-          console.log('Screenshot taken!');
-        })
-        .screenshots({
-          folder: path.join(__dirname, '..', 'public', 'previews'),
-          count: 1,
-          filename: `thumbnail-${req.files.video[0].filename.split('.')[0]}.png`,
-        });
-    }
+    // if (!req.files.preview) {
+    //   ffmpeg(path.join(__dirname, '..', 'uploads', `${req.files.video[0].filename}`))
+    //     .on('end', () => {
+    //       console.log('Screenshot taken!');
+    //     })
+    //     .screenshots({
+    //       folder: path.join(__dirname, '..', 'public', 'previews'),
+    //       count: 1,
+    //       filename: `thumbnail-${req.files.video[0].filename.split('.')[0]}.png`,
+    //     });
+    // }
 
-    const video = await Video.create({
+    await Video.create({
       title,
       description,
       link: uuid.v4(),
@@ -89,7 +87,13 @@ uploadRouter.post(
         : `/previews/thumbnail-${req.files.video[0].filename.split('.')[0]}.png`,
     });
 
-    res.sendStatus(200);
+    const allVideos = await Video.findAll({
+      where: { channelId: user.Channel.id },
+      include: { model: Channel },
+    });
+
+    // res.sendStatus(200);
+    res.json(allVideos);
   },
 );
 

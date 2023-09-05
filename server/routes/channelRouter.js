@@ -23,7 +23,7 @@ channelRouter.get('/:id', async (req, res) => {
       },
     ],
   });
-  console.log(channel);
+
   return res.json(channel);
 });
 

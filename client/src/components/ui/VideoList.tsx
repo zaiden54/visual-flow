@@ -7,19 +7,22 @@ import VideoCard from './VideoCard';
 type VideoListProps = { videos: VideoType[] };
 
 export default function VideoList({ videos }: VideoListProps): JSX.Element {
+  console.log(videos);
+
   return (
     <Box
       sx={{
         display: 'flex',
         flexWrap: 'wrap',
-        // flexGrow: 1,
+        flexDirection: 'row',
         marginTop: '2rem',
         marginBottom: '2rem',
+        justifyContent: 'space-around',
       }}
     >
       <Grid container spacing={2}>
         {videos?.map((el) => (
-          <Grid key={el.id} item xs={3} md={3}>
+          <Grid key={el.id} item xs={3}>
             <VideoCard video={el} />
           </Grid>
         ))}

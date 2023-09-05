@@ -100,39 +100,28 @@ export default function NavBar(): JSX.Element {
             </Box>
           </>
         ) : (
-          <>
-            {/* <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                User/Channel Name
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                много подпешникафф
-              </Typography>
-            </CardContent> */}
-            <CardActions>
-              <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                {/* <ListItemButton onClick={handleMenuClose}>My Channel</ListItemButton> */}
-                <Link to="/auth/signin">
-                  <Button
-                    onClick={() => {
-                      void dispatch(logoutUserThunk());
-                    }}
-                  >
-                    Sign In
-                  </Button>
-                </Link>
-                <Link to="/auth/signup">
-                  <Button
-                    onClick={() => {
-                      void dispatch(logoutUserThunk());
-                    }}
-                  >
-                    Sign Up
-                  </Button>
-                </Link>
-              </Box>
-            </CardActions>
-          </>
+          <CardActions>
+            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+              <Link to="/auth/signin">
+                <Button
+                  onClick={() => {
+                    void dispatch(logoutUserThunk());
+                  }}
+                >
+                  Sign In
+                </Button>
+              </Link>
+              <Link to="/auth/signup">
+                <Button
+                  onClick={() => {
+                    void dispatch(logoutUserThunk());
+                  }}
+                >
+                  Sign Up
+                </Button>
+              </Link>
+            </Box>
+          </CardActions>
         )}
       </Box>
     </Menu>
