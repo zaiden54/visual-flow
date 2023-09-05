@@ -20,7 +20,6 @@ const watchSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getWatchThunk.fulfilled, (state, action) => action.payload);
     builder.addCase(createCommentThunk.fulfilled, (state, action) => {
-      // console.log(action.payload);
       return {...state, Comments: action.payload};
     })
 

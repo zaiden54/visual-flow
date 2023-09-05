@@ -25,7 +25,6 @@ import { getWatchThunk, setLikeThunk } from '../../redux/slices/video/watchThunk
 import Comments from '../ui/Comments';
 import MenuLeft from '../ui/MenuLeft';
 import NavBar from '../ui/NavBar';
-
 import { addSubThunk } from '../../redux/slices/subs/subThunk';
 import apiService from '../../services/config';
 

@@ -8,16 +8,12 @@ import MainPage from './components/pages/MainPage';
 import MostViewedPage from './components/pages/MostViewedPage';
 import RoomsPage from './components/pages/RoomsPage';
 import SubscriptionsPage from './components/pages/SubscriptionsPage';
-import TestChatPage from './components/pages/TestChatPage';
 import VideoPage from './components/pages/VideoPage';
+import TestChatPage from './components/pages/TestChatPage';
 import ModalWindow from './components/ui/ModalWindow';
 import { useAppDispatch, useAppSelector } from './redux/hooks/reduxHooks';
 import { checkUserThunk } from './redux/slices/user/userThunks';
-import VideoPage from './components/pages/VideoPage';
 import Comments from './components/ui/Comments';
-import TestChatPage from './components/pages/TestChatPage';
-import ModalWindow from './components/ui/ModalWindow';
-import ChannelPage from './components/pages/ChannelPage';
 import MiniDrawer from './components/ui/ButtonMenuLeftTest';
 
 function App(): JSX.Element {
