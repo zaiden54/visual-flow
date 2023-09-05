@@ -7,7 +7,7 @@ const initialState: VideoPageType = null;
 
 const watchSlice = createSlice({
   name: 'currentVideo',
-  initialState: initialState as VideoPageType,
+  initialState: initialState as VideoPageType | undefined,
   reducers: {
     // setCurrentVideo(state, action: PayloadAction<WatchType>) {
     //   // console.log(action.payload);
@@ -31,10 +31,12 @@ const watchSlice = createSlice({
       }
     });
     builder.addCase(setLikeThunk.fulfilled, (state, action) => {
-      if (state?.Likes.findIndex((el) => el.id === action.payload.id) >= 0) {
-        state.Likes = state.Likes.filter((el) => el.id !== action.payload.id)
-      } else {
-        state.Likes.push(action.payload)
+      if (state) {
+        if (state.Likes.findIndex((el) => el.id === action.payload.id) >= 0) {
+          state.Likes = state?.Likes.filter((el) => el.id !== action.payload.id)
+        } else {
+          state?.Likes.push(action.payload)
+        }
       }
     });
   },

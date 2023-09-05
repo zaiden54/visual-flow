@@ -30,7 +30,7 @@ export default function VideoPage(): JSX.Element {
   const video = useAppSelector((state) => state.currentVideo);
 
   const dispatch = useAppDispatch();
-  
+
   const { link } = useParams();
 
   useEffect(() => {
@@ -39,12 +39,9 @@ export default function VideoPage(): JSX.Element {
     }
   }, []);
 
-
-  const likeHandler = async (): Promise<void> => {
     const videoId = video?.id
     const userId = user.id
-    await dispatch(setLikeThunk({videoId, userId}))
-  }
+    const channelId = video?.Channel.id
 
   return (
     <div>
@@ -57,7 +54,6 @@ export default function VideoPage(): JSX.Element {
         <div>
           <Card style={{ marginTop: 0 }}>
             <CardContent style={{ display: 'flex', flexDirection: 'column', alignItems: 'start' }}>
-              {/* <Skeleton variant="rounded" width={910} height={500} style={{alignSelf: 'center'}}/> */}
               <video
                 id="videoPlayer"
                 style={{ alignSelf: 'center' }}
@@ -82,7 +78,7 @@ export default function VideoPage(): JSX.Element {
                   54623754 просмотров | опубликовано когда-то
                 </Typography>
                   {video?.Likes.length}
-                <IconButton aria-label="add to favorites" onClick={likeHandler}>
+                <IconButton aria-label="add to favorites" onClick={() => dispatch(setLikeThunk({videoId, userId}))}>
                   <FavoriteBorderIcon />
                 </IconButton>
                 <Button>Create your Room +</Button>
