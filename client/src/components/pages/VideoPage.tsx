@@ -15,15 +15,18 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import IconButton from '@mui/material/IconButton';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import MenuLeft from '../ui/MenuLeft';
 import NavBar from '../ui/NavBar';
 import Comments from '../ui/Comments';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks/reduxHooks';
+
 import getWatchThunk from '../../redux/slices/video/watchThunk';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks/reduxHooks';
+import { addSubThunk } from '../../redux/slices/subs/subThunk';
 
 export default function VideoPage(): JSX.Element {
+  const user = useAppSelector((state) => state.user.data);
   const { link } = useParams();
   const dispatch = useAppDispatch();
 
@@ -33,8 +36,12 @@ export default function VideoPage(): JSX.Element {
     }
   }, []);
 
+
+
   const video = useAppSelector((state) => state.currentVideo);
-  // console.log(video);
+  console.log(video?.channelId, user.id);
+  const userId = user.id;
+  const channelId = video?.Channel.id;
 
   return (
     <div>
@@ -69,7 +76,7 @@ export default function VideoPage(): JSX.Element {
                 }}
               >
                 <Typography color="text.secondary" style={{ marginRight: '35%' }}>
-                  {video && video?.views} просмотров | опубликовано когда-то
+                  54623754 просмотров | опубликовано когда-то
                 </Typography>
                 <IconButton aria-label="add to favorites">
                   <FavoriteBorderIcon />
@@ -88,13 +95,21 @@ export default function VideoPage(): JSX.Element {
                       {video && video.Channel.Subscriptions.length} subscribers
                     </Typography>
                   </ListItemText>
-                  <Button style={{ marginRight: '-147%' }} variant="contained">
+                  <Button
+                    style={{ marginRight: '-147%' }}
+                    variant="contained"
+                    onClick={() => {
+                      if (user.status === 'logged') {
+                        void dispatch(addSubThunk({ userId, channelId }));
+                      }
+                    }}
+                  >
                     Подписаться
                   </Button>
                 </ListItem>
               </div>
               <Divider />
-              <div style={{ width: '100%' }}>
+              <div>
                 <Accordion>
                   <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
