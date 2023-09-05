@@ -72,6 +72,8 @@ export default function VideoPage(): JSX.Element {
                   flexDirection: 'row',
                   justifyContent: 'space-between',
                   width: '100%',
+
+                  alignItems: 'center',
                 }}
               >
                 <Typography color="text.secondary" style={{ marginRight: '35%' }}>
