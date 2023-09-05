@@ -64,17 +64,17 @@ uploadRouter.post(
       return res.json({ message: 'Пожалуйста, приложите видеофайл!' });
     }
 
-    if (!req.files.preview) {
-      ffmpeg(path.join(__dirname, '..', 'uploads', `${req.files.video[0].filename}`))
-        .on('end', () => {
-          console.log('Screenshot taken!');
-        })
-        .screenshots({
-          folder: path.join(__dirname, '..', 'public', 'previews'),
-          count: 1,
-          filename: `thumbnail-${req.files.video[0].filename.split('.')[0]}.png`,
-        });
-    }
+    // if (!req.files.preview) {
+    //   ffmpeg(path.join(__dirname, '..', 'uploads', `${req.files.video[0].filename}`))
+    //     .on('end', () => {
+    //       console.log('Screenshot taken!');
+    //     })
+    //     .screenshots({
+    //       folder: path.join(__dirname, '..', 'public', 'previews'),
+    //       count: 1,
+    //       filename: `thumbnail-${req.files.video[0].filename.split('.')[0]}.png`,
+    //     });
+    // }
 
     await Video.create({
       title,
@@ -87,7 +87,13 @@ uploadRouter.post(
         : `/previews/thumbnail-${req.files.video[0].filename.split('.')[0]}.png`,
     });
 
-    return res.sendStatus(200);
+    const allVideos = await Video.findAll({
+      where: { channelId: user.Channel.id },
+      include: { model: Channel },
+    });
+
+    // res.sendStatus(200);
+    res.json(allVideos);
   },
 );
 
