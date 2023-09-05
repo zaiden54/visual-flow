@@ -41,6 +41,8 @@ export default function MenuLeft(): JSX.Element {
     }
   }, [clicked]);
 
+  console.log(subs.rows);
+
   return (
     <Drawer
       variant="permanent"
@@ -108,11 +110,16 @@ export default function MenuLeft(): JSX.Element {
               {subs.rows && (
                 <List>
                   {subs.rows.map((el) => (
-                    <ListItem key={el.id} disablePadding>
-                      <ListItemButton>
-                        <Subscribes name={el.name} />
-                      </ListItemButton>
-                    </ListItem>
+                    <Link
+                      to={`/channel/${el.id}`}
+                      style={{ textDecoration: 'none', color: 'white' }}
+                    >
+                      <ListItem key={el.id} disablePadding>
+                        <ListItemButton>
+                          <Subscribes name={el.name} />
+                        </ListItemButton>
+                      </ListItem>
+                    </Link>
                   ))}
                   {subs.count - subs.rows.length > 0 ? (
                     <Button
