@@ -1,4 +1,4 @@
-import { List, ListItem } from '@mui/material';
+import { Box, List, ListItem } from '@mui/material';
 import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/reduxHooks';
 import { getAllSubVideoThunk } from '../../redux/slices/video/videoThunk';
@@ -17,23 +17,46 @@ export default function SubscriptionsPage(): JSX.Element {
   return (
     <>
       <div>SUUUBS</div>
+
       <ModalWindow />
       <MenuLeft />
       <NavBar />
-      <List
-        style={{
-          width: '100%',
+
+      <Box
+        sx={{
           display: 'flex',
-          flexDirection: 'column',
-          marginTop: '70px',
+          flexWrap: 'wrap',
+          flexDirection: 'row',
+          marginTop: '2rem',
+          marginBottom: '2rem',
+          justifyContent: 'flex-start',
         }}
       >
-        {subVideos.map((el) => (
-          <ListItem key={el.id}>
-            <VideoListItem video={el} />
-          </ListItem>
-        ))}
-      </List>
+        <div
+          style={{
+            display: 'flex',
+            marginTop: '5rem',
+            flexWrap: 'wrap',
+            flexDirection: 'column',
+            width: '100%',
+          }}
+        >
+          <List
+            style={{
+              width: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              marginTop: '70px',
+            }}
+          >
+            {subVideos.map((el) => (
+              <ListItem key={el.id}>
+                <VideoListItem video={el} />
+              </ListItem>
+            ))}
+          </List>
+        </div>
+      </Box>
     </>
   );
 }
