@@ -116,8 +116,8 @@ export default function VideoPage(): JSX.Element {
                 </ListItem>
               </div>
               <Divider />
-              <div>
-                <Accordion>
+              <div style={{ width: '100%' }}>
+                <Accordion style={{ width: '100%' }}>
                   <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
