@@ -3,18 +3,16 @@ import React, { useEffect, useMemo } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import PrivateRouter from './components/PrivateRouter';
 import AuthPage from './components/pages/AuthPage';
+import ChannelPage from './components/pages/ChannelPage';
 import MainPage from './components/pages/MainPage';
 import MostViewedPage from './components/pages/MostViewedPage';
 import RoomsPage from './components/pages/RoomsPage';
 import SubscriptionsPage from './components/pages/SubscriptionsPage';
+import TestChatPage from './components/pages/TestChatPage';
+import VideoPage from './components/pages/VideoPage';
+import ModalWindow from './components/ui/ModalWindow';
 import { useAppDispatch, useAppSelector } from './redux/hooks/reduxHooks';
 import { checkUserThunk } from './redux/slices/user/userThunks';
-import VideoPage from './components/pages/VideoPage';
-import Comments from './components/ui/ButtonMenuLeftTest';
-import TestChatPage from './components/pages/TestChatPage';
-import ModalWindow from './components/ui/ModalWindow';
-import AlignItemsList from './components/ui/Comments';
-import ChannelPage from './components/pages/ChannelPage';
 
 function App(): JSX.Element {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');

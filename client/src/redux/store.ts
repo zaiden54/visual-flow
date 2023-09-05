@@ -1,12 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
-import userReducer from './slices/user/userSlice';
-import modalReducer from './slices/modals/modalSlice';
-import videoReducer from './slices/video/videoSlice';
-import randomVideoReducer from './slices/video/randomVideoSlice';
-import subChannelReducer from './slices/subChannels/subChannelSlice';
-import videoSubReducer from './slices/video/subAllSlice';
 import channelReducer from './slices/channel/channelSlice';
-
+import modalReducer from './slices/modals/modalSlice';
+import subChannelReducer from './slices/subChannels/subChannelSlice';
+import userReducer from './slices/user/userSlice';
+import randomVideoReducer from './slices/video/randomVideoSlice';
+import videoSubReducer from './slices/video/subAllSlice';
+import videoReducer from './slices/video/videoSlice';
 import currentVideoReducer from './slices/video/watchSlice';
 
 export const store = configureStore({
