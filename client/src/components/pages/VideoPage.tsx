@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-boolean-value */
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import Accordion from '@mui/material/Accordion';
@@ -13,8 +14,7 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-// import ButtonGroup from '@mui/material/ButtonGroup';
-// import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import IconButton from '@mui/material/IconButton';
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
@@ -55,7 +55,6 @@ export default function VideoPage(): JSX.Element {
                 width={910}
                 height={500}
                 controls
-                // eslint-disable-next-line react/jsx-boolean-value
                 muted={true}
                 autoPlay
               >
@@ -86,7 +85,9 @@ export default function VideoPage(): JSX.Element {
                   </ListItemAvatar>
                   <ListItemText>
                     <Typography>{video && video.Channel.name}</Typography>
-                    <Typography color="text.secondary">{video && video.Channel.Subscriptions.length} subscribers</Typography>
+                    <Typography color="text.secondary">
+                      {video && video.Channel.Subscriptions.length} subscribers
+                    </Typography>
                   </ListItemText>
                   <Button style={{ marginRight: '-147%' }} variant="contained">
                     Подписаться
