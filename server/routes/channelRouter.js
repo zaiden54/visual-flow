@@ -11,6 +11,7 @@ channelRouter.get('/:id', async (req, res) => {
     include: [
       {
         model: Video,
+        order: [['createdAt', 'DESC']],
         include: {
           model: Channel,
         },

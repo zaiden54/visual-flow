@@ -55,6 +55,7 @@ postRouter.get('/subs/all', async (req, res) => {
 
   const videos = await Subscription.findAll({
     where: { userId },
+    order: [['createdAt', 'DESC']],
     include: {
       model: Channel,
       include: {

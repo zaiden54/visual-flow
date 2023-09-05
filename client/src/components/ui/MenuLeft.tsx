@@ -125,15 +125,17 @@ export default function MenuLeft(): JSX.Element {
                       {subs.count - subs.rows.length} more
                     </Button>
                   ) : (
-                    <Button
-                      type="button"
-                      onClick={() => {
-                        void dispatch(getSubChannelThunk(subs.rows.length));
-                        setClick(true);
-                      }}
-                    >
-                      hide
-                    </Button>
+                    subs.rows.length >= 3 && (
+                      <Button
+                        type="button"
+                        onClick={() => {
+                          void dispatch(getSubChannelThunk(subs.rows.length));
+                          setClick(true);
+                        }}
+                      >
+                        hide
+                      </Button>
+                    )
                   )}
                 </List>
               )}

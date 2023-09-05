@@ -27,7 +27,7 @@ export default function ChannelPage(): JSX.Element {
         sx={{
           display: 'flex',
           flexWrap: 'wrap',
-          flexDirection: 'row',
+          flexDirection: 'column',
           marginTop: '2rem',
           marginBottom: '2rem',
           justifyContent: 'flex-start',
@@ -44,27 +44,27 @@ export default function ChannelPage(): JSX.Element {
         >
           {/* <Card style={{display:"flex",flexDirection:'column',justifyContent:'center'}}>
             <CardContent> */}
-              <Stack
-                direction="row"
-                spacing={2}
-                style={{
-                  padding: '1px',
-                  alignItems: 'center',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  width: '90%',
-                }}
-              >
-                <Avatar alt={channel.name} sx={{ width: 56, height: 56 }} src="#" />
-                <Stack direction="column">
-                  <Stack direction="column">{channel.name}</Stack>
-                  <Stack direction="row" spacing={2}>
-                    <Stack direction="column">{channel.Subscriptions.length} subscribers</Stack>
-                    <Stack direction="column">{channel.Videos.length} videos</Stack>
-                  </Stack>
-                </Stack>
+          <Stack
+            direction="row"
+            spacing={2}
+            style={{
+              padding: '1px',
+              alignItems: 'center',
+              display: 'flex',
+              justifyContent: 'center',
+              width: '90%',
+            }}
+          >
+            <Avatar alt={channel.name} sx={{ width: 56, height: 56 }} src="#" />
+            <Stack direction="column">
+              <Stack direction="column">{channel.name}</Stack>
+              <Stack direction="row" spacing={2}>
+                <Stack direction="column">{channel.Subscriptions?.length} subscribers</Stack>
+                <Stack direction="column">{channel.Videos?.length} videos</Stack>
               </Stack>
-            {/* </CardContent>
+            </Stack>
+          </Stack>
+          {/* </CardContent>
           </Card> */}
           <VideoList videos={channel?.Videos} />
         </div>

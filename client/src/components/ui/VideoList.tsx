@@ -7,7 +7,6 @@ import VideoCard from './VideoCard';
 type VideoListProps = { videos: VideoType[] };
 
 export default function VideoList({ videos }: VideoListProps): JSX.Element {
-
   return (
     <Box
       sx={{

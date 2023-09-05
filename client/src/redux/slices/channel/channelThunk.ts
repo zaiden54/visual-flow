@@ -7,7 +7,7 @@ export const getChannelThunk = createAsyncThunk<ChannelType, number>(
   '/channel/:id',
   async (id: number): Promise<ChannelType> => {
     const { data } = await apiService.get<ChannelType>(`/channel/${id}`);
-    console.log(data, 'HAHAHHAHAHAHHA');
+    console.log(data.Videos.sort(), 'HAHAHHAHAHAHHA');
 
     return data;
   },

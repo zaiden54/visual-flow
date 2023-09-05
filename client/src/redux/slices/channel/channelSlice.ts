@@ -10,6 +10,8 @@ const channelSlice = createSlice({
   reducers: {
     setVideos: (state, action: PayloadAction) => {
       state.Videos = action.payload.reverse()
+      console.log(state.Videos);
+      
     },
   },
   extraReducers: (builder) => {
