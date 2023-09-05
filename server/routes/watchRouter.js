@@ -42,6 +42,17 @@ watchRouter.get('/:link', async (req, res) => {
   }
 });
 
+watchRouter.put('/:link', async (req, res) => {
+  try {
+    const video = await Video.findOne({ where: { link: req.params.link } });
+    await video.increment('views', { by: 1 });
+    await video.save();
+    return res.sendStatus(200);
+  } catch (error) {
+    return res.json({ error });
+  }
+});
+
 watchRouter.get('/info/:link', async (req, res) => {
   const { link } = req.params;
 

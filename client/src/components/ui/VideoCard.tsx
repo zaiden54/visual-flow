@@ -9,6 +9,9 @@ import React from 'react';
 import Typography from '@mui/material/Typography';
 
 import { Link } from 'react-router-dom';
+
+import { formatDistanceToNow } from 'date-fns';
+import ru from 'date-fns/locale/ru';
 import type { VideoType } from '../../types/videotypes';
 
 type VideoCardProps = {
@@ -48,7 +51,9 @@ export default function VideoCard({ video }: VideoCardProps): JSX.Element {
             <Typography variant="subtitle1" color="text.secondary" component="div">
               <Stack direction="row">{video.views} views</Stack>
               {/* <Stack direction="row">{formatDistance(subDays(new Date(), 3), video.createdAt, { addSuffix: true })}</Stack> */}
-              <Stack direction="row">{video.createdAt}</Stack>
+              <Stack direction="row">
+                {formatDistanceToNow(new Date(video.createdAt), { addSuffix: true, locale: ru })}
+              </Stack>
             </Typography>
           </CardContent>
         </Box>

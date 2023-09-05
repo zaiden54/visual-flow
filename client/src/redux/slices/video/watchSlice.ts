@@ -17,6 +17,7 @@ const watchSlice = createSlice({
 
   extraReducers: (builder) => {
     builder.addCase(getWatchThunk.fulfilled, (state, action) => action.payload);
+
     builder.addCase(addSubThunk.fulfilled, (state, action) => {
       console.log(action.payload);
 
@@ -30,6 +31,7 @@ const watchSlice = createSlice({
         state?.Channel.Subscriptions.push(action.payload);
       }
     });
+
     builder.addCase(setLikeThunk.fulfilled, (state, action) => {
       if (state) {
         if (state.Likes.findIndex((el) => el.id === action.payload.id) >= 0) {

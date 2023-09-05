@@ -15,7 +15,7 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { formatDistanceToNow } from 'date-fns';
 import ru from 'date-fns/locale/ru';
@@ -26,10 +26,26 @@ import MenuLeft from '../ui/MenuLeft';
 import NavBar from '../ui/NavBar';
 
 import { addSubThunk } from '../../redux/slices/subs/subThunk';
+import apiService from '../../services/config';
 
 export default function VideoPage(): JSX.Element {
+  const [start, setStart] = useState(Date.now());
+
   const user = useAppSelector((state) => state.user.data);
   const video = useAppSelector((state) => state.currentVideo);
+
+  useEffect(
+    () => () => {
+      if (Date.now() - start > 15 * 1000 && video) {
+        // console.log('first');
+        apiService
+          .put(`/watch/${video?.link}`)
+          .then(({ data }) => console.log(data))
+          .catch((err) => console.error(err));
+      }
+    },
+    [],
+  );
 
   const dispatch = useAppDispatch();
 
@@ -41,7 +57,7 @@ export default function VideoPage(): JSX.Element {
     }
   }, []);
 
-  console.log(video?.channelId, user.id);
+  // console.log(video?.channelId, user.id);
   const videoId = video?.id;
   const userId = user.id;
   const channelId = video?.Channel.id;
