@@ -15,26 +15,23 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import IconButton from '@mui/material/IconButton';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/reduxHooks';
 import { getWatchThunk, setLikeThunk } from '../../redux/slices/video/watchThunk';
-import apiService from '../../services/config';
 import Comments from '../ui/Comments';
 import MenuLeft from '../ui/MenuLeft';
 import NavBar from '../ui/NavBar';
-import Comments from '../ui/Comments';
 
-import getWatchThunk from '../../redux/slices/video/watchThunk';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks/reduxHooks';
 import { addSubThunk } from '../../redux/slices/subs/subThunk';
 
 export default function VideoPage(): JSX.Element {
   const user = useAppSelector((state) => state.user.data);
-  const { link } = useParams();
+  const video = useAppSelector((state) => state.currentVideo);
+
   const dispatch = useAppDispatch();
+  
+  const { link } = useParams();
 
   useEffect(() => {
     if (link) {
@@ -43,17 +40,10 @@ export default function VideoPage(): JSX.Element {
   }, []);
 
 
-
-  const video = useAppSelector((state) => state.currentVideo);
-  const user = useAppSelector((state) => state.user);
-  console.log(video);
-  console.log(user)
-
   const likeHandler = async (): Promise<void> => {
     const videoId = video?.id
-    const userId = user.data.id
+    const userId = user.id
     await dispatch(setLikeThunk({videoId, userId}))
-    // const response = await apiService.put('/videos/like', {videoId, userId})
   }
 
   return (

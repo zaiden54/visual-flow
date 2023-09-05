@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { VideoPageType } from '../../../types/videotypes';
 import { addSubThunk } from '../subs/subThunk';
-import getWatchThunk from './watchThunk';
+import { getWatchThunk, setLikeThunk } from './watchThunk';
 
 const initialState: VideoPageType = null;
 
@@ -28,6 +28,13 @@ const watchSlice = createSlice({
         state?.Channel.Subscriptions.splice(ind, 1);
       } else {
         state?.Channel.Subscriptions.push(action.payload);
+      }
+    });
+    builder.addCase(setLikeThunk.fulfilled, (state, action) => {
+      if (state?.Likes.findIndex((el) => el.id === action.payload.id) >= 0) {
+        state.Likes = state.Likes.filter((el) => el.id !== action.payload.id)
+      } else {
+        state.Likes.push(action.payload)
       }
     });
   },
