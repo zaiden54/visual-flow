@@ -1,31 +1,36 @@
 import { Box, Button, Modal, TextField, Typography } from '@mui/material';
 import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/reduxHooks';
+import { getChannelThunk } from '../../redux/slices/channel/channelThunk';
 import { swapModal } from '../../redux/slices/modals/modalSlice';
 import apiService from '../../services/config';
+import { setVideos } from '../../redux/slices/channel/channelSlice';
 
 export default function ModalWindow(): JSX.Element {
   const modal = useAppSelector((state) => state.modal);
   const dispatch = useAppDispatch();
-
+  const channel = useAppSelector((state) => state.channel);
+  const user = useAppSelector((state) => state.user.data);
   const submitHandler = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
 
     const fileData = Object.fromEntries(new FormData(e.currentTarget));
     // const formData = Object.fromEntries(new FormData(e.currentTarget))
 
-    console.log(fileData);
-    
+    // console.log('=---------------', fileData);
+
     apiService
       .post('/upload/video', fileData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       })
-      .then(console.log)
+      .then(({ data }) => dispatch(setVideos(data)))
       .catch((err) => Promise.reject(err));
 
     dispatch(swapModal({ value: false }));
+
+    // console.log(user.id, '------------------------', channel);
   };
 
   const style = {
@@ -50,11 +55,29 @@ export default function ModalWindow(): JSX.Element {
         <Typography id="modal-modal-title" variant="h6" component="h2">
           Добавьте видео
         </Typography>
-        <form encType="multipart/form-data" onSubmit={submitHandler}>
-        <TextField type="text" name="title" id="outlined-basic" label="Название" variant="outlined" />
-        <TextField type="text" name="description" id="outlined-basic" label="Описание" variant="outlined" />
-        <TextField type="file" name="video" id="outlined-basic" variant="outlined" />
-        <TextField type="file" name="preview" id="outlined-basic" variant="outlined" />
+        <form
+          encType="multipart/form-data"
+          onSubmit={(e) => {
+            submitHandler(e);
+            // void dispatch(getChannelThunk(user.id));
+          }}
+        >
+          <TextField
+            type="text"
+            name="title"
+            id="outlined-basic"
+            label="Название"
+            variant="outlined"
+          />
+          <TextField
+            type="text"
+            name="description"
+            id="outlined-basic"
+            label="Описание"
+            variant="outlined"
+          />
+          <TextField type="file" name="video" id="outlined-basic" variant="outlined" />
+          <TextField type="file" name="preview" id="outlined-basic" variant="outlined" />
           {/* <input type="text" name="title" placeholder="Введите название видео" />
           <input type="text" name="description" placeholder="Введите описание" />
           <input type="file" name="video" /> */}
