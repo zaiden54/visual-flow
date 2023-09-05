@@ -42,6 +42,7 @@ export default function VideoPage(): JSX.Element {
   }, []);
 
   console.log(video?.channelId, user.id);
+  const videoId = video?.id;
   const userId = user.id;
   const channelId = video?.Channel.id;
 
