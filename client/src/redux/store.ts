@@ -7,7 +7,6 @@ import subChannelReducer from './slices/subChannels/subChannelSlice';
 import videoSubReducer from './slices/video/subAllSlice';
 import channelReducer from './slices/channel/channelSlice';
 import currentVideoReducer from './slices/video/watchSlice';
-import commentSlice from './slices/video/commentSlice';
 
 export const store = configureStore({
   reducer: {
@@ -18,7 +17,7 @@ export const store = configureStore({
     subs: subChannelReducer,
     subVideos: videoSubReducer,
     channel: channelReducer,
-    currentVideo: currentVideoReducer,
+    currentVideo: currentVideoReducer
   },
 });
 

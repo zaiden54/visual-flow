@@ -1,14 +1,15 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import type { CommentType } from '../../../types/commentType'
-import {getCommentService} from '../../../services/commentService';
+import apiService from '../../../services/config';
+import type { CommentFormType, WatchType } from '../../../types/videotypes'
 
-const getAllCommentsVideoThunk = createAsyncThunk<CommentType[]>(
-  '/link',
-  async (link)=>
-  getCommentService(link)
-  .then((data) => data)
-.catch(console.log)
-);
+type CreateCommentThunkType = {
+  link: string,
+  formData: CommentFormType
+}
 
+const createCommentThunk = createAsyncThunk('watch/addComment', async ({link, formData}: CreateCommentThunkType) => {
+  const { data } = await apiService.post<WatchType>(`/watch/info/${link}`, formData);
+  return data;
+});
 
-export default getAllCommentsVideoThunk;
+export default createCommentThunk;

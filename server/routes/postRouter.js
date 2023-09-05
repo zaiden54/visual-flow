@@ -92,23 +92,4 @@ postRouter.get('/:link', async (req, res) => {
   res.json(comments);
 });
 
-postRouter.post('/:link', async (req, res) => {
-  if (!req.session.user) {
-    res
-      .status(401)
-      .json({ message: 'You are not authorized to create a new comment' });
-    return;
-  }
-  const { commentFrom } = req.body;
-  const {link} = req.params
-  const videoId = await Video.findOne({where: {link }})
-  const comment = await Comment.create({
-    userId: req.session.user.id,
-    videoId,
-    message: commentFrom,
-  });
-  console.log(comment);
-  res.json(comment);
-});
-
 module.exports = postRouter;

@@ -35,7 +35,6 @@ export default function VideoPage(): JSX.Element {
   }, []);
 
   const video = useAppSelector((state) => state.currentVideo);
-  // console.log(video);
 
   return (
     <div>
@@ -69,8 +68,8 @@ export default function VideoPage(): JSX.Element {
                   width: '100%',
                 }}
               >
-                <Typography color="text.secondary" style={{ marginRight: '35%' }}>
-                  {video && video?.views} просмотров | опубликовано когда-то
+                <Typography color="text.secondary" style={{ marginRight: '28%' }}>
+                  {video && video?.views} просмотров | опубликовано {video?.createdAt}
                 </Typography>
                 <IconButton aria-label="add to favorites">
                   <FavoriteBorderIcon />
@@ -84,10 +83,10 @@ export default function VideoPage(): JSX.Element {
                     <Avatar alt="Remy Sharp" src="" />
                   </ListItemAvatar>
                   <ListItemText>
-                    <Typography>{video && video.Channel.name}</Typography>
-                    <Typography color="text.secondary">{video && video.Channel.Subscriptions.length} subscribers</Typography>
+                    <Typography>{video && video.Channel?.name}</Typography>
+                    <Typography color="text.secondary">{video && video.Channel?.Subscriptions.length} subscribers</Typography>
                   </ListItemText>
-                  <Button style={{ marginRight: '-147%' }} variant="contained">
+                  <Button style={{ marginRight: '-187%' }} variant="contained">
                     Подписаться
                   </Button>
                 </ListItem>

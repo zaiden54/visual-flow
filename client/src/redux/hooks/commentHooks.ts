@@ -1,19 +1,16 @@
-import React from 'react';
-import { commentCreateService } from '../../services/commentService';
+import type React from 'react';
 import { useAppDispatch } from './reduxHooks';
-import { commentCreate } from '../slices/video/commentSlice';
-import type { CommentFormType, CommentType } from '../../types/commentType';
+import type { CommentFormType  } from '../../types/videotypes';
+import createCommentThunk from '../slices/video/commentThunk';
 
 const useComments = (): {
-addNewCommentHandler: (event: React.FormEvent<HTMLFormElement>) => void;
+    addNewCommentHandler: (event: React.FormEvent<HTMLFormElement>, link: string) => void;
 } => {
-const dispatch = useAppDispatch();
-const addNewCommentHandler = (event: React.FormEvent<HTMLFormElement>): void => {
-event.preventDefault();
-const formData = Object.fromEntries(new FormData(event.currentTarget)) as CommentFormType
-commentCreateService(formData)
-.then((data) => dispatch(commentCreate(data)))
-.catch(() => console.log())
+    const dispatch = useAppDispatch();
+    const addNewCommentHandler = (event: React.FormEvent<HTMLFormElement>, link: string): void => {
+ event.preventDefault();
+    const formData = Object.fromEntries(new FormData(event.currentTarget)) as CommentFormType
+void dispatch(createCommentThunk({link, formData}));
 event.currentTarget.reset();
 }
 
