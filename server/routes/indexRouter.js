@@ -10,7 +10,7 @@ indexRouter.get('/', (req, res) => {
   res.json({ message: 'You have access to request data' });
 });
 
-indexRouter.use('/auth', authRouter);
+// indexRouter.use('/auth', authRouter);
 // indexRouter.use('/video', videoRouter);
 indexRouter.use('/upload', uploadRouter);
 
