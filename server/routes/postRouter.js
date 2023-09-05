@@ -1,5 +1,5 @@
 const router = require('express').Router;
-const { Video, Channel, sequelize, Subscription } = require('../db/models');
+const { Video, Channel, sequelize, Subscription, Like } = require('../db/models');
 
 const postRouter = router();
 
@@ -75,6 +75,31 @@ postRouter.get('/random', async (req, res) => {
     },
   });
   res.json(randomVids);
+});
+
+postRouter.put('/like', async (req, res) => {
+  const { videoId, userId } = req.body;
+  const liked = await Like.findOne({
+    where: {
+      videoId,
+      userId,
+    },
+  });
+
+  if (!liked) {
+    const newLike = await Like.create({
+      videoId,
+      userId,
+    });
+    return res.json(newLike);
+  }
+  await Like.destroy({
+    where: {
+      videoId,
+      userId,
+    },
+  });
+  return res.json(liked);
 });
 
 module.exports = postRouter;
