@@ -87,4 +87,26 @@ watchRouter.get('/info/:link', async (req, res) => {
   return res.json(info);
 });
 
+watchRouter.post('/info/:link', async (req, res) => {
+  console.log(req.body);
+  const userId = req.session.user?.id;
+  if (!userId) {
+    return res.status(401).json({ message: 'Unauthorized' });
+  }
+  const { link } = req.params;
+  const videoId = await Video.findOne({ where: { link } });
+  const { message } = req.body;
+  console.log(message);
+  await Comment.create({
+    userId,
+    videoId: videoId.id,
+    message,
+    include: {
+      model: User,
+    },
+  });
+  const data = await Comment.findAll({ where: { videoId: videoId.id }, include: { model: User } });
+  res.json(data);
+});
+
 module.exports = watchRouter;

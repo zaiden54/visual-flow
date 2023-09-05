@@ -17,7 +17,7 @@ export const store = configureStore({
     subs: subChannelReducer,
     subVideos: videoSubReducer,
     channel: channelReducer,
-    currentVideo: currentVideoReducer,
+    currentVideo: currentVideoReducer
   },
 });
 

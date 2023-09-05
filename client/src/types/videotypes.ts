@@ -71,6 +71,9 @@ export type CommentsType = {
   }
 };
 
+export type CommentFormType = {
+  message: string;
+}
 
 
 
