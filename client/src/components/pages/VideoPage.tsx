@@ -30,24 +30,37 @@ import { addSubThunk } from '../../redux/slices/subs/subThunk';
 import apiService from '../../services/config';
 
 export default function VideoPage(): JSX.Element {
-  const [start, setStart] = useState(Date.now());
+  const [start, setStart] = useState(0);
 
   const user = useAppSelector((state) => state.user.data);
   const video = useAppSelector((state) => state.currentVideo);
-  // console.log(video)
 
-  useEffect(
-    () => () => {
+  // useEffect(() => {
+  //     setStart(Date.now())
+
+  //     return () => {}
+  //       if (Date.now() - start > 15 * 1000 && video) {
+  //         // console.log('first');
+  //         apiService
+  //           .put(`/watch/${video?.link}`)
+  //           .then(({ data }) => console.log(data))
+  //           .catch((err) => console.error(err));
+  //     }
+  //   },
+  // }, []);
+
+  useEffect(() => {
+    setStart(Date.now());
+
+    return () => {
       if (Date.now() - start > 15 * 1000 && video) {
-        // console.log('first');
         apiService
           .put(`/watch/${video?.link}`)
           .then(({ data }) => console.log(data))
           .catch((err) => console.error(err));
       }
-    },
-    [],
-  );
+    };
+  }, []);
 
   const dispatch = useAppDispatch();
 
@@ -105,21 +118,21 @@ export default function VideoPage(): JSX.Element {
                     })}
                 </Typography>
                 {video?.Likes.length}
-                {video?.Likes.find((el) => el.userId === user.id)?
-                <IconButton
-                  aria-label="add to favorites"
-                  onClick={() => dispatch(setLikeThunk({ videoId, userId }))}
-                >
-                  <FavoriteIcon />
-                </IconButton>
-                :
-                <IconButton
-                  aria-label="add to favorites"
-                  onClick={() => dispatch(setLikeThunk({ videoId, userId }))}
-                >
-                  <FavoriteBorderIcon />
-                </IconButton>
-                }
+                {video?.Likes.find((el) => el.userId === user.id) ? (
+                  <IconButton
+                    aria-label="add to favorites"
+                    onClick={() => dispatch(setLikeThunk({ videoId, userId }))}
+                  >
+                    <FavoriteIcon />
+                  </IconButton>
+                ) : (
+                  <IconButton
+                    aria-label="add to favorites"
+                    onClick={() => dispatch(setLikeThunk({ videoId, userId }))}
+                  >
+                    <FavoriteBorderIcon />
+                  </IconButton>
+                )}
                 <Button>Create your Room +</Button>
               </div>
               <Divider />
