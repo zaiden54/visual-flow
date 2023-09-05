@@ -17,6 +17,8 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import IconButton from '@mui/material/IconButton';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { formatDistanceToNow } from 'date-fns';
+import ru  from 'date-fns/locale/ru';
 import MenuLeft from '../ui/MenuLeft';
 import NavBar from '../ui/NavBar';
 import Comments from '../ui/Comments';
@@ -35,8 +37,6 @@ export default function VideoPage(): JSX.Element {
       void dispatch(getWatchThunk(link));
     }
   }, []);
-
-
 
   const video = useAppSelector((state) => state.currentVideo);
   console.log(video?.channelId, user.id);
@@ -76,7 +76,12 @@ export default function VideoPage(): JSX.Element {
                 }}
               >
                 <Typography color="text.secondary" style={{ marginRight: '35%' }}>
-                  54623754 просмотров | опубликовано когда-то
+                  54623754 просмотров |{' '}
+                  {video &&
+                    formatDistanceToNow(new Date(video?.createdAt), {
+                      addSuffix: true,
+                      locale: ru,
+                    })}
                 </Typography>
                 <IconButton aria-label="add to favorites">
                   <FavoriteBorderIcon />
