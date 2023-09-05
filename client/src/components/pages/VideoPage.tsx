@@ -94,14 +94,8 @@ export default function VideoPage(): JSX.Element {
                   alignItems: 'center',
                 }}
               >
-                <Typography color="text.secondary" style={{ marginRight: '35%' }}>
-                  {video?.views} просмотров |{' '}
-                  {video &&
-                    formatDistanceToNow(new Date(video?.createdAt), {
-                      addSuffix: true,
-                      locale: ru,
-                    })}
-                </Typography>
+                <h4>{video?.title}</h4>
+
                 {video?.Likes.find((el) => el.userId === user.id) ? (
                   <IconButton
                     aria-label="add to favorites"
@@ -169,8 +163,19 @@ export default function VideoPage(): JSX.Element {
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
                     id="panel1a-header"
+                    // style={{ display: 'flex ' }}
                   >
-                    <Typography>Смотреть описание</Typography>
+                    <div style={{ display: 'flex', flexDirection: 'column' }}>
+                      <Typography color="text.secondary">
+                        {video?.views} просмотров |{' '}
+                        {video &&
+                          formatDistanceToNow(new Date(video?.createdAt), {
+                            addSuffix: true,
+                            locale: ru,
+                          })}
+                      </Typography>
+                      <Typography>Смотреть описание</Typography>
+                    </div>
                   </AccordionSummary>
                   <AccordionDetails>
                     <Typography>{video && video.description}</Typography>
