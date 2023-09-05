@@ -39,9 +39,9 @@ export default function VideoPage(): JSX.Element {
     }
   }, []);
 
-    const videoId = video?.id
-    const userId = user.id
-    const channelId = video?.Channel.id
+  const videoId = video?.id;
+  const userId = user.id;
+  const channelId = video?.Channel.id;
 
   return (
     <div>
@@ -77,8 +77,11 @@ export default function VideoPage(): JSX.Element {
                 <Typography color="text.secondary" style={{ marginRight: '35%' }}>
                   54623754 просмотров | опубликовано когда-то
                 </Typography>
-                  {video?.Likes.length}
-                <IconButton aria-label="add to favorites" onClick={() => dispatch(setLikeThunk({videoId, userId}))}>
+                {video?.Likes.length}
+                <IconButton
+                  aria-label="add to favorites"
+                  onClick={() => dispatch(setLikeThunk({ videoId, userId }))}
+                >
                   <FavoriteBorderIcon />
                 </IconButton>
                 <Button>Create your Room +</Button>
@@ -95,17 +98,19 @@ export default function VideoPage(): JSX.Element {
                       {video && video.Channel.Subscriptions.length} subscribers
                     </Typography>
                   </ListItemText>
-                  <Button
-                    style={{ marginRight: '-147%' }}
-                    variant="contained"
-                    onClick={() => {
-                      if (user.status === 'logged') {
-                        void dispatch(addSubThunk({ userId, channelId }));
-                      }
-                    }}
-                  >
-                    Подписаться
-                  </Button>
+                  {user.id !== video?.channelId && (
+                    <Button
+                      style={{ marginRight: '-147%' }}
+                      variant="contained"
+                      onClick={() => {
+                        if (user.status === 'logged') {
+                          void dispatch(addSubThunk({ userId, channelId }));
+                        }
+                      }}
+                    >
+                      Подписаться
+                    </Button>
+                  )}
                 </ListItem>
               </div>
               <Divider />
