@@ -41,7 +41,6 @@ export default function VideoPage(): JSX.Element {
     }
   }, []);
 
-  const video = useAppSelector((state) => state.currentVideo);
   console.log(video?.channelId, user.id);
   const userId = user.id;
   const channelId = video?.Channel.id;

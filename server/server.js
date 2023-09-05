@@ -28,7 +28,6 @@ app.use((req, res, next) => {
   next();
 });
 
-
 app.use('/api', indexRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/videos', postRouter);
