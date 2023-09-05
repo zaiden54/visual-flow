@@ -20,7 +20,14 @@ export default function SubscriptionsPage(): JSX.Element {
       <ModalWindow />
       <MenuLeft />
       <NavBar />
-      <List style={{ width: '100%', display: 'flex', flexDirection: 'column', marginTop: '70px' }}>
+      <List
+        style={{
+          width: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          marginTop: '70px',
+        }}
+      >
         {subVideos.map((el) => (
           <ListItem key={el.id}>
             <VideoListItem video={el} />
