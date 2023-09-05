@@ -25,7 +25,7 @@ export default function VideosMap(): JSX.Element {
         <>
           <h4>Подписки</h4>
 
-          <VideoList videos={subVideos} />
+          <VideoList videos={subVideos.slice(0,8)} />
           <Link to="/subs">
             <Button type="button">ЕЩЕ</Button>
           </Link>

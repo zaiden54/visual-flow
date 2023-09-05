@@ -7,7 +7,6 @@ import VideoCard from './VideoCard';
 type VideoListProps = { videos: VideoType[] };
 
 export default function VideoList({ videos }: VideoListProps): JSX.Element {
-  console.log(videos);
 
   return (
     <Box
@@ -17,16 +16,11 @@ export default function VideoList({ videos }: VideoListProps): JSX.Element {
         flexDirection: 'row',
         marginTop: '2rem',
         marginBottom: '2rem',
-        justifyContent: 'space-around',
+        justifyContent: 'flex-start',
       }}
     >
-      <Grid container spacing={2}>
-        {videos?.map((el) => (
-          <Grid key={el.id} item xs={3}>
-            <VideoCard video={el} />
-          </Grid>
-        ))}
-      </Grid>
+      {/* <Grid container spacing={2}> */}
+      {videos?.map((el) => <VideoCard video={el} />)}
     </Box>
   );
 }
