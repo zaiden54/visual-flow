@@ -1,5 +1,5 @@
 const router = require('express').Router;
-const { Video, Channel, sequelize, Subscription, Like } = require('../db/models');
+const { Video, Channel, sequelize, Subscription, Comment, Like } = require('../db/models');
 
 const postRouter = router();
 
@@ -55,6 +55,7 @@ postRouter.get('/subs/all', async (req, res) => {
 
   const videos = await Subscription.findAll({
     where: { userId },
+    order: [['createdAt', 'DESC']],
     include: {
       model: Channel,
       include: {
@@ -75,6 +76,21 @@ postRouter.get('/random', async (req, res) => {
     },
   });
   res.json(randomVids);
+});
+
+postRouter.get('/:link', async (req, res) => {
+  const {link} = req.params;
+ const comments = await Video.findOne({
+    where: { link },
+    include: [
+      {
+        model: Comment,
+      },
+      { model: Channel }
+    ],
+  });
+  console.log(comments);
+  res.json(comments);
 });
 
 postRouter.put('/like', async (req, res) => {

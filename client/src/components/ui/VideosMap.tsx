@@ -24,7 +24,6 @@ export default function VideosMap(): JSX.Element {
       {user.data.status === 'logged' && (
         <>
           <h4>Подписки</h4>
-
           <VideoList videos={subVideos.slice(0,8)} />
           <Link to="/subs">
             <Button type="button">ЕЩЕ</Button>
@@ -32,7 +31,6 @@ export default function VideosMap(): JSX.Element {
           <Divider />
         </>
       )}
-
       <h4>Рекомендации</h4>
       <VideoList videos={random} />
     </div>

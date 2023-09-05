@@ -8,11 +8,13 @@ import MainPage from './components/pages/MainPage';
 import MostViewedPage from './components/pages/MostViewedPage';
 import RoomsPage from './components/pages/RoomsPage';
 import SubscriptionsPage from './components/pages/SubscriptionsPage';
-import TestChatPage from './components/pages/TestChatPage';
 import VideoPage from './components/pages/VideoPage';
+import TestChatPage from './components/pages/TestChatPage';
 import ModalWindow from './components/ui/ModalWindow';
 import { useAppDispatch, useAppSelector } from './redux/hooks/reduxHooks';
 import { checkUserThunk } from './redux/slices/user/userThunks';
+import Comments from './components/ui/Comments';
+import MiniDrawer from './components/ui/ButtonMenuLeftTest';
 
 function App(): JSX.Element {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
@@ -41,6 +43,7 @@ function App(): JSX.Element {
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         <Routes>
           <Route path="/watch/:link" element={<VideoPage />} />
+          <Route path="/watch/info/:link" element={<Comments />} />
           <Route path="/rooms" element={<RoomsPage />} />
           <Route path="/mostViewed" element={<MostViewedPage />} />
           <Route path="/" element={<MainPage />} />
@@ -51,8 +54,7 @@ function App(): JSX.Element {
             <Route path="/auth/:auth" element={<AuthPage />} />
           </Route>
           <Route path="/channel/:id" element={<ChannelPage />} />
-          {/* <Route path="/watch" element={<VideoPage />} /> */}
-          {/* <Route path="/ololo" element={<Comments />} />  */}
+          <Route path="/ololo" element={<MiniDrawer />} /> 
           <Route path="/chat" element={<TestChatPage />} />
         </Routes>
       </div>

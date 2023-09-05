@@ -16,7 +16,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { formatDistanceToNow } from 'date-fns';
 import ru from 'date-fns/locale/ru';
@@ -25,7 +25,6 @@ import { getWatchThunk, setLikeThunk } from '../../redux/slices/video/watchThunk
 import Comments from '../ui/Comments';
 import MenuLeft from '../ui/MenuLeft';
 import NavBar from '../ui/NavBar';
-
 import { addSubThunk } from '../../redux/slices/subs/subThunk';
 import apiService from '../../services/config';
 
@@ -89,7 +88,7 @@ export default function VideoPage(): JSX.Element {
                 style={{
                   display: 'flex',
                   flexDirection: 'row',
-                  justifyContent: 'space-between',
+                  justifyContent: 'space-around',
                   width: '100%',
 
                   alignItems: 'center',
@@ -103,7 +102,6 @@ export default function VideoPage(): JSX.Element {
                       locale: ru,
                     })}
                 </Typography>
-                {video?.Likes.length}
                 {video?.Likes.find((el) => el.userId === user.id) ? (
                   <IconButton
                     aria-label="add to favorites"
@@ -119,22 +117,35 @@ export default function VideoPage(): JSX.Element {
                     <FavoriteBorderIcon />
                   </IconButton>
                 )}
+                {video?.Likes.length}
                 <Button>Создать комнату +</Button>
               </div>
               <Divider />
-              <div style={{ display: 'flex', flexDirection: 'row' }}>
+              <div style={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
                 <ListItem>
-                  <ListItemAvatar>
-                    <Avatar alt="Remy Sharp" src="" />
-                  </ListItemAvatar>
-                  <ListItemText>
-                    <Typography>{video && video.Channel.name}</Typography>
-                    <Typography color="text.secondary">
-                      {video && video.Channel.Subscriptions.length} подписчиков
-                    </Typography>
-                  {user.id !== video?.channelId?
+                  <Link
+                    to={`/channel/${video?.Channel.id}`}
+                    style={{
+                      textDecoration: 'none',
+                      color: 'white',
+                      display: 'flex',
+                      alignItems: 'center',
+                      width: '100%',
+                    }}
+                  >
+                    <ListItemAvatar>
+                      <Avatar alt="Remy Sharp" src="" />
+                    </ListItemAvatar>
+                    <ListItemText>
+                      <Typography>{video && video.Channel.name}</Typography>
+                      <Typography color="text.secondary">
+                        {video && video.Channel.Subscriptions.length} подписчиков
+                      </Typography>
+                    </ListItemText>
+                  </Link>
+                  {user.id !== video?.channelId ? (
                     <Button
-                      style={{ width: '100px', height: '30px', fontSize:'11px' }}
+                      style={{ width: '100px', height: '30px', fontSize: '11px' }}
                       variant="contained"
                       onClick={() => {
                         if (user.status === 'logged') {
@@ -142,11 +153,13 @@ export default function VideoPage(): JSX.Element {
                         }
                       }}
                     >
-                    {video?.Channel.Subscriptions.find((el) => el.userId === user.id)? "Отписаться" : "Подписаться"}
+                      {video?.Channel.Subscriptions.find((el) => el.userId === user.id)
+                        ? 'Отписаться'
+                        : 'Подписаться'}
                     </Button>
-                    : false
-                  }
-                  </ListItemText>
+                  ) : (
+                    false
+                  )}
                 </ListItem>
               </div>
               <Divider />

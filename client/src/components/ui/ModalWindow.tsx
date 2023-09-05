@@ -1,10 +1,9 @@
 import { Box, Button, Modal, TextField, Typography } from '@mui/material';
 import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/reduxHooks';
-import { getChannelThunk } from '../../redux/slices/channel/channelThunk';
+import { setVideos } from '../../redux/slices/channel/channelSlice';
 import { swapModal } from '../../redux/slices/modals/modalSlice';
 import apiService from '../../services/config';
-import { setVideos } from '../../redux/slices/channel/channelSlice';
 
 export default function ModalWindow(): JSX.Element {
   const modal = useAppSelector((state) => state.modal);
@@ -15,9 +14,6 @@ export default function ModalWindow(): JSX.Element {
     e.preventDefault();
 
     const fileData = Object.fromEntries(new FormData(e.currentTarget));
-    // const formData = Object.fromEntries(new FormData(e.currentTarget))
-
-    // console.log('=---------------', fileData);
 
     apiService
       .post('/upload/video', fileData, {
@@ -29,8 +25,6 @@ export default function ModalWindow(): JSX.Element {
       .catch((err) => Promise.reject(err));
 
     dispatch(swapModal({ value: false }));
-
-    // console.log(user.id, '------------------------', channel);
   };
 
   const style = {

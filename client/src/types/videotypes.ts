@@ -70,3 +70,10 @@ export type CommentsType = {
     name: string;
   };
 };
+
+export type CommentFormType = {
+  message: string;
+}
+
+
+
