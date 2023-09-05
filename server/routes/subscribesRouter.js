@@ -1,5 +1,5 @@
 const router = require('express').Router;
-const { Video, Channel, User, Subscription } = require('../db/models');
+const { Subscription } = require('../db/models');
 
 const subRouter = router();
 

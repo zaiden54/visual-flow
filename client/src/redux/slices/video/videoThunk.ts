@@ -1,7 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
-import type { ChannelType, VideoType } from '../../../types/videotypes';
 import apiService from '../../../services/config';
+import type { VideoType } from '../../../types/videotypes';
 
 export const getSubVideoThunk = createAsyncThunk<VideoType[]>(
   '/videos/subs',

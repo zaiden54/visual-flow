@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import type { ChannelType, VideoType } from '../../../types/videotypes';
 import apiService from '../../../services/config';
+import type { ChannelType } from '../../../types/videotypes';
 
 export const getChannelThunk = createAsyncThunk<ChannelType, number>(
   '/channel/:id',
