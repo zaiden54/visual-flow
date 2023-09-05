@@ -24,7 +24,6 @@ const watchSlice = createSlice({
       const ind = state?.Channel.Subscriptions.findIndex(
         (el) => el.id === action.payload.id,
       ) as number;
-      console.log('INDEX', ind);
       if (ind >= 0) {
         state?.Channel.Subscriptions.splice(ind, 1);
       } else {
@@ -35,9 +34,9 @@ const watchSlice = createSlice({
     builder.addCase(setLikeThunk.fulfilled, (state, action) => {
       if (state) {
         if (state.Likes.findIndex((el) => el.id === action.payload.id) >= 0) {
-          state.Likes = state?.Likes.filter((el) => el.id !== action.payload.id)
+          state.Likes = state?.Likes.filter((el) => el.id !== action.payload.id);
         } else {
-          state?.Likes.push(action.payload)
+          state?.Likes.push(action.payload);
         }
       }
     });
