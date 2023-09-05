@@ -1,11 +1,11 @@
+import { Box } from '@mui/material';
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/reduxHooks';
+import { getChannelThunk } from '../../redux/slices/channel/channelThunk';
 import MenuLeft from '../ui/MenuLeft';
 import NavBar from '../ui/NavBar';
 import VideoList from '../ui/VideoList';
-import { getChannelThunk } from '../../redux/slices/channel/channelThunk';
-import { Box } from '@mui/material';
 
 export default function ChannelPage(): JSX.Element {
   const channel = useAppSelector((state) => state.channel);
@@ -20,6 +20,7 @@ export default function ChannelPage(): JSX.Element {
     <>
       <MenuLeft />
       <NavBar />
+
       <Box
         sx={{
           display: 'flex',
