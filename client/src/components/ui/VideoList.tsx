@@ -12,7 +12,7 @@ export default function VideoList({ videos }: VideoListProps): JSX.Element {
       sx={{
         display: 'flex',
         flexWrap: 'wrap',
-        // flexGrow: 1,
+
         marginTop: '2rem',
         marginBottom: '2rem',
       }}

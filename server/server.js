@@ -5,6 +5,7 @@ const indexRouter = require('./routes/indexRouter');
 const postRouter = require('./routes/postRouter');
 const watchRouter = require('./routes/watchRouter');
 const channelRouter = require('./routes/channelRouter');
+const subRouter = require('./routes/subscribesRouter');
 
 const PORT = process.env.PORT || 3001;
 
@@ -20,6 +21,7 @@ app.use('/api', indexRouter);
 app.use('/api/videos', postRouter);
 app.use('/api/watch', watchRouter);
 app.use('/api/channel', channelRouter);
+app.use('/api/subscription', subRouter);
 
 const start = async () => {
   try {

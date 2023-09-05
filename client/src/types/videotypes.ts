@@ -46,7 +46,7 @@ export type WatchChannelType = {
   id: number;
   name: string;
   userId: number;
-  Subscriptions: ChannelSubscription[];
+  Subscriptions: SubscriptionsType[];
 };
 
 export type ChannelSubscription = {
