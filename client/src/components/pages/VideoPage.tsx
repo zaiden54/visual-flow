@@ -17,6 +17,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/reduxHooks';
 import { getWatchThunk, setLikeThunk } from '../../redux/slices/video/watchThunk';
 import Comments from '../ui/Comments';
@@ -28,6 +29,7 @@ import { addSubThunk } from '../../redux/slices/subs/subThunk';
 export default function VideoPage(): JSX.Element {
   const user = useAppSelector((state) => state.user.data);
   const video = useAppSelector((state) => state.currentVideo);
+  console.log(video)
 
   const dispatch = useAppDispatch();
 
@@ -80,12 +82,21 @@ export default function VideoPage(): JSX.Element {
                   54623754 просмотров | опубликовано когда-то
                 </Typography>
                 {video?.Likes.length}
+                {video?.Likes.find((el) => el.userId === user.id)?
+                <IconButton
+                  aria-label="add to favorites"
+                  onClick={() => dispatch(setLikeThunk({ videoId, userId }))}
+                >
+                  <FavoriteIcon />
+                </IconButton>
+                :
                 <IconButton
                   aria-label="add to favorites"
                   onClick={() => dispatch(setLikeThunk({ videoId, userId }))}
                 >
                   <FavoriteBorderIcon />
                 </IconButton>
+                }
                 <Button>Create your Room +</Button>
               </div>
               <Divider />
