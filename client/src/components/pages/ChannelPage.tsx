@@ -9,6 +9,8 @@ import MenuLeft from '../ui/MenuLeft';
 import NavBar from '../ui/NavBar';
 import VideoList from '../ui/VideoList';
 import { addSubThunk } from '../../redux/slices/subs/subThunk';
+import VideoCard from '../ui/VideoCard';
+import useDeleteVideo from '../../redux/hooks/deleteVideoHook';
 
 export default function ChannelPage(): JSX.Element {
   const channel = useAppSelector((state) => state.channel);
@@ -24,6 +26,8 @@ export default function ChannelPage(): JSX.Element {
 
   console.log('----------',channel);
   
+  const {deleteVideoHandler} = useDeleteVideo()
+
   return (
     <>
       <MenuLeft />
@@ -86,7 +90,17 @@ export default function ChannelPage(): JSX.Element {
               </Stack>
             </Stack>
           </Stack>
-          <VideoList videos={channel?.Videos} />
+          <Box  sx={{
+        display: 'flex',
+        flexWrap: 'wrap',
+        flexDirection: 'row',
+        marginTop: '2rem',
+        marginBottom: '2rem',
+      }}> 
+          {/* <VideoList videos={channel?.Videos} /> */}
+          {channel?.Videos?.map((el) => <div key={el.id}><VideoCard video={el} />
+          <Button onClick={(e) => deleteVideoHandler(e, el.id)} style={{alignSelf:'center'}}> huhu </Button> </div>)}
+      </Box>
         </div>
       </Box>
     </>

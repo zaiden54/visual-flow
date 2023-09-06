@@ -62,7 +62,7 @@ export default function VideoPage(): JSX.Element {
   const channelId = video?.Channel.id;
 
   return (
-    <div>
+    <div >
       <MenuLeft />
       <NavBar />
       <Stack
