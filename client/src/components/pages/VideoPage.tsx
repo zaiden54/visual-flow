@@ -101,7 +101,7 @@ export default function VideoPage(): JSX.Element {
                 style={{
                   display: 'flex',
                   flexDirection: 'row',
-                  justifyContent: 'space-around',
+                  justifyContent: 'space-between',
                   width: '100%',
 
                   alignItems: 'center',
@@ -109,7 +109,7 @@ export default function VideoPage(): JSX.Element {
               >
                 <h4>{video?.title}</h4>
 
-                {video?.Likes.find((el) => el.userId === user.id) ? (
+                {/* {video?.Likes.find((el) => el.userId === user.id) ? (
                   <IconButton
                     aria-label="add to favorites"
                     onClick={() => {
@@ -127,57 +127,76 @@ export default function VideoPage(): JSX.Element {
                   >
                     <FavoriteBorderIcon />
                   </IconButton>
-                )}
-                {video?.Likes.length}
-                <Button
-                  onClick={() => {
-                    if (video) {
-                      void dispatch(createRoomThunk(video));
-                    }
+                )} */}
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    alignContent: 'baseline',
+
+                    justifyContent: 'end',
+                    width: '40%',
                   }}
                 >
-                  Создать комнату +
-                </Button>
-
-                <div>
-                  <IconButton
-                    size="large"
-                    aria-label="account of current user"
-                    aria-controls="menu-appbar"
-                    aria-haspopup="true"
-                    onClick={handleMenu}
-                    color="inherit"
-                  >
-                    <MoreVertIcon />
-                  </IconButton>
-                  <Menu
-                    id="menu-appbar"
-                    anchorEl={anchorEl}
-                    anchorOrigin={{
-                      vertical: 'top',
-                      horizontal: 'left',
-                    }}
-                    keepMounted
-                    transformOrigin={{
-                      vertical: 'bottom',
-                      horizontal: 'left',
-                    }}
-                    open={Boolean(anchorEl)}
-                    onClose={handleClose}
-                  >
-                    <MenuItem
-                      style={{ width: '100px' }}
+                  <div style={{ alignItems: 'center', display: 'flex',marginRight:'5%' }}>
+                    <IconButton
+                      aria-label="add to favorites"
                       onClick={() => {
-                        void dispatch(reportThunk({ videoId }));
-                        console.log(videoId);
-
-                        handleClose();
+                        void void dispatch(setLikeThunk({ videoId, userId }));
                       }}
                     >
-                      Report
-                    </MenuItem>
-                    {/* <MenuItem onClick={handleClose}>My account</MenuItem> */}
-                  </Menu>
+                      <FavoriteIcon />
+                    </IconButton>
+                    {video?.Likes.length}
+                  </div>
+                  <Button
+                    onClick={() => {
+                      if (video) {
+                        void dispatch(createRoomThunk(video));
+                      }
+                    }}
+                  >
+                    Создать комнату +
+                  </Button>
+                  <div>
+                    <IconButton
+                      size="large"
+                      aria-label="account of current user"
+                      aria-controls="menu-appbar"
+                      aria-haspopup="true"
+                      onClick={handleMenu}
+                      color="inherit"
+                    >
+                      <MoreVertIcon />
+                    </IconButton>
+                    <Menu
+                      id="menu-appbar"
+                      anchorEl={anchorEl}
+                      anchorOrigin={{
+                        vertical: 'top',
+                        horizontal: 'left',
+                      }}
+                      keepMounted
+                      transformOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'left',
+                      }}
+                      open={Boolean(anchorEl)}
+                      onClose={handleClose}
+                    >
+                      <MenuItem
+                        style={{ width: '100px' }}
+                        onClick={() => {
+                          void dispatch(reportThunk({ videoId }));
+                          console.log(videoId);
+                          handleClose();
+                        }}
+                      >
+                        Report
+                      </MenuItem>
+                      {/* <MenuItem onClick={handleClose}>My account</MenuItem> */}
+                    </Menu>
+                  </div>
                 </div>
               </div>
               <Divider />
