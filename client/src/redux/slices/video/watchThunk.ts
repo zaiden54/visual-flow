@@ -20,11 +20,11 @@ export const setLikeThunk = createAsyncThunk(
 );
 
 export const reportThunk = createAsyncThunk<ReportType, number>(
-  '/video/report',
-  async (videoId): Promise<ReportType> => {
-    const { data } = await apiService.post<ReportType>('/videos/report', videoId);
+  '/videos/rep',
+  async ({ videoId }): Promise<ReportType> => {
+    const { data } = await apiService.post<ReportType>('/videos/rep', { videoId });
     console.log(data);
-    
+
     return data;
   },
 );

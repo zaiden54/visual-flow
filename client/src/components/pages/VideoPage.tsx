@@ -168,7 +168,9 @@ export default function VideoPage(): JSX.Element {
                     <MenuItem
                       style={{ width: '100px' }}
                       onClick={() => {
-                        void dispatch(reportThunk(video?.id));
+                        void dispatch(reportThunk({ videoId }));
+                        console.log(videoId);
+
                         handleClose();
                       }}
                     >

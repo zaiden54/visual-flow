@@ -35,10 +35,9 @@ channelRouter.delete('/delete/:videoId', async (req, res) => {
   //   res.status(401).json({ message: 'not authorized' });
   // } else {
   await video.destroy();
-  const channelId = req.session.user.id;
-
-  const allVideos = await Video.findAll({ where: { channelId } });
-  res.json(allVideos);
+  // const channelId = req.session.user.id;
+  // const allVideos = await Video.findAll({ where: { channelId } });
+  res.json(video);
 });
 
 module.exports = channelRouter;

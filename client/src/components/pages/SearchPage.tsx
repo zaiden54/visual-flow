@@ -6,7 +6,7 @@ import MenuLeft from '../ui/MenuLeft';
 import ModalWindow from '../ui/ModalWindow';
 import NavBar from '../ui/NavBar';
 import VideoListItem from '../ui/VideoListItem';
-import searchThunk from '../../redux/slices/search/searchThunk';
+import { addSearchThunk, searchThunk } from '../../redux/slices/search/searchThunk';
 
 export default function SearchPage(): JSX.Element {
 
@@ -58,7 +58,7 @@ export default function SearchPage(): JSX.Element {
                 <VideoListItem video={el} />
               </ListItem>
             )): false}
-            {searchVideos.rows?.length !== searchVideos.count ? <Button onClick={() => dispatch(searchThunk({searchString, offset: searchVideos.rows.length}))}>Загрузить ещё</Button> : false}
+            {searchVideos.rows?.length !== searchVideos.count ? <Button onClick={() => dispatch(addSearchThunk({searchString, offset: searchVideos.rows.length}))}>Загрузить ещё</Button> : false}
           </List>
         </div>
       </Box>

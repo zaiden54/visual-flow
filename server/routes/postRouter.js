@@ -155,26 +155,39 @@ postRouter.post('/search/:offset', async (req, res) => {
   return res.json({ rows, count });
 });
 
-postRouter.post('/report', async (req, res) => {
+postRouter.post('/rep', async (req, res) => {
+  console.log(req.body);
   try {
     const { videoId } = req.body;
 
-    const [report, created] = await Report.findOrCreate({
+    const [rep, newRep] = await Report.findOrCreate({
       where: { videoId },
       defaults: { videoId },
     });
+    console.log(newRep, rep);
+    if (!newRep) {
+      rep.reportCount += 1;
+      await rep.save();
 
-    if (!created) {
-      report.reportCount += 1;
-      await report.save();
-      return res.json(report);
+      return res.json(rep);
     }
-
-    // report.reportCount += 1;
-    // await report.save();
-    return res.json(report);
+    // rep.reportCount += 1;
+    // await rep.save();
+    return res.json(rep);
   } catch (err) {
-    return res.json({ message: err });
+    return res.status(404).json(err);
   }
+});
+
+postRouter.get('/rep/all', async (req, res) => {
+  const allReps = await Report.findAll({
+    include: {
+      model: Video,
+      include: Channel,
+      // include: Report,
+    },
+  });
+  console.log('BAAACKKKKK', allReps);
+  res.json(allReps);
 });
 module.exports = postRouter;

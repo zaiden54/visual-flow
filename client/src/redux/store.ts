@@ -4,11 +4,12 @@ import modalReducer from './slices/modals/modalSlice';
 import subChannelReducer from './slices/subChannels/subChannelSlice';
 import userReducer from './slices/user/userSlice';
 import randomVideoReducer from './slices/video/randomVideoSlice';
-import videoSubReducer from './slices/video/subAllSlice';
+// import videoSubReducer from './slices/video/subAllSlice';
+import roomsReducer from './slices/rooms/roomSlice';
+import searchReducer from './slices/search/searchSlice';
+import allRepReducer from './slices/video/reportSlice';
 import videoReducer from './slices/video/videoSlice';
 import currentVideoReducer from './slices/video/watchSlice';
-import roomsReducer from './slices/rooms/roomSlice'
-import searchReducer from './slices/search/searchSlice';
 
 export const store = configureStore({
   reducer: {
@@ -18,9 +19,10 @@ export const store = configureStore({
     videos: videoReducer,
     random: randomVideoReducer,
     subs: subChannelReducer,
-    subVideos: videoSubReducer,
+    // subVideos: videoSubReducer,
     channel: channelReducer,
     currentVideo: currentVideoReducer,
+    allReps: allRepReducer,
     rooms: roomsReducer,
   },
 });
