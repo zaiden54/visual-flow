@@ -9,7 +9,7 @@ const videoSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getSubVideoThunk.fulfilled, (state, action) => action.payload);
+    builder.addCase(getSubVideoThunk.fulfilled, (state, action) => action.payload.reverse());
   },
 });
 
