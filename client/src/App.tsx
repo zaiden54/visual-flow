@@ -15,6 +15,7 @@ import { useAppDispatch, useAppSelector } from './redux/hooks/reduxHooks';
 import { checkUserThunk } from './redux/slices/user/userThunks';
 import Comments from './components/ui/Comments';
 import MiniDrawer from './components/ui/ButtonMenuLeftTest';
+import SearchPage from './components/pages/SearchPage';
 
 function App(): JSX.Element {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
@@ -48,6 +49,7 @@ function App(): JSX.Element {
           <Route path="/mostViewed" element={<MostViewedPage />} />
           <Route path="/" element={<MainPage />} />
           <Route path="/subs" element={<SubscriptionsPage />} />
+          <Route path="/search/:searchString" element={<SearchPage />} />
           <Route
             element={<PrivateRouter redirectTo="/" isAllowed={user.data.status !== 'logged'} />}
           >

@@ -1,22 +1,28 @@
-import { Box, List, ListItem } from '@mui/material';
-import React, { useEffect } from 'react';
+import { Box, Button, List, ListItem } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/reduxHooks';
-import { getAllSubVideoThunk } from '../../redux/slices/video/videoThunk';
 import MenuLeft from '../ui/MenuLeft';
 import ModalWindow from '../ui/ModalWindow';
 import NavBar from '../ui/NavBar';
 import VideoListItem from '../ui/VideoListItem';
+import searchThunk from '../../redux/slices/search/searchThunk';
 
-export default function SubscriptionsPage(): JSX.Element {
+export default function SearchPage(): JSX.Element {
+
+  const [offset, setOffset] = useState(0)
+
+  const searchString = useParams();
   const dispatch = useAppDispatch();
-  const subVideos = useAppSelector((state) => state.subVideos);
+  console.log(searchString)
+  const searchVideos = useAppSelector((state) => state.search);
+  
   useEffect(() => {
-    void dispatch(getAllSubVideoThunk());
-  }, []);
+    void dispatch(searchThunk({searchString, offset}))
+  }, [searchString])
 
   return (
     <>
-      <div>SUUUBS</div>
       <ModalWindow />
       <MenuLeft />
       <NavBar />
@@ -47,11 +53,12 @@ export default function SubscriptionsPage(): JSX.Element {
               marginTop: '70px',
             }}
           >
-            {subVideos.map((el) => (
+            {searchVideos?.rows?searchVideos.rows.map((el) => (
               <ListItem key={el.id}>
                 <VideoListItem video={el} />
               </ListItem>
-            ))}
+            )): false}
+            {searchVideos.rows?.length !== searchVideos.count ? <Button onClick={() => dispatch(searchThunk({searchString, offset: searchVideos.rows.length}))}>Загрузить ещё</Button> : false}
           </List>
         </div>
       </Box>
