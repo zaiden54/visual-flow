@@ -15,6 +15,7 @@ import { useAppDispatch, useAppSelector } from './redux/hooks/reduxHooks';
 import { checkUserThunk } from './redux/slices/user/userThunks';
 import Comments from './components/ui/Comments';
 import MiniDrawer from './components/ui/ButtonMenuLeftTest';
+import AdminPage from './components/pages/AdminPage';
 import SearchPage from './components/pages/SearchPage';
 
 function App(): JSX.Element {
@@ -33,6 +34,7 @@ function App(): JSX.Element {
   const dispatch = useAppDispatch();
 
   const user = useAppSelector((state) => state.user);
+  console.log(user.data.status === 'logged');
 
   useEffect(() => {
     void dispatch(checkUserThunk());
@@ -55,8 +57,18 @@ function App(): JSX.Element {
           >
             <Route path="/auth/:auth" element={<AuthPage />} />
           </Route>
+          <Route
+            element={
+              <PrivateRouter
+                redirectTo="/subs"
+                isAllowed={user.data.status === 'logged' && user.data.roleId === 1}
+              />
+            }
+          >
+            <Route path="/admin" element={<AdminPage />} />
+          </Route>
           <Route path="/channel/:id" element={<ChannelPage />} />
-          <Route path="/ololo" element={<MiniDrawer />} /> 
+          <Route path="/ololo" element={<MiniDrawer />} />
           <Route path="/chat" element={<TestChatPage />} />
         </Routes>
       </div>

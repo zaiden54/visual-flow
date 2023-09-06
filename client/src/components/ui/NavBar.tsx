@@ -80,16 +80,13 @@ export default function NavBar(): JSX.Element {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <Box sx={{ display: 'flex', flexDirection: 'column' }} alignItems="center">
+      <Box sx={{ display: 'flex', flexDirection: 'column', width: '13vw' }} alignItems="center">
         <Avatar style={{ marginTop: '3vh' }} alt="avatar" title="userpic" />
         {user.status === 'logged' ? (
           <>
             <CardContent>
               <Typography gutterBottom variant="h5" component="div">
                 {user.name}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                много подпешникафф
               </Typography>
             </CardContent>
             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
@@ -169,12 +166,14 @@ export default function NavBar(): JSX.Element {
         </IconButton>
         <p>Profile</p>
       </MenuItem>
-      <MenuItem onClick={() => dispatch(swapModal({ value: true }))}>
-        <IconButton>
-          <AddCircleOutlinedIcon />
-        </IconButton>
-        <p>Add video</p>
-      </MenuItem>
+      {user.status === 'logged' && (
+        <MenuItem onClick={() => dispatch(swapModal({ value: true }))}>
+          <IconButton>
+            <AddCircleOutlinedIcon />
+          </IconButton>
+          <p>Add video</p>
+        </MenuItem>
+      )}
     </Menu>
   );
 
@@ -192,7 +191,7 @@ export default function NavBar(): JSX.Element {
               component="div"
               sx={{ display: { xs: 'none', sm: 'block' } }}
             >
-              Kinda Logo/Visual Flow
+              Visual Flow
             </Typography>
           </Link>
           {/* <Box component="form" onSubmit={searchHandler}> */}
@@ -212,9 +211,11 @@ export default function NavBar(): JSX.Element {
             </Link>
           {/* </Box> */}
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-            <IconButton type="button" onClick={() => dispatch(swapModal({ value: true }))}>
-              <AddCircleOutlinedIcon />
-            </IconButton>
+            {user.status === 'logged' && (
+              <IconButton type="button" onClick={() => dispatch(swapModal({ value: true }))}>
+                <AddCircleOutlinedIcon />
+              </IconButton>
+            )}
             <IconButton
               size="large"
               edge="end"

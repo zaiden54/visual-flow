@@ -21,6 +21,7 @@ import MailIcon from '@mui/icons-material/Mail';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
+import AutoAwesomeMotionIcon from '@mui/icons-material/AutoAwesomeMotion';
 import SearchIcon from '@mui/icons-material/Search';
 import Button from '@mui/material/Button';
 import CardActions from '@mui/material/CardActions';
@@ -29,6 +30,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
 // import AppBar from '@mui/material/AppBar';
+import HomeIcon from '@mui/icons-material/Home';
 import Avatar from '@mui/material/Avatar';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/reduxHooks';
@@ -217,7 +219,7 @@ const renderMenu = (
           </IconButton>
           <Link to="/" style={{textDecoration: 'none', color: 'white'}}>
           <Typography variant="h6" noWrap component="div">
-          Kinda Logo/Visual Flow
+          Visual Flow
           </Typography>
           </Link>
           <Box component="form">
@@ -258,7 +260,7 @@ const renderMenu = (
         </DrawerHeader>
         <Divider />
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+          {['Rooms', 'Subscribers', 'Most viewed'].map((text, index) => (
             <ListItem key={text} disablePadding sx={{ display: 'block' }}>
               <ListItemButton
                 sx={{
@@ -274,7 +276,7 @@ const renderMenu = (
                     justifyContent: 'center',
                   }}
                 >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                  {index % 2 === 0 ? <HomeIcon /> :<AutoAwesomeMotionIcon />}
                 </ListItemIcon>
                 <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>

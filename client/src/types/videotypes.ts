@@ -8,13 +8,15 @@ export type VideoType = {
   preview: string;
   link: string;
   Channel: ChannelType;
+  reports: ReportType;
 };
 
 export type SubscriptionsType = {
-  id:number;
-  userId:number,
-  channelId:number
-}
+  id: number;
+  userId: number;
+  channelId: number;
+  Channel: ChannelType;
+};
 
 export type ChannelType = {
   id: number;
@@ -22,10 +24,10 @@ export type ChannelType = {
   userId: number;
   Videos: VideoType[];
   createdAt: string;
-  Subscriptions:SubscriptionsType[]
+  Subscriptions: SubscriptionsType[];
 };
 
-export type VideoPageType = WatchType | null
+export type VideoPageType = WatchType | null;
 
 export type WatchType = {
   id: number;
@@ -39,8 +41,8 @@ export type WatchType = {
   Channel: WatchChannelType;
   Likes: LikesType[];
   Comments: CommentsType[];
+  reports: ReportType
 };
-
 
 export type WatchChannelType = {
   id: number;
@@ -67,13 +69,15 @@ export type CommentsType = {
   videoId: number;
   message: string;
   Users: {
-    name: string
-  }
+    name: string;
+  };
 };
 
 export type CommentFormType = {
   message: string;
-}
+};
 
-
-
+export type ReportType = {
+  videoId: number;
+  counter: number;
+};

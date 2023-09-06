@@ -1,6 +1,6 @@
 const router = require('express').Router;
+const { Video, Channel, sequelize, Subscription, Comment, Like, Report } = require('../db/models');
 const { Op } = require('sequelize');
-const { Video, Channel, sequelize, Subscription, Comment, Like } = require('../db/models');
 
 const postRouter = router();
 
@@ -137,4 +137,41 @@ postRouter.post('/search/:offset', async (req, res) => {
   return res.json({ rows, count });
 });
 
+postRouter.post('/search/:offset', async (req, res) => {
+  const { offset } = req.params;
+  const { searchString } = req.body;
+  console.log('offset', offset)
+  console.log('searchString', searchString)
+  const { rows, count } = await Video.findAndCountAll({
+    include: Channel,
+    where: {
+      title: {
+        [Op.substring]: searchString,
+      },
+    },
+    offset,
+    limit: 5,
+  });
+  return res.json({ rows, count });
+});
+
+postRouter.post('/report', async (req, res) => {
+  try {
+    const { videoId } = req.body;
+    const [rep, newRep] = await Report.findOrCreate({
+      where: { videoId },
+      defaults: { videoId },
+    });
+    if (!newRep) {
+      newRep.reportCount += 1;
+      await newRep.save();
+      return res.json(newRep);
+    }
+    rep.reportCount += 1;
+    await rep.save();
+    return res.json(rep);
+  } catch {
+    return res.status(404).json({ message: 'Video not found' });
+  }
+});
 module.exports = postRouter;

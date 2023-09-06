@@ -19,21 +19,23 @@ export default function Comments(): JSX.Element {
   return (
     <div style={{ marginLeft: '5%' }}>
       <Typography variant="subtitle1">Add a comment: </Typography>
-    <Box component="form" onSubmit={(e) => addNewCommentHandler(e, video?.link)} style={{ display: 'flex', flexDirection: 'row' }} sx={{ width: '100%'}}>
+    <Box component="form" onSubmit={(e) => addNewCommentHandler(e, video?.link)} style={{ display: 'flex', flexDirection: 'row', marginBottom: '3%' }} sx={{ width: '100%'}}>
             <TextField
               id="outlined-basic"
-              sx={{ width:'85%', height: 40 }}
+              sx={{ width:'84%', height: 40 }}
               variant="outlined"
               size="small"
               name="message"
             />
             <Button variant="outlined" style={{ height: 40, marginRight: '5%' }} type="submit">
-              Comment
+               + коммент
             </Button>
           </Box>
-          <List sx={{ width: '100%' }}>
+          <List 
+          sx={{ height: '400px', overflow: 'auto'}}
+          >
         {video?.Comments?.map((el) => (
-          <div key={el.id} >
+          <div key={el.id} style={{ display:'flex', flexWrap:'wrap', flexDirection:'column', width:"100%" }} >
             <ListItem alignItems="flex-start">
               <ListItemAvatar>
                 <Avatar alt={`${el.User.name}`} src="" />
@@ -41,13 +43,13 @@ export default function Comments(): JSX.Element {
               <ListItemText
                 primary={`${el.User.name}`}
                 secondary={
-                  <Typography sx={{ display: 'inline' }} component="span" color="text.secondary">
+                  <Typography sx={{ display: 'inline', wordWrap: 'break-word', overflow: 'hidden'}} component="span" color="text.secondary">
                     {el.message}
                   </Typography>
                 }
               />
             </ListItem>
-            <Divider variant="inset" component="li" sx={{ width: '100%' }} />
+            <Divider variant="inset" component="li" sx={{ width: '93%' }} />
           </div>
         ))}
       </List>
