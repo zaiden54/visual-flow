@@ -1,5 +1,6 @@
 const router = require('express').Router;
 const { Video, Channel, sequelize, Subscription, Comment, Like, Report } = require('../db/models');
+const { Op } = require('sequelize');
 
 const postRouter = router();
 
@@ -116,6 +117,42 @@ postRouter.put('/like', async (req, res) => {
     },
   });
   return res.json(liked);
+});
+
+postRouter.post('/search/:offset', async (req, res) => {
+  const { offset } = req.params;
+  const { searchString } = req.body;
+  console.log('offset', offset)
+  console.log('searchString', searchString)
+  const { rows, count } = await Video.findAndCountAll({
+    include: Channel,
+    where: {
+      title: {
+        [Op.substring]: searchString,
+      },
+    },
+    offset,
+    limit: 5,
+  });
+  return res.json({ rows, count });
+});
+
+postRouter.post('/search/:offset', async (req, res) => {
+  const { offset } = req.params;
+  const { searchString } = req.body;
+  console.log('offset', offset)
+  console.log('searchString', searchString)
+  const { rows, count } = await Video.findAndCountAll({
+    include: Channel,
+    where: {
+      title: {
+        [Op.substring]: searchString,
+      },
+    },
+    offset,
+    limit: 5,
+  });
+  return res.json({ rows, count });
 });
 
 postRouter.post('/report', async (req, res) => {

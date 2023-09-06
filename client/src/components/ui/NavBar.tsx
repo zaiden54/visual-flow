@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
@@ -21,11 +21,13 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks/reduxHooks';
 import { swapModal } from '../../redux/slices/modals/modalSlice';
 import { logoutUserThunk } from '../../redux/slices/user/userThunks';
 import { getChannelThunk } from '../../redux/slices/channel/channelThunk';
+import searchThunk from '../../redux/slices/search/searchThunk';
 
 export default function NavBar(): JSX.Element {
   const user = useAppSelector((state) => state.user.data);
+  const dispatch = useAppDispatch()
 
-  const dispatch = useAppDispatch();
+  const [string, setString] = useState('')
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -49,6 +51,18 @@ export default function NavBar(): JSX.Element {
   const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>): void => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
+
+  // const searchHandler = async (e) => {
+  //   e.preventDefault()
+  //   const formData = Object.fromEntries(new FormData(e.currentTarget))
+  //   console.log(formData)
+  //   dispatch(searchThunk(formData))
+  // }
+
+  const inputControl = async (e) => {
+    await setString(e.currentTarget.value)
+  }
+
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
@@ -80,7 +94,6 @@ export default function NavBar(): JSX.Element {
                 <ListItemButton
                   onClick={() => {
                     void dispatch(getChannelThunk(user.id));
-
                     handleMenuClose();
                   }}
                 >
@@ -181,18 +194,22 @@ export default function NavBar(): JSX.Element {
               Visual Flow
             </Typography>
           </Link>
-          <Box component="form">
+          {/* <Box component="form" onSubmit={searchHandler}> */}
             <TextField
+              onChange={inputControl}
+              value={string}
+              name="searchString"
               id="outlined-basic"
               sx={{ width: '50vw', height: 40 }}
               variant="outlined"
-              style={{}}
               size="small"
             />
-            <Button variant="outlined" style={{ height: 40 }} type="submit">
+            <Link to={`/search/${string}`}>
+            <Button variant="outlined" style={{ height: 40 }}>
               <SearchIcon />
             </Button>
-          </Box>
+            </Link>
+          {/* </Box> */}
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
             {user.status === 'logged' && (
               <IconButton type="button" onClick={() => dispatch(swapModal({ value: true }))}>

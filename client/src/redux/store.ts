@@ -8,9 +8,11 @@ import videoSubReducer from './slices/video/subAllSlice';
 import videoReducer from './slices/video/videoSlice';
 import currentVideoReducer from './slices/video/watchSlice';
 import roomsReducer from './slices/rooms/roomSlice'
+import searchReducer from './slices/search/searchSlice';
 
 export const store = configureStore({
   reducer: {
+    search: searchReducer,
     user: userReducer,
     modal: modalReducer,
     videos: videoReducer,
