@@ -10,7 +10,7 @@ import VideoList from './VideoList';
 export default function VideosMap(): JSX.Element {
   const dispatch = useAppDispatch();
   const user = useAppSelector((store) => store.user);
-  const subVideos = useAppSelector((state) => state.videos);
+  const videos = useAppSelector((state) => state.videos);
 
   useEffect(() => {
     void dispatch(getSubVideoThunk());
@@ -34,8 +34,8 @@ export default function VideosMap(): JSX.Element {
       {user.data.status === 'logged' && (
         <>
           <h4>Подписки</h4>
-          <VideoList videos={subVideos.slice(0, 8)} />
-          {subVideos.length > 8 && (
+          <VideoList videos={videos.slice(0, 8)} />
+          {videos.length > 8 && (
             <Link to="/subs">
               <Button type="button">ЕЩЕ</Button>
               {/* <Button size="small" variant="elevated" type="button" color="primary" /> */}

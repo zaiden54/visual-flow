@@ -77,7 +77,7 @@ export default function VideoPage(): JSX.Element {
   const channelId = video?.Channel.id;
 
   return (
-    <div >
+    <div>
       <MenuLeft />
       <NavBar />
       <Stack
@@ -158,7 +158,9 @@ export default function VideoPage(): JSX.Element {
                     <MenuItem
                       style={{ width: '100px' }}
                       onClick={() => {
-                        void dispatch(reportThunk(video?.id));
+                        void dispatch(reportThunk({ videoId }));
+                        console.log(videoId);
+
                         handleClose();
                       }}
                     >
