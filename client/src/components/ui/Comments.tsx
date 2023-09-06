@@ -8,6 +8,7 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import AddCommentIcon from '@mui/icons-material/AddComment';
 import React from 'react';
 import useComments from '../../redux/hooks/commentHooks';
 import { useAppSelector } from '../../redux/hooks/reduxHooks';
@@ -18,17 +19,17 @@ export default function Comments(): JSX.Element {
   
   return (
     <div style={{ marginLeft: '5%' }}>
-      <Typography variant="subtitle1">Add a comment: </Typography>
+      <Typography variant="subtitle1">Написать комментарий: </Typography>
     <Box component="form" onSubmit={(e) => addNewCommentHandler(e, video?.link)} style={{ display: 'flex', flexDirection: 'row', marginBottom: '3%' }} sx={{ width: '100%'}}>
             <TextField
               id="outlined-basic"
-              sx={{ width:'84%', height: 40 }}
+              sx={{ width:'88%', height: 40 }}
               variant="outlined"
               size="small"
               name="message"
             />
             <Button variant="outlined" style={{ height: 40, marginRight: '5%' }} type="submit">
-               + коммент
+              <AddCommentIcon />
             </Button>
           </Box>
           <List 
