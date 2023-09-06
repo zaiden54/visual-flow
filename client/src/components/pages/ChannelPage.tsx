@@ -12,6 +12,7 @@ import MenuLeft from '../ui/MenuLeft';
 import NavBar from '../ui/NavBar';
 import VideoList from '../ui/VideoList';
 
+
 function a11yProps(index: number): JSX.Element {
   return {
     id: `simple-tab-${index}`,
@@ -95,7 +96,7 @@ export default function ChannelPage(): JSX.Element {
                     indicatorColor="primary"
                   >
                     <Tab label="My Videos" {...a11yProps(0)} />
-                    <Tab label="Complaints" {...a11yProps(1)} />
+                    <Tab label="Reports" {...a11yProps(1)} />
                   </Tabs>
                 </Box>
               </Box>
