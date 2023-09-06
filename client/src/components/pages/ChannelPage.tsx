@@ -14,7 +14,8 @@ import NavBar from '../ui/NavBar';
 import VideoList from '../ui/VideoList';
 import { addSubThunk } from '../../redux/slices/subs/subThunk';
 import VideoCard from '../ui/VideoCard';
-import useDeleteVideo from '../../redux/hooks/deleteVideoHook';
+// import useDeleteVideo from '../../redux/hooks/deleteVideoHook';
+// import useDeleteVide
 import { getAllReportedVideosThunk } from '../../redux/slices/video/videoThunk';
 
 function a11yProps(index: number): JSX.Element {
@@ -49,7 +50,7 @@ export default function ChannelPage(): JSX.Element {
   };
   console.log('----------', allReps);
 
-  const { deleteVideoHandler } = useDeleteVideo();
+  // const { deleteVideoHandler } = useDeleteVideo();
 
   return (
     <>

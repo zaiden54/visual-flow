@@ -91,8 +91,12 @@ export default function ModalWindow(): JSX.Element {
           {/* <TextField type="file" name="video" id="outlined-basic" variant="outlined" />
           <TextField type="file" name="preview" id="outlined-basic" variant="outlined" /> */}
           <Button component="label" variant="outlined" style={{marginTop:'10px'}} startIcon={<CloudUploadIcon />}>
-            Upload a file
+            Upload video
             <VisuallyHiddenInput type="file" name="video" />
+          </Button>
+          <Button component="label" variant="outlined" style={{marginTop:'10px'}} startIcon={<CloudUploadIcon />}>
+            Upload preview
+            <VisuallyHiddenInput type="file" name="preview" />
           </Button>
           {/* <input type="text" name="title" placeholder="Введите название видео" />
           <input type="text" name="description" placeholder="Введите описание" />
