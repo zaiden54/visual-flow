@@ -20,14 +20,24 @@ export default function VideosMap(): JSX.Element {
   }, []);
 
   return (
-    <div style={{ display: 'flex', marginTop: '5rem', flexWrap: 'wrap', flexDirection: 'column' }}>
+    <div
+      style={{
+        display: 'flex',
+        marginTop: '5rem',
+        flexWrap: 'wrap',
+        flexDirection: 'column',
+        justifyContent: 'center',
+      }}
+    >
       {user.data.status === 'logged' && (
         <>
           <h4>Подписки</h4>
-          <VideoList videos={subVideos.slice(0,8)} />
-          <Link to="/subs">
-            <Button type="button">ЕЩЕ</Button>
-          </Link>
+          <VideoList videos={subVideos.slice(0, 8)} />
+          {subVideos.length > 8 && (
+            <Link to="/subs">
+              <Button type="button">ЕЩЕ</Button>
+            </Link>
+          )}
           <Divider />
         </>
       )}

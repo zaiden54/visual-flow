@@ -4,7 +4,6 @@ import { getWatchThunk, setLikeThunk } from './watchThunk';
 import type { VideoPageType } from '../../../types/videotypes';
 import createCommentThunk from './commentThunk';
 
-
 const initialState: VideoPageType = null;
 
 const watchSlice = createSlice({
@@ -19,7 +18,10 @@ const watchSlice = createSlice({
 
   extraReducers: (builder) => {
     builder.addCase(getWatchThunk.fulfilled, (state, action) => action.payload);
-    builder.addCase(createCommentThunk.fulfilled, (state, action) => ({...state, Comments: action.payload}))
+    builder.addCase(createCommentThunk.fulfilled, (state, action) => ({
+      ...state,
+      Comments: action.payload,
+    }));
     builder.addCase(addSubThunk.fulfilled, (state, action) => {
       const ind = state?.Channel.Subscriptions.findIndex(
         (el) => el.id === action.payload.id,
