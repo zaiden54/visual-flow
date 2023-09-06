@@ -13,17 +13,14 @@ const channelSlice = createSlice({
       state.Videos = action.payload.reverse();
       console.log(state.Videos);
     },
-    afterDeleteVideos: (state, action: PayloadAction) => {
-      state.Videos = action.payload
-  },
 },
   extraReducers: (builder) => {
     builder.addCase(getChannelThunk.fulfilled, (state, action) => action.payload);
-    builder.addCase(deleteVideoThunk.fulfilled, (state, action) => { state.Videos.filter((el) => el.id !== action.payload.filter((elem) => elem.id === el.id))});
+    builder.addCase(deleteVideoThunk.fulfilled, (state, action) => ({...state, Videos: state.Videos.filter((video) => video.id !== action.payload.id) })); 
   },
 }
 );
 
-export const { setVideos, afterDeleteVideos } = channelSlice.actions;
+export const { setVideos } = channelSlice.actions;
 
 export default channelSlice.reducer;

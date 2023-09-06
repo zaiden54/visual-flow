@@ -14,7 +14,7 @@ export const getChannelThunk = createAsyncThunk<ChannelType, number>(
 );
 export const deleteVideoThunk = createAsyncThunk('/channel/deleteVideo',
   async (videoId: number) => {
-    const { data } = await apiService.delete<VideoType[]>(`/channel/delete/${videoId}`);
+    const { data } = await apiService.delete<VideoType>(`/channel/delete/${videoId}`);
     return data;
   },
 );
