@@ -89,7 +89,7 @@ export default function MenuLeft(): JSX.Element {
               </ListItemButton>
             </ListItem>
           </Link>
-          {(user.data.status==='logged'&&user.data.roleId===1)&&
+          {/* {(user.data.status==='logged'&&user.data.roleId===1)&&
           <Link style={{ textDecoration: 'none', color: 'white' }} to="/admin">
             <ListItem key={2} style={{ padding: '1px', alignItems: 'center' }} disablePadding>
               <ListItemButton
@@ -106,7 +106,7 @@ export default function MenuLeft(): JSX.Element {
               </ListItemButton>
             </ListItem>
           </Link>
-          }
+          } */}
           <Link style={{ textDecoration: 'none', color: 'white' }} to="/mostViewed">
             <ListItem key={3} style={{ padding: '1px', alignItems: 'center' }} disablePadding>
               <ListItemButton

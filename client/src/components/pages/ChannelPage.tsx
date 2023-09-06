@@ -87,7 +87,13 @@ export default function ChannelPage(): JSX.Element {
           {user.status === 'logged' && user.id === channel.userId && user.roleId === 1 && (
             <Box sx={{ width: '100%' }}>
               <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+                <Tabs
+                  value={value}
+                  onChange={handleChange}
+                  aria-label="basic tabs example"
+                  textColor="primary"
+                  indicatorColor="success"
+                >
                   <Tab label="My Videos" {...a11yProps(0)} />
                   <Tab label="Complaints" {...a11yProps(1)} />
                 </Tabs>
