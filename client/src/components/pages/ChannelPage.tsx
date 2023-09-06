@@ -133,7 +133,7 @@ export default function ChannelPage(): JSX.Element {
                     <div key={el.id}>
                       <VideoCard video={el} />
                       <Button
-                        onClick={(e) => deleteVideoHandler(e, el.id)}
+                        onClick={() => void dispatch(deleteVideoThunk(el.id))}
                         style={{ alignSelf: 'center' }}
                       >
                         {' '}
