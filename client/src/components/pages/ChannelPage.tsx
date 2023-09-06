@@ -7,7 +7,7 @@ import Tabs from '@mui/material/Tabs';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/reduxHooks';
-import { getChannelThunk } from '../../redux/slices/channel/channelThunk';
+import { deleteVideoThunk, getChannelThunk } from '../../redux/slices/channel/channelThunk';
 import CustomTabs from '../ui/CustomTabs';
 import MenuLeft from '../ui/MenuLeft';
 import NavBar from '../ui/NavBar';
@@ -41,8 +41,6 @@ export default function ChannelPage(): JSX.Element {
     setValue(newValue);
   };
   console.log('----------',channel);
-  
-  const {deleteVideoHandler} = useDeleteVideo()
 
   return (
     <>
@@ -126,7 +124,7 @@ export default function ChannelPage(): JSX.Element {
       }}> 
           {/* <VideoList videos={channel?.Videos} /> */}
           {channel?.Videos?.map((el) => <div key={el.id}><VideoCard video={el} />
-          <Button onClick={(e) => deleteVideoHandler(e, el.id)} style={{alignSelf:'center'}}> huhu </Button> </div>)}
+          <Button onClick={() => void dispatch(deleteVideoThunk(el.id))} style={{alignSelf:'center'}}> huhu </Button> </div>)}
       </Box>
           )}
         </div>
