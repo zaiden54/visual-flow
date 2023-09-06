@@ -1,6 +1,6 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Card, Typography } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button'
+import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
@@ -15,7 +15,7 @@ import VideoList from '../ui/VideoList';
 import { addSubThunk } from '../../redux/slices/subs/subThunk';
 import VideoCard from '../ui/VideoCard';
 import useDeleteVideo from '../../redux/hooks/deleteVideoHook';
-
+import { getAllReportedVideosThunk } from '../../redux/slices/video/videoThunk';
 
 function a11yProps(index: number): JSX.Element {
   return {
@@ -25,8 +25,11 @@ function a11yProps(index: number): JSX.Element {
 }
 
 export default function ChannelPage(): JSX.Element {
+  // const videos = useAppSelector((state) => state.videos);
   const channel = useAppSelector((state) => state.channel);
   const user = useAppSelector((state) => state.user.data);
+
+  const allReps = useAppSelector((state) => state.allReps);
 
   const { id } = useParams();
 
@@ -35,14 +38,18 @@ export default function ChannelPage(): JSX.Element {
     void dispatch(getChannelThunk(id));
   }, [id]);
 
+  useEffect(() => {
+    void dispatch(getAllReportedVideosThunk());
+  }, []);
+
   const [value, setValue] = useState(0);
 
   const handleChange = (e: React.SyntheticEvent, newValue: number): void => {
     setValue(newValue);
   };
-  console.log('----------',channel);
-  
-  const {deleteVideoHandler} = useDeleteVideo()
+  console.log('----------', allReps);
+
+  const { deleteVideoHandler } = useDeleteVideo();
 
   return (
     <>
@@ -109,25 +116,85 @@ export default function ChannelPage(): JSX.Element {
                 </Box>
               </Box>
               <CustomTabs value={value} index={0}>
-                <VideoList videos={channel?.Videos} />
+                {/* <VideoList videos={channel?.Videos} />
+                 */}
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    flexDirection: 'row',
+                    marginTop: '2rem',
+                    marginBottom: '2rem',
+                  }}
+                >
+                  {/* <VideoList videos={channel?.Videos} /> */}
+                  {channel?.Videos?.map((el) => (
+                    <div key={el.id}>
+                      <VideoCard video={el} />
+                      <Button
+                        onClick={(e) => deleteVideoHandler(e, el.id)}
+                        style={{ alignSelf: 'center' }}
+                      >
+                        {' '}
+                        huhu{' '}
+                      </Button>{' '}
+                    </div>
+                  ))}
+                </Box>
               </CustomTabs>
               <CustomTabs value={value} index={1}>
-                <Typography>hiiii</Typography>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    flexDirection: 'row',
+                    marginTop: '2rem',
+                    marginBottom: '2rem',
+                  }}
+                >
+                  {allReps.map((el) => (
+                    <div key={el.id}>
+                      <Typography style={{ display: 'flex',justifyContent:'center' }}>
+                        {el.reportCount} report(s)
+                      </Typography>
+                      <VideoCard video={el.Video} />
+                      <Button
+                        onClick={(e) => deleteVideoHandler(e, el.id)}
+                        style={{ alignSelf: 'center' }}
+                      >
+                        {' '}
+                        huhu{' '}
+                      </Button>{' '}
+                    </div>
+                  ))}
+                </Box>
               </CustomTabs>
             </>
           ) : (
             // <VideoList videos={channel?.Videos} />
-          <Box  sx={{
-        display: 'flex',
-        flexWrap: 'wrap',
-        flexDirection: 'row',
-        marginTop: '2rem',
-        marginBottom: '2rem',
-      }}> 
-          {/* <VideoList videos={channel?.Videos} /> */}
-          {channel?.Videos?.map((el) => <div key={el.id}><VideoCard video={el} />
-          <Button onClick={(e) => deleteVideoHandler(e, el.id)} style={{alignSelf:'center'}}> huhu </Button> </div>)}
-      </Box>
+            <Box
+              sx={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                flexDirection: 'row',
+                marginTop: '2rem',
+                marginBottom: '2rem',
+              }}
+            >
+              {/* <VideoList videos={channel?.Videos} /> */}
+              {channel?.Videos?.map((el) => (
+                <div key={el.id}>
+                  <VideoCard video={el} />
+                  <Button
+                    onClick={(e) => deleteVideoHandler(e, el.id)}
+                    style={{ alignSelf: 'center' }}
+                  >
+                    {' '}
+                    huhu{' '}
+                  </Button>{' '}
+                </div>
+              ))}
+            </Box>
           )}
         </div>
       </Box>
