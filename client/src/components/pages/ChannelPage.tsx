@@ -116,8 +116,7 @@ export default function ChannelPage(): JSX.Element {
               </CustomTabs>
             </>
           ) : (
-            <VideoList videos={channel?.Videos} />
-          )}
+            // <VideoList videos={channel?.Videos} />
           <Box  sx={{
         display: 'flex',
         flexWrap: 'wrap',
@@ -129,6 +128,7 @@ export default function ChannelPage(): JSX.Element {
           {channel?.Videos?.map((el) => <div key={el.id}><VideoCard video={el} />
           <Button onClick={(e) => deleteVideoHandler(e, el.id)} style={{alignSelf:'center'}}> huhu </Button> </div>)}
       </Box>
+          )}
         </div>
       </Box>
     </>
