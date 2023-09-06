@@ -17,7 +17,6 @@ export default function SubscriptionsPage(): JSX.Element {
   return (
     <>
       <div>SUUUBS</div>
-
       <ModalWindow />
       <MenuLeft />
       <NavBar />

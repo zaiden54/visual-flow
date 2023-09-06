@@ -1,5 +1,5 @@
 const router = require('express').Router;
-const { Subscription } = require('../db/models');
+const { Subscription, Channel } = require('../db/models');
 
 const subRouter = router();
 
@@ -12,16 +12,24 @@ subRouter.post('/', async (req, res) => {
   const [newSub, subbed] = await Subscription.findOrCreate({
     where: { userId, channelId },
     defaults: { userId, channelId },
+    include: Channel,
+  });
+
+  const sub = await Subscription.findOne({
+    where: { id: newSub.id },
+    include: Channel,
   });
 
   if (!subbed) {
     await newSub.destroy();
-    console.log('----------------', newSub);
-
+    console.log(JSON.stringify(newSub, null, 1));
     return res.json(newSub);
   }
 
-  return res.json(newSub);
+  console.log(JSON.stringify(sub, null, 1));
+
+
+  return res.json(sub);
 });
 
 module.exports = subRouter;
