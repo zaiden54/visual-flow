@@ -1,7 +1,7 @@
 const router = require('express').Router;
 const fs = require('fs');
 const path = require('path');
-const { Video, Channel, Subscription, Like, Comment, User } = require('../db/models');
+const { Video, Channel, Subscription, Like, Comment, User, Report } = require('../db/models');
 
 const watchRouter = router();
 
@@ -107,6 +107,26 @@ watchRouter.post('/info/:link', async (req, res) => {
   });
   const data = await Comment.findAll({ where: { videoId: videoId.id }, include: { model: User } });
   res.json(data);
+});
+
+watchRouter.post('/report', async (req, res) => {
+  try {
+    const { videoId } = req.body;
+    const [rep, newRep] = await Report.findOrCreate({
+      where: { videoId },
+      defaults: { videoId },
+    });
+    if (!newRep) {
+      newRep.reportCount += 1;
+      await newRep.save();
+      return res.json(newRep);
+    }
+    rep.reportCount += 1;
+    await rep.save();
+    return res.json(rep);
+  } catch {
+    return res.status(404).json({ message: 'Video not found' });
+  }
 });
 
 module.exports = watchRouter;

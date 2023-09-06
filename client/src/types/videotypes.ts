@@ -8,6 +8,7 @@ export type VideoType = {
   preview: string;
   link: string;
   Channel: ChannelType;
+  reports: ReportType;
 };
 
 export type SubscriptionsType = {
@@ -40,6 +41,7 @@ export type WatchType = {
   Channel: WatchChannelType;
   Likes: LikesType[];
   Comments: CommentsType[];
+  reports: ReportType
 };
 
 export type WatchChannelType = {
@@ -73,7 +75,9 @@ export type CommentsType = {
 
 export type CommentFormType = {
   message: string;
-}
+};
 
-
-
+export type ReportType = {
+  videoId: number;
+  counter: number;
+};

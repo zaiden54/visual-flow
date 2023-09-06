@@ -1,4 +1,4 @@
-import type { PayloadAction} from '@reduxjs/toolkit';
+import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 import type { ChannelType } from '../../../types/videotypes';
 import { getChannelThunk } from './channelThunk';
@@ -10,9 +10,8 @@ const channelSlice = createSlice({
   initialState,
   reducers: {
     setVideos: (state, action: PayloadAction) => {
-      state.Videos = action.payload.reverse()
+      state.Videos = action.payload.reverse();
       console.log(state.Videos);
-      
     },
   },
   extraReducers: (builder) => {
