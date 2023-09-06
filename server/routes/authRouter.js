@@ -10,6 +10,7 @@ authRouter.get('/check', (req, res) => {
   if (!req.session.user) {
     return res.status(401).json({ message: 'no cookies' });
   }
+  console.log('?????????????????????????', req.session.user);
   return res.json(req.session.user);
 });
 
@@ -30,6 +31,7 @@ authRouter.post('/signup', async (req, res) => {
       email,
       password: hash,
       link: activationLink,
+      roleId: null,
     },
   });
 
@@ -51,6 +53,7 @@ authRouter.post('/signup', async (req, res) => {
     email: user.email,
     name: user.name,
     isActivated: user.isActivated,
+    roleId: user.roleId,
   };
 
   return res.json({
@@ -58,6 +61,7 @@ authRouter.post('/signup', async (req, res) => {
     email: user.email,
     name: user.name,
     isActivated: user.isActivated,
+    roleId: user.roleId,
   });
 });
 
@@ -69,7 +73,7 @@ authRouter.post('/signin', async (req, res) => {
   }
 
   const user = await User.findOne({ where: { email } });
-
+  console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!', user);
   if (!user || !(await bcrypt.compare(password, user?.password))) {
     return res.status(400).json({ message: 'Неверная электронная почта или пароль' });
   }
@@ -79,6 +83,7 @@ authRouter.post('/signin', async (req, res) => {
     email: user.email,
     name: user.name,
     isActivated: user.isActivated,
+    roleId: user.roleId,
   };
 
   return res.json({
@@ -86,6 +91,7 @@ authRouter.post('/signin', async (req, res) => {
     email: user.email,
     name: user.name,
     isActivated: user.isActivated,
+    roleId: user.roleId,
   });
 });
 
@@ -112,6 +118,7 @@ authRouter.get('/activate/:activationLink', async (req, res) => {
     name: user.name,
     email: user.email,
     isActivated: user.isActivated,
+    roleId: user.roleId,
   };
 
   res.redirect('http://localhost:3000/');
