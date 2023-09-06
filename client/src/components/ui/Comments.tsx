@@ -16,7 +16,6 @@ export default function Comments(): JSX.Element {
   const video = useAppSelector((state) => state.currentVideo);
   // const comments = useAppSelector((state => state.currentVideo.co))
   const {addNewCommentHandler} = useComments();
-  console.log(video?.Comments);
   
   return (
     <div style={{ marginLeft: '5%' }}>
