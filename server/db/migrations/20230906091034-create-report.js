@@ -10,7 +10,7 @@ module.exports = {
       },
       reportCount: {
         type: Sequelize.INTEGER,
-        defaultValue: 0,
+        defaultValue: 1,
       },
       videoId: {
         type: Sequelize.INTEGER,

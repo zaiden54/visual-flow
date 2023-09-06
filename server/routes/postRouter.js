@@ -1,6 +1,6 @@
 const router = require('express').Router;
-const { Video, Channel, sequelize, Subscription, Comment, Like, Report } = require('../db/models');
 const { Op } = require('sequelize');
+const { Video, Channel, sequelize, Subscription, Comment, Like, Report } = require('../db/models');
 
 const postRouter = router();
 
@@ -122,8 +122,8 @@ postRouter.put('/like', async (req, res) => {
 postRouter.post('/search/:offset', async (req, res) => {
   const { offset } = req.params;
   const { searchString } = req.body;
-  console.log('offset', offset)
-  console.log('searchString', searchString)
+  console.log('offset', offset);
+  console.log('searchString', searchString);
   const { rows, count } = await Video.findAndCountAll({
     include: Channel,
     where: {
@@ -140,8 +140,8 @@ postRouter.post('/search/:offset', async (req, res) => {
 postRouter.post('/search/:offset', async (req, res) => {
   const { offset } = req.params;
   const { searchString } = req.body;
-  console.log('offset', offset)
-  console.log('searchString', searchString)
+  console.log('offset', offset);
+  console.log('searchString', searchString);
   const { rows, count } = await Video.findAndCountAll({
     include: Channel,
     where: {
@@ -158,20 +158,23 @@ postRouter.post('/search/:offset', async (req, res) => {
 postRouter.post('/report', async (req, res) => {
   try {
     const { videoId } = req.body;
-    const [rep, newRep] = await Report.findOrCreate({
+
+    const [report, created] = await Report.findOrCreate({
       where: { videoId },
       defaults: { videoId },
     });
-    if (!newRep) {
-      newRep.reportCount += 1;
-      await newRep.save();
-      return res.json(newRep);
+
+    if (!created) {
+      report.reportCount += 1;
+      await report.save();
+      return res.json(report);
     }
-    rep.reportCount += 1;
-    await rep.save();
-    return res.json(rep);
-  } catch {
-    return res.status(404).json({ message: 'Video not found' });
+
+    // report.reportCount += 1;
+    // await report.save();
+    return res.json(report);
+  } catch (err) {
+    return res.json({ message: err });
   }
 });
 module.exports = postRouter;
