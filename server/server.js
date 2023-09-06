@@ -10,6 +10,7 @@ const watchRouter = require('./routes/watchRouter');
 const channelRouter = require('./routes/channelRouter');
 const subRouter = require('./routes/subscribesRouter');
 const authRouter = require('./routes/authRouter');
+const roomsRouter = require('./routes/roomsRouter');
 
 const PORT = process.env.PORT || 3001;
 
@@ -34,7 +35,7 @@ app.use('/api/videos', postRouter);
 app.use('/api/watch', watchRouter);
 app.use('/api/channel', channelRouter);
 app.use('/api/subscription', subRouter);
-
+app.use('/api/room', roomsRouter);
 const start = async () => {
   try {
     app.listen(PORT, () => {

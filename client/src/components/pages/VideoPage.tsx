@@ -27,6 +27,8 @@ import MenuLeft from '../ui/MenuLeft';
 import NavBar from '../ui/NavBar';
 import { addSubThunk } from '../../redux/slices/subs/subThunk';
 import apiService from '../../services/config';
+import { addOneRoom } from '../../redux/slices/rooms/roomSlice';
+import createRoomThunk from '../../redux/slices/rooms/roomThunk';
 
 export default function VideoPage(): JSX.Element {
   const [start, setStart] = useState(0);
@@ -99,20 +101,32 @@ export default function VideoPage(): JSX.Element {
                 {video?.Likes.find((el) => el.userId === user.id) ? (
                   <IconButton
                     aria-label="add to favorites"
-                    onClick={() => dispatch(setLikeThunk({ videoId, userId }))}
+                    onClick={() => {
+                      void dispatch(setLikeThunk({ videoId, userId }));
+                    }}
                   >
                     <FavoriteIcon />
                   </IconButton>
                 ) : (
                   <IconButton
                     aria-label="add to favorites"
-                    onClick={() => dispatch(setLikeThunk({ videoId, userId }))}
+                    onClick={() => {
+                      void dispatch(setLikeThunk({ videoId, userId }));
+                    }}
                   >
                     <FavoriteBorderIcon />
                   </IconButton>
                 )}
                 {video?.Likes.length}
-                <Button>Создать комнату +</Button>
+                <Button
+                  onClick={() => {
+                    if (video) {
+                      void dispatch(createRoomThunk(video));
+                    }
+                  }}
+                >
+                  Создать комнату +
+                </Button>
               </div>
               <Divider />
               <div style={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
