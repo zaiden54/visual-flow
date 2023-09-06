@@ -1,17 +1,16 @@
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
+import Tab from '@mui/material/Tab';
+import Tabs from '@mui/material/Tabs';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/reduxHooks';
 import { getChannelThunk } from '../../redux/slices/channel/channelThunk';
+import CustomTabs from '../ui/CustomTabs';
 import MenuLeft from '../ui/MenuLeft';
 import NavBar from '../ui/NavBar';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
 import VideoList from '../ui/VideoList';
-import { addSubThunk } from '../../redux/slices/subs/subThunk';
-import { CustomTabs } from '../ui/CustomTabs';
 
 function a11yProps(index: number): JSX.Element {
   return {
@@ -84,28 +83,32 @@ export default function ChannelPage(): JSX.Element {
               </Stack>
             </Stack>
           </Stack>
-          {user.status === 'logged' && user.id === channel.userId && user.roleId === 1 && (
-            <Box sx={{ width: '100%' }}>
-              <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <Tabs
-                  value={value}
-                  onChange={handleChange}
-                  aria-label="basic tabs example"
-                  textColor="primary"
-                  indicatorColor="success"
-                >
-                  <Tab label="My Videos" {...a11yProps(0)} />
-                  <Tab label="Complaints" {...a11yProps(1)} />
-                </Tabs>
+          {user.status === 'logged' && user.roleId === 1 && user.id === channel.userId ? (
+            <>
+              <Box sx={{ width: '100%' }}>
+                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                  <Tabs
+                    value={value}
+                    onChange={handleChange}
+                    aria-label="basic tabs example"
+                    textColor="primary"
+                    indicatorColor="primary"
+                  >
+                    <Tab label="My Videos" {...a11yProps(0)} />
+                    <Tab label="Complaints" {...a11yProps(1)} />
+                  </Tabs>
+                </Box>
               </Box>
-            </Box>
-          )}
-          <CustomTabs value={value} index={0}>
+              <CustomTabs value={value} index={0}>
+                <VideoList videos={channel?.Videos} />
+              </CustomTabs>
+              <CustomTabs value={value} index={1}>
+                <Typography>hiiii</Typography>
+              </CustomTabs>
+            </>
+          ) : (
             <VideoList videos={channel?.Videos} />
-          </CustomTabs>
-          <CustomTabs value={value} index={1}>
-            <Typography>hiiii</Typography>
-          </CustomTabs>
+          )}
         </div>
       </Box>
     </>
