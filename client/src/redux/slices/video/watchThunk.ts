@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import apiService from '../../../services/config';
-import type { VideoPageType } from '../../../types/videotypes';
+import type { ReportType, VideoPageType } from '../../../types/videotypes';
 import type { LikeType } from '../../../types/likeTypes';
 
 export const getWatchThunk = createAsyncThunk(
@@ -15,6 +15,16 @@ export const setLikeThunk = createAsyncThunk(
   '/videos/like',
   async ({ videoId, userId }: LikeType): Promise<LikeType> => {
     const { data } = await apiService.put<LikeType>('/videos/like', { videoId, userId });
+    return data;
+  },
+);
+
+export const reportThunk = createAsyncThunk<ReportType, number>(
+  '/video/report',
+  async (videoId): Promise<ReportType> => {
+    const { data } = await apiService.post<ReportType>('/videos/report', videoId);
+    console.log(data);
+    
     return data;
   },
 );

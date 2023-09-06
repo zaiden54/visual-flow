@@ -1,7 +1,7 @@
 const router = require('express').Router;
 const fs = require('fs');
 const path = require('path');
-const { Video, Channel, Subscription, Like, Comment, User } = require('../db/models');
+const { Video, Channel, Subscription, Like, Comment, User, Report } = require('../db/models');
 
 const watchRouter = router();
 
@@ -108,5 +108,7 @@ watchRouter.post('/info/:link', async (req, res) => {
   const data = await Comment.findAll({ where: { videoId: videoId.id }, include: { model: User } });
   res.json(data);
 });
+
+
 
 module.exports = watchRouter;

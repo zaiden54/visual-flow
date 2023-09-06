@@ -98,6 +98,7 @@ export default function ModalWindow(): JSX.Element {
           <input type="text" name="description" placeholder="Введите описание" />
           <input type="file" name="video" /> */}
           <Button type="submit">Добавить</Button>
+          
         </form>
         <Button type="button" onClick={() => dispatch(swapModal({ value: false }))}>
           Закрыть

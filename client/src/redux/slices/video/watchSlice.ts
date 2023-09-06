@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { addSubThunk } from '../subs/subThunk';
-import { getWatchThunk, setLikeThunk } from './watchThunk';
+import { getWatchThunk, reportThunk, setLikeThunk } from './watchThunk';
 import type { VideoPageType } from '../../../types/videotypes';
 import createCommentThunk from './commentThunk';
 
@@ -40,6 +40,9 @@ const watchSlice = createSlice({
           state?.Likes.push(action.payload);
         }
       }
+    });
+    builder.addCase(reportThunk.fulfilled, (state, action) => {
+      return (state.reports += 1);
     });
   },
 });
