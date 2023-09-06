@@ -21,16 +21,31 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import { formatDistanceToNow } from 'date-fns';
 import ru from 'date-fns/locale/ru';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/reduxHooks';
-import { getWatchThunk, setLikeThunk } from '../../redux/slices/video/watchThunk';
+import { getWatchThunk, reportThunk, setLikeThunk } from '../../redux/slices/video/watchThunk';
 import Comments from '../ui/Comments';
 import MenuLeft from '../ui/MenuLeft';
 import NavBar from '../ui/NavBar';
 import { addSubThunk } from '../../redux/slices/subs/subThunk';
 import apiService from '../../services/config';
+import { Menu, MenuItem } from '@mui/material';
+import { AccountCircle } from '@mui/icons-material';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 export default function VideoPage(): JSX.Element {
   const [start, setStart] = useState(0);
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [auth, setAuth] = React.useState(true);
+  // const handleChange = (event: React.ChangeEvent<HTMLInputElement>):void => {
+  //   setAuth(event.target.checked);
+  // };
 
+  const handleMenu = (event: React.MouseEvent<HTMLElement>): void => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = (): void => {
+    setAnchorEl(null);
+  };
   const user = useAppSelector((state) => state.user.data);
   const video = useAppSelector((state) => state.currentVideo);
 
@@ -99,20 +114,59 @@ export default function VideoPage(): JSX.Element {
                 {video?.Likes.find((el) => el.userId === user.id) ? (
                   <IconButton
                     aria-label="add to favorites"
-                    onClick={() => dispatch(setLikeThunk({ videoId, userId }))}
+                    onClick={() => void dispatch(setLikeThunk({ videoId, userId }))}
                   >
                     <FavoriteIcon />
                   </IconButton>
                 ) : (
                   <IconButton
                     aria-label="add to favorites"
-                    onClick={() => dispatch(setLikeThunk({ videoId, userId }))}
+                    onClick={() => void dispatch(setLikeThunk({ videoId, userId }))}
                   >
                     <FavoriteBorderIcon />
                   </IconButton>
                 )}
                 {video?.Likes.length}
                 <Button>Создать комнату +</Button>
+
+                <div>
+                  <IconButton
+                    size="large"
+                    aria-label="account of current user"
+                    aria-controls="menu-appbar"
+                    aria-haspopup="true"
+                    onClick={handleMenu}
+                    color="inherit"
+                  >
+                    <MoreVertIcon />
+                  </IconButton>
+                  <Menu
+                    id="menu-appbar"
+                    anchorEl={anchorEl}
+                    anchorOrigin={{
+                      vertical: 'top',
+                      horizontal: 'left',
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                      vertical: 'bottom',
+                      horizontal: 'left',
+                    }}
+                    open={Boolean(anchorEl)}
+                    onClose={handleClose}
+                  >
+                    <MenuItem
+                      style={{ width: '100px' }}
+                      onClick={() => {
+                        void dispatch(reportThunk(video?.id));
+                        handleClose();
+                      }}
+                    >
+                      Report
+                    </MenuItem>
+                    {/* <MenuItem onClick={handleClose}>My account</MenuItem> */}
+                  </Menu>
+                </div>
               </div>
               <Divider />
               <div style={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
