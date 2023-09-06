@@ -1,29 +1,41 @@
-import { Box, Button } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/reduxHooks';
 import { getChannelThunk } from '../../redux/slices/channel/channelThunk';
 import MenuLeft from '../ui/MenuLeft';
 import NavBar from '../ui/NavBar';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
 import VideoList from '../ui/VideoList';
 import { addSubThunk } from '../../redux/slices/subs/subThunk';
+import { CustomTabs } from '../ui/CustomTabs';
+
+function a11yProps(index: number): JSX.Element {
+  return {
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
+  };
+}
 
 export default function ChannelPage(): JSX.Element {
   const channel = useAppSelector((state) => state.channel);
   const user = useAppSelector((state) => state.user.data);
-  // const subs = useAppSelector((state)=>state.subs.rows)
+
   const { id } = useParams();
-  // const userId = user.id;
-  // const channelId = channel.id;
+
   const dispatch = useAppDispatch();
   useEffect(() => {
     void dispatch(getChannelThunk(id));
   }, [id]);
 
-  console.log('----------',channel);
-  
+  const [value, setValue] = useState(0);
+
+  const handleChange = (e: React.SyntheticEvent, newValue: number): void => {
+    setValue(newValue);
+  };
   return (
     <>
       <MenuLeft />
@@ -37,6 +49,7 @@ export default function ChannelPage(): JSX.Element {
           marginTop: '2rem',
           marginBottom: '2rem',
           justifyContent: 'flex-start',
+          width: '100%',
         }}
       >
         <div
@@ -46,6 +59,8 @@ export default function ChannelPage(): JSX.Element {
             flexWrap: 'wrap',
             flexDirection: 'column',
             justifyContent: 'center',
+            width: '100%',
+            // backgroundColor:'red'
           }}
         >
           <Stack
@@ -63,30 +78,28 @@ export default function ChannelPage(): JSX.Element {
             <Stack direction="column">
               <Stack direction="column">{channel.name}</Stack>
 
-              {/* {user.id !== channel.userId ? (
-                <Button
-                  style={{ width: '100px', height: '30px', fontSize: '11px' }}
-                  variant="contained"
-                  onClick={() => {
-                    if (user.status === 'logged') {
-                      void dispatch(addSubThunk({ userId, channelId }));
-                    }
-                  }}
-                >
-                  {subs.find((el) => el.userId === user.id)
-                    ? 'Отписаться'
-                    : 'Подписаться'}
-                </Button>
-              ) : (
-                false
-              )} */}
               <Stack direction="row" spacing={2}>
                 <Stack direction="column">{channel.Subscriptions?.length} subscribers</Stack>
                 <Stack direction="column">{channel.Videos?.length} videos</Stack>
               </Stack>
             </Stack>
           </Stack>
-          <VideoList videos={channel?.Videos} />
+          {user.status === 'logged' && user.id === channel.userId && user.roleId === 1 && (
+            <Box sx={{ width: '100%' }}>
+              <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+                  <Tab label="My Videos" {...a11yProps(0)} />
+                  <Tab label="Complaints" {...a11yProps(1)} />
+                </Tabs>
+              </Box>
+            </Box>
+          )}
+          <CustomTabs value={value} index={0}>
+            <VideoList videos={channel?.Videos} />
+          </CustomTabs>
+          <CustomTabs value={value} index={1}>
+            <Typography>hiiii</Typography>
+          </CustomTabs>
         </div>
       </Box>
     </>
