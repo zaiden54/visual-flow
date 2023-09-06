@@ -22,7 +22,7 @@ export const setLikeThunk = createAsyncThunk(
 export const reportThunk = createAsyncThunk<ReportType, number>(
   '/video/report',
   async (videoId): Promise<ReportType> => {
-    const { data } = await apiService.post<ReportType>('/watch/report', videoId);
+    const { data } = await apiService.post<ReportType>('/videos/report', videoId);
     console.log(data);
     
     return data;

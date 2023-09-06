@@ -1,5 +1,5 @@
 const router = require('express').Router;
-const { Video, Channel, sequelize, Subscription, Comment, Like } = require('../db/models');
+const { Video, Channel, sequelize, Subscription, Comment, Like, Report } = require('../db/models');
 
 const postRouter = router();
 
@@ -79,14 +79,14 @@ postRouter.get('/random', async (req, res) => {
 });
 
 postRouter.get('/:link', async (req, res) => {
-  const {link} = req.params;
- const comments = await Video.findOne({
+  const { link } = req.params;
+  const comments = await Video.findOne({
     where: { link },
     include: [
       {
         model: Comment,
       },
-      { model: Channel }
+      { model: Channel },
     ],
   });
   console.log(comments);
@@ -118,4 +118,23 @@ postRouter.put('/like', async (req, res) => {
   return res.json(liked);
 });
 
+postRouter.post('/report', async (req, res) => {
+  try {
+    const { videoId } = req.body;
+    const [rep, newRep] = await Report.findOrCreate({
+      where: { videoId },
+      defaults: { videoId },
+    });
+    if (!newRep) {
+      newRep.reportCount += 1;
+      await newRep.save();
+      return res.json(newRep);
+    }
+    rep.reportCount += 1;
+    await rep.save();
+    return res.json(rep);
+  } catch {
+    return res.status(404).json({ message: 'Video not found' });
+  }
+});
 module.exports = postRouter;

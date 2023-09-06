@@ -109,24 +109,6 @@ watchRouter.post('/info/:link', async (req, res) => {
   res.json(data);
 });
 
-watchRouter.post('/report', async (req, res) => {
-  try {
-    const { videoId } = req.body;
-    const [rep, newRep] = await Report.findOrCreate({
-      where: { videoId },
-      defaults: { videoId },
-    });
-    if (!newRep) {
-      newRep.reportCount += 1;
-      await newRep.save();
-      return res.json(newRep);
-    }
-    rep.reportCount += 1;
-    await rep.save();
-    return res.json(rep);
-  } catch {
-    return res.status(404).json({ message: 'Video not found' });
-  }
-});
+
 
 module.exports = watchRouter;
