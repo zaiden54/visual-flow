@@ -155,12 +155,12 @@ export default function ChannelPage(): JSX.Element {
                 >
                   {allReps.map((el) => (
                     <div key={el.id}>
-                      <Typography style={{ display: 'flex',justifyContent:'center' }}>
+                      <Typography style={{ display: 'flex', justifyContent: 'center' }}>
                         {el.reportCount} report(s)
                       </Typography>
                       <VideoCard video={el.Video} />
                       <Button
-                        onClick={(e) => deleteVideoHandler(e, el.id)}
+                        onClick={() => void dispatch(deleteVideoThunk(el.videoId))}
                         style={{ alignSelf: 'center' }}
                       >
                         {' '}
@@ -187,7 +187,7 @@ export default function ChannelPage(): JSX.Element {
                 <div key={el.id}>
                   <VideoCard video={el} />
                   <Button
-                    onClick={(e) => deleteVideoHandler(e, el.id)}
+                    onClick={(e) => void dispatch(deleteVideoThunk(el.id))}
                     style={{ alignSelf: 'center' }}
                   >
                     {' '}
