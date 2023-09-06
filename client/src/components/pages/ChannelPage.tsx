@@ -11,6 +11,9 @@ import CustomTabs from '../ui/CustomTabs';
 import MenuLeft from '../ui/MenuLeft';
 import NavBar from '../ui/NavBar';
 import VideoList from '../ui/VideoList';
+import { addSubThunk } from '../../redux/slices/subs/subThunk';
+import VideoCard from '../ui/VideoCard';
+import useDeleteVideo from '../../redux/hooks/deleteVideoHook';
 
 function a11yProps(index: number): JSX.Element {
   return {
@@ -35,6 +38,10 @@ export default function ChannelPage(): JSX.Element {
   const handleChange = (e: React.SyntheticEvent, newValue: number): void => {
     setValue(newValue);
   };
+  console.log('----------',channel);
+  
+  const {deleteVideoHandler} = useDeleteVideo()
+
   return (
     <>
       <MenuLeft />
@@ -109,6 +116,17 @@ export default function ChannelPage(): JSX.Element {
           ) : (
             <VideoList videos={channel?.Videos} />
           )}
+          <Box  sx={{
+        display: 'flex',
+        flexWrap: 'wrap',
+        flexDirection: 'row',
+        marginTop: '2rem',
+        marginBottom: '2rem',
+      }}> 
+          {/* <VideoList videos={channel?.Videos} /> */}
+          {channel?.Videos?.map((el) => <div key={el.id}><VideoCard video={el} />
+          <Button onClick={(e) => deleteVideoHandler(e, el.id)} style={{alignSelf:'center'}}> huhu </Button> </div>)}
+      </Box>
         </div>
       </Box>
     </>
