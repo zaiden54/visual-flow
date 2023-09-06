@@ -138,15 +138,26 @@ export default function VideoPage(): JSX.Element {
                     width: '40%',
                   }}
                 >
-                  <div style={{ alignItems: 'center', display: 'flex',marginRight:'5%' }}>
-                    <IconButton
-                      aria-label="add to favorites"
-                      onClick={() => {
-                        void void dispatch(setLikeThunk({ videoId, userId }));
-                      }}
-                    >
-                      <FavoriteIcon />
-                    </IconButton>
+                  <div style={{ alignItems: 'center', display: 'flex', marginRight: '5%' }}>
+                    {video?.Likes.find((el) => el.userId === user.id) ? (
+                      <IconButton
+                        aria-label="add to favorites"
+                        onClick={() => {
+                          void void dispatch(setLikeThunk({ videoId, userId }));
+                        }}
+                      >
+                        <FavoriteIcon />
+                      </IconButton>
+                    ) : (
+                      <IconButton
+                        aria-label="add to favorites"
+                        onClick={() => {
+                          void void dispatch(setLikeThunk({ videoId, userId }));
+                        }}
+                      >
+                        <FavoriteBorderIcon />
+                      </IconButton>
+                    )}
                     {video?.Likes.length}
                   </div>
                   <Button
@@ -158,6 +169,26 @@ export default function VideoPage(): JSX.Element {
                   >
                     Создать комнату +
                   </Button>
+                  {/* <IconButton
+                      aria-label="add to favorites"
+                      onClick={() => {
+                        void void dispatch(setLikeThunk({ videoId, userId }));
+                      }}
+                    >
+                      <FavoriteIcon />
+                    </IconButton>
+                    {video?.Likes.length}
+                  </div>
+
+                  <Button
+                    onClick={() => {
+                      if (video) {
+                        void dispatch(createRoomThunk(video));
+                      }
+                    }}
+                  >
+                    Создать комнату +
+                  </Button> */}
                   <div>
                     <IconButton
                       size="large"
