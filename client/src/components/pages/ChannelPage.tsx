@@ -132,7 +132,7 @@ export default function ChannelPage(): JSX.Element {
                 >
                   {/* <VideoList videos={channel?.Videos} /> */}
                   {channel?.Videos?.map((el) => (
-                    <div key={el.id}>
+                    <div key={el.id} style={{display: 'flex', flexDirection: 'column'}}>
                       <VideoCard video={el} />
                       <Button
                         onClick={() => void dispatch(deleteVideoThunk(el.id))}
@@ -156,7 +156,7 @@ export default function ChannelPage(): JSX.Element {
                   }}
                 >
                   {allReps.map((el) => (
-                    <div key={el.id}>
+                    <div key={el.id} style={{display: 'flex', flexDirection: 'column'}}>
                       <Typography style={{ display: 'flex', justifyContent: 'center' }}>
                         {el.reportCount} report(s)
                       </Typography>
