@@ -39,6 +39,8 @@ function App(): JSX.Element {
   useEffect(() => {
     void dispatch(checkUserThunk());
   }, []);
+
+  
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />

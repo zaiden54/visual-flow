@@ -1,6 +1,9 @@
 /* eslint-disable react/jsx-boolean-value */
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { Menu, MenuItem } from '@mui/material';
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -15,24 +18,20 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import FavoriteIcon from '@mui/icons-material/Favorite';
 import { formatDistanceToNow } from 'date-fns';
 import ru from 'date-fns/locale/ru';
+import React, { useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/reduxHooks';
+import { addSubThunk } from '../../redux/slices/subs/subThunk';
 import { getWatchThunk, reportThunk, setLikeThunk } from '../../redux/slices/video/watchThunk';
+import apiService from '../../services/config';
 import Comments from '../ui/Comments';
 import MenuLeft from '../ui/MenuLeft';
 import NavBar from '../ui/NavBar';
-import { addSubThunk } from '../../redux/slices/subs/subThunk';
-import apiService from '../../services/config';
-import { Menu, MenuItem } from '@mui/material';
-import { AccountCircle } from '@mui/icons-material';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 export default function VideoPage(): JSX.Element {
-  const [start, setStart] = useState(0);
+  const [start, setStart] = useState(Date.now());
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [auth, setAuth] = React.useState(true);
   // const handleChange = (event: React.ChangeEvent<HTMLInputElement>):void => {
@@ -49,18 +48,17 @@ export default function VideoPage(): JSX.Element {
   const user = useAppSelector((state) => state.user.data);
   const video = useAppSelector((state) => state.currentVideo);
 
-  useEffect(() => {
-    setStart(Date.now());
-
-    return () => {
+  useEffect(
+    () => () => {
       if (Date.now() - start > 15 * 1000 && video) {
         apiService
           .put(`/watch/${video?.link}`)
-          .then(({ data }) => console.log(data))
+          .then(() => console.log('views++'))
           .catch((err) => console.error(err));
       }
-    };
-  }, []);
+    },
+    [],
+  );
 
   const dispatch = useAppDispatch();
 
@@ -77,7 +75,7 @@ export default function VideoPage(): JSX.Element {
   const channelId = video?.Channel.id;
 
   return (
-    <div >
+    <div>
       <MenuLeft />
       <NavBar />
       <Stack

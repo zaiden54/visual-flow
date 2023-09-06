@@ -44,7 +44,10 @@ jspm_packages/
 sessions/
 public/
 test/
-uploads/
+
+*.mp4
+*.MP4
+
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/
 
