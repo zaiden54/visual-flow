@@ -4,6 +4,8 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
+import IconButton from '@mui/material';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/reduxHooks';
@@ -137,7 +139,7 @@ export default function ChannelPage(): JSX.Element {
                         style={{ alignSelf: 'center' }}
                       >
                         {' '}
-                        huhu{' '}
+                       <DeleteOutlineIcon />{' '}
                       </Button>{' '}
                     </div>
                   ))}
@@ -184,14 +186,14 @@ export default function ChannelPage(): JSX.Element {
             >
               {/* <VideoList videos={channel?.Videos} /> */}
               {channel?.Videos?.map((el) => (
-                <div key={el.id}>
+                <div key={el.id} style={{display: 'flex', flexDirection: 'column'}}>
                   <VideoCard video={el} />
                   <Button
                     onClick={(e) => void dispatch(deleteVideoThunk(el.id))}
                     style={{ alignSelf: 'center' }}
                   >
                     {' '}
-                    huhu{' '}
+                  <DeleteOutlineIcon /> Удалить{' '}
                   </Button>{' '}
                 </div>
               ))}
