@@ -139,7 +139,7 @@ export default function ChannelPage(): JSX.Element {
                         style={{ alignSelf: 'center' }}
                       >
                         {' '}
-                       <DeleteOutlineIcon />{' '}
+                        <DeleteOutlineIcon /> Удалить{' '}
                       </Button>{' '}
                     </div>
                   ))}
@@ -166,7 +166,7 @@ export default function ChannelPage(): JSX.Element {
                         style={{ alignSelf: 'center' }}
                       >
                         {' '}
-                        huhu{' '}
+                        <DeleteOutlineIcon /> Удалить{' '}
                       </Button>{' '}
                     </div>
                   ))}
