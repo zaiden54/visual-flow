@@ -174,4 +174,20 @@ postRouter.get('/rep/all', async (req, res) => {
   res.json(allReps);
 });
 
+postRouter.patch('/update', async (req, res) => {
+  const { newTitle, newDesc, videoId } = req.body;
+
+  const updatedVideo = await Video.findOne({
+    where: { id: videoId },
+    include: Channel,
+  });
+
+  updatedVideo.title = newTitle;
+  updatedVideo.description = newDesc;
+
+  await updatedVideo.save();
+
+  return res.json(updatedVideo);
+});
+
 module.exports = postRouter;

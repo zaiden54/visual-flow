@@ -33,3 +33,12 @@ export const getAllReportedVideosThunk = createAsyncThunk<ReportType[]>(
     return data;
   },
 );
+
+
+export const updateVideoThunk = createAsyncThunk<VideoType>(
+  '/videos/update',
+  async ({ newTitle, newDesc, videoId }): Promise<VideoType> => {
+    const { data } = await apiService.patch<VideoType>('/videos/update', {newTitle, newDesc, videoId});
+    return data;
+  },
+);

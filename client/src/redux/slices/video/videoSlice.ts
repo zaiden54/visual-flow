@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { VideoType } from '../../../types/videotypes';
-import { getAllReportedVideosThunk, getAllSubVideoThunk, getSubVideoThunk } from './videoThunk';
+import { getAllSubVideoThunk, getSubVideoThunk, updateVideoThunk } from './videoThunk';
 import { reportThunk } from './watchThunk';
 
 const initialState: VideoType[] = [];
@@ -10,16 +10,16 @@ const videoSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getSubVideoThunk.fulfilled, (state, action) => action.payload.reverse());
-    builder.addCase(getAllSubVideoThunk.fulfilled, (state, action) => action.payload);
+    builder.addCase(getSubVideoThunk.fulfilled, (state, action) => action.payload);
+    builder.addCase(getAllSubVideoThunk.fulfilled, (state, action) => action.payload.reverse());
     builder.addCase(reportThunk.fulfilled, (state, action) => {
       state.forEach((el) => {
         if (el.id === action.payload.videoId) {
           el.reports = action.payload;
-          console.log('REPORT!!!!!!!!!!!!!', el);
         }
       });
     });
+    // builder.addCase(updateVideoThunk.fulfilled, (state, action) => action.payload);
   },
 });
 

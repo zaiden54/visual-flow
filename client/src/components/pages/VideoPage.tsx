@@ -29,11 +29,14 @@ import apiService from '../../services/config';
 import Comments from '../ui/Comments';
 import MenuLeft from '../ui/MenuLeft';
 import NavBar from '../ui/NavBar';
+import { SnackbarProvider, VariantType, useSnackbar } from 'notistack';
 
 export default function VideoPage(): JSX.Element {
   const [start, setStart] = useState(Date.now());
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [auth, setAuth] = React.useState(true);
+
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>): void => {
     setAnchorEl(event.currentTarget);
@@ -45,17 +48,16 @@ export default function VideoPage(): JSX.Element {
   const user = useAppSelector((state) => state.user.data);
   const video = useAppSelector((state) => state.currentVideo);
 
-  useEffect(
-    () => () => {
+  useEffect(() => {
+    console.log(start)
+    return () => {
       if (Date.now() - start > 15 * 1000 && video) {
         apiService
           .put(`/watch/${video?.link}`)
-          .then(() => console.log('views++'))
           .catch((err) => console.error(err));
       }
-    },
-    [],
-  );
+    }
+  }, []);
 
   const dispatch = useAppDispatch();
 
@@ -72,16 +74,37 @@ export default function VideoPage(): JSX.Element {
   const channelId = video?.Channel.id;
 
   return (
-    <div>
+    <div style={{ display: 'flex', width: '70%', justifyContent: 'center', marginBottom: '20px' }}>
       <MenuLeft />
       <NavBar />
       <Stack
-        style={{ marginTop: 90, display: 'flex', alignContent: 'center', zIndex: -3 }}
+        style={{
+          marginTop: 90,
+          display: 'flex',
+          alignContent: 'center',
+          zIndex: 1,
+          flexWrap: 'wrap',
+          width: '100%',
+        }}
         spacing={1}
       >
-        <div>
-          <Card style={{ marginTop: 0 }}>
-            <CardContent style={{ display: 'flex', flexDirection: 'column', alignItems: 'start' }}>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            flexWrap: 'wrap',
+            width: '100%',
+          }}
+        >
+          <Card style={{ marginTop: 0, width: '100%', justifyContent: 'center' }}>
+            <CardContent
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'start',
+                flexWrap: 'wrap',
+              }}
+            >
               <video
                 id="videoPlayer"
                 style={{ alignSelf: 'center' }}
@@ -100,11 +123,12 @@ export default function VideoPage(): JSX.Element {
                   flexDirection: 'row',
                   justifyContent: 'space-between',
                   width: '100%',
-
+                  // flexWrap: 'wrap',
+                  // wordWrap: 'break-word'
                   alignItems: 'center',
                 }}
               >
-                <h4>{video?.title}</h4>
+                <h4 style={{ wordWrap: 'break-word', marginLeft: '20px' }}>{video?.title}</h4>
                 <div
                   style={{
                     display: 'flex',
@@ -120,7 +144,7 @@ export default function VideoPage(): JSX.Element {
                       <IconButton
                         aria-label="add to favorites"
                         onClick={() => {
-                         void dispatch(setLikeThunk({ videoId, userId }));
+                          void dispatch(setLikeThunk({ videoId, userId }));
                         }}
                       >
                         <FavoriteIcon />
@@ -178,6 +202,7 @@ export default function VideoPage(): JSX.Element {
                           void dispatch(reportThunk({ videoId }));
                           console.log(videoId);
                           handleClose();
+                          enqueueSnackbar('Жалоба отправленна',{ variant: 'warning' });
                         }}
                       >
                         Report
