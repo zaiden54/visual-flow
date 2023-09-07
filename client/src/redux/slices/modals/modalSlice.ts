@@ -15,10 +15,13 @@ const modalSlice = createSlice({
   reducers: {
     swapModal(state, action: PayloadAction<SwapModalType>) {
         state.value = action.payload.value
+    },
+    swapEditModal(state, action: PayloadAction<SwapModalType>) {
+      state.value = action.payload.value
     }
   }
 });
 
 export default modalSlice.reducer;
 
-export const {swapModal} = modalSlice.actions
+export const {swapModal, swapEditModal} = modalSlice.actions

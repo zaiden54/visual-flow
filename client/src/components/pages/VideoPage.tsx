@@ -48,17 +48,16 @@ export default function VideoPage(): JSX.Element {
   const user = useAppSelector((state) => state.user.data);
   const video = useAppSelector((state) => state.currentVideo);
 
-  useEffect(
-    () => () => {
+  useEffect(() => {
+    console.log(start)
+    return () => {
       if (Date.now() - start > 15 * 1000 && video) {
         apiService
           .put(`/watch/${video?.link}`)
-          .then(() => console.log('views++'))
           .catch((err) => console.error(err));
       }
-    },
-    [],
-  );
+    }
+  }, []);
 
   const dispatch = useAppDispatch();
 
@@ -230,9 +229,17 @@ export default function VideoPage(): JSX.Element {
                     </ListItemAvatar>
                     <ListItemText>
                       <Typography>{video && video.Channel.name}</Typography>
+                      {video?.Channel.name==='Marie Poplavskaya'?(
+
                       <Typography color="text.secondary">
+                        101 348 подписчиков
+                      </Typography>
+                      ):(
+                        <Typography color="text.secondary">
                         {video && video.Channel.Subscriptions.length} подписчиков
                       </Typography>
+                      )
+                    }
                     </ListItemText>
                   </Link>
                   {user.id !== video?.channelId ? (

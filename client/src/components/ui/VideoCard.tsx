@@ -5,18 +5,17 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Stack from '@mui/material/Stack';
 import React from 'react';
-
 import Typography from '@mui/material/Typography';
-
 import { Link } from 'react-router-dom';
-
 import { formatDistanceToNow } from 'date-fns';
 import ru from 'date-fns/locale/ru';
+import { useAppSelector } from '../../redux/hooks/reduxHooks';
 import type { VideoType } from '../../types/videotypes';
 
 type VideoCardProps = {
   video: VideoType;
 };
+
 
 export default function VideoCard({ video }: VideoCardProps): JSX.Element {
   return (
@@ -37,7 +36,7 @@ export default function VideoCard({ video }: VideoCardProps): JSX.Element {
         <CardMedia
           component="img"
           sx={{ width: '100%', height: '200px', objectFit: 'cover' }}
-          image={`http://localhost:3001${video.preview}`}
+          image={`http://localhost:3001/api/videos/preview?file=${video.preview}`}
           alt={video.title}
         />
         <Box sx={{ display: 'flex', flexDirection: 'column', flexWrap: 'wrap' }}>

@@ -109,12 +109,13 @@ export default function MenuLeft(): JSX.Element {
                 <List>
                   {subs.rows.map((el) => (
                     <Link
+                      key={el.id}
                       to={`/channel/${el.id}`}
                       style={{ textDecoration: 'none', color: 'white' }}
                     >
                       <ListItem key={el.id} disablePadding>
                         <ListItemButton>
-                          <Subscribes name={el.name} />
+                          <Subscribes key={el.id} name={el.name} />
                         </ListItemButton>
                       </ListItem>
                     </Link>
@@ -130,7 +131,7 @@ export default function MenuLeft(): JSX.Element {
                       {subs.count - subs.rows.length} more
                     </Button>
                   ) : (
-                    subs.rows.length >= 3 && (
+                    subs.rows.length > 3 && (
                       <Button
                         type="button"
                         onClick={() => {
