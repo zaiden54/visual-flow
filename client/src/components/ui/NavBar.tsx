@@ -95,6 +95,7 @@ export default function NavBar(): JSX.Element {
               <Button
                 onClick={() => {
                   void dispatch(logoutUserThunk());
+                  handleMenuClose()
                 }}
               >
                 Выйти
