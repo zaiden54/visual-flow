@@ -186,23 +186,25 @@ export default function NavBar(): JSX.Element {
               Visual Flow
             </Typography>
           </Link>
-            <TextField
-              onChange={inputControl}
-              value={string}
-              name="searchString"
-              id="outlined-basic"
-              sx={{ width: '50vw', height: 40 }}
-              variant="outlined"
-              size="small"
-            />
-            {string !== '' 
-              ? (<Link to={`/search/${string}`}>
-              <Button variant="outlined" style={{ height: 40 }}>
-              <SearchIcon />
-            </Button>
-            </Link>) :  (<Button variant="outlined" style={{ height: 40 }}>
-              <SearchIcon />
-            </Button>)}
+            <div>
+              <TextField
+                onChange={inputControl}
+                value={string}
+                name="searchString"
+                id="outlined-basic"
+                sx={{ width: '50vw', height: 40 }}
+                variant="outlined"
+                size="small"
+              />
+              {string !== ''
+                ? (<Link to={`/search/${string}`}>
+                <Button variant="outlined" style={{ height: 40 }}>
+                <SearchIcon />
+              </Button>
+              </Link>) :  (<Button variant="outlined" style={{ height: 40 }}>
+                <SearchIcon />
+              </Button>)}
+            </div>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
             {user.status === 'logged' && (
               <IconButton type="button" onClick={() => dispatch(swapModal({ value: true }))}>
