@@ -29,11 +29,14 @@ import apiService from '../../services/config';
 import Comments from '../ui/Comments';
 import MenuLeft from '../ui/MenuLeft';
 import NavBar from '../ui/NavBar';
+import { SnackbarProvider, VariantType, useSnackbar } from 'notistack';
 
 export default function VideoPage(): JSX.Element {
   const [start, setStart] = useState(Date.now());
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [auth, setAuth] = React.useState(true);
+
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>): void => {
     setAnchorEl(event.currentTarget);
@@ -72,7 +75,7 @@ export default function VideoPage(): JSX.Element {
   const channelId = video?.Channel.id;
 
   return (
-    <div style={{ display: 'flex', width: '70%', justifyContent: 'center' }}>
+    <div style={{ display: 'flex', width: '70%', justifyContent: 'center', marginBottom: '20px' }}>
       <MenuLeft />
       <NavBar />
       <Stack
@@ -126,7 +129,7 @@ export default function VideoPage(): JSX.Element {
                   alignItems: 'center',
                 }}
               >
-                <h4 style={{ wordWrap: 'break-word',marginLeft:"20px" }}>{video?.title}</h4>
+                <h4 style={{ wordWrap: 'break-word', marginLeft: '20px' }}>{video?.title}</h4>
                 <div
                   style={{
                     display: 'flex',
@@ -200,6 +203,7 @@ export default function VideoPage(): JSX.Element {
                           void dispatch(reportThunk({ videoId }));
                           console.log(videoId);
                           handleClose();
+                          enqueueSnackbar('Жалоба отправленна',{ variant: 'warning' });
                         }}
                       >
                         Report

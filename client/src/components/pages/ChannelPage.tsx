@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-useless-fragment */
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { Box, Typography } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
@@ -14,6 +15,7 @@ import MenuLeft from '../ui/MenuLeft';
 import NavBar from '../ui/NavBar';
 import VideoCard from '../ui/VideoCard';
 import { getAllReportedVideosThunk } from '../../redux/slices/video/videoThunk';
+import { SnackbarProvider, VariantType, useSnackbar } from 'notistack';
 
 function a11yProps(index: number): JSX.Element {
   return {
@@ -25,7 +27,7 @@ function a11yProps(index: number): JSX.Element {
 export default function ChannelPage(): JSX.Element {
   const channel = useAppSelector((state) => state.channel);
   const user = useAppSelector((state) => state.user.data);
-
+  const { enqueueSnackbar } = useSnackbar();
   const allReps = useAppSelector((state) => state.allReps);
 
   const { id } = useParams();
@@ -118,18 +120,27 @@ export default function ChannelPage(): JSX.Element {
                     marginBottom: '2rem',
                   }}
                 >
-                  {channel?.Videos?.map((el) => (
-                    <div key={el.id} style={{ display: 'flex', flexDirection: 'column' }}>
-                      <VideoCard video={el} />
-                      <Button
-                        onClick={() => void dispatch(deleteVideoThunk(el.id))}
-                        style={{ alignSelf: 'center' }}
-                      >
-                        {' '}
-                        <DeleteOutlineIcon /> Удалить{' '}
-                      </Button>{' '}
-                    </div>
-                  ))}
+                  {channel.Videos.length ? (
+                    <>
+                      {channel?.Videos?.map((el) => (
+                        <div key={el.id} style={{ display: 'flex', flexDirection: 'column' }}>
+                          <VideoCard video={el} />
+                          <Button
+                            onClick={() => {
+                              void dispatch(deleteVideoThunk(el.id));
+                              enqueueSnackbar('Видео удаленно!', { variant: 'error' });
+                            }}
+                            style={{ alignSelf: 'center' }}
+                          >
+                            {' '}
+                            <DeleteOutlineIcon /> Удалить{' '}
+                          </Button>{' '}
+                        </div>
+                      ))}
+                    </>
+                  ) : (
+                    <h4 style={{ marginLeft: '30px' }}>Выложи свое первое видео!</h4>
+                  )}
                 </Box>
               </CustomTabs>
               <CustomTabs value={value} index={1}>
@@ -145,11 +156,14 @@ export default function ChannelPage(): JSX.Element {
                   {allReps.map((el) => (
                     <div key={el.id} style={{ display: 'flex', flexDirection: 'column' }}>
                       <Typography style={{ display: 'flex', justifyContent: 'center' }}>
-                      Количество жалоб: {el.reportCount}
+                        Количество жалоб: {el.reportCount}
                       </Typography>
                       <VideoCard video={el.Video} />
                       <Button
-                        onClick={() => void dispatch(deleteVideoThunk(el.videoId))}
+                        onClick={() => {
+                          void dispatch(deleteVideoThunk(el.videoId));
+                          enqueueSnackbar('Видео удаленно!', { variant: 'error' });
+                        }}
                         style={{ alignSelf: 'center' }}
                       >
                         {' '}
@@ -170,20 +184,30 @@ export default function ChannelPage(): JSX.Element {
                 marginBottom: '2rem',
               }}
             >
-              {channel?.Videos?.map((el) => (
-                <div key={el.id} style={{ display: 'flex', flexDirection: 'column' }}>
-                  <VideoCard video={el} />
-                  {user.status === 'logged' && user.id === channel.userId && (
-                    <Button
-                      onClick={(e) => void dispatch(deleteVideoThunk(el.id))}
-                      style={{ alignSelf: 'center' }}
-                    >
-                      {' '}
-                      <DeleteOutlineIcon /> Удалить{' '}
-                    </Button>
-                  )}
-                </div>
-              ))}
+             
+              {channel.Videos.length ? (
+                <>
+                  {channel?.Videos?.map((el) => (
+                    <div key={el.id} style={{ display: 'flex', flexDirection: 'column' }}>
+                      <VideoCard video={el} />
+                      {user.status === 'logged' && user.id === channel.userId && (
+                        <Button
+                          onClick={() => {
+                            void dispatch(deleteVideoThunk(el.id));
+                            enqueueSnackbar('Видео удаленно!', { variant: 'error' });
+                          }}
+                          style={{ alignSelf: 'center' }}
+                        >
+                          {' '}
+                          <DeleteOutlineIcon /> Удалить{' '}
+                        </Button>
+                      )}
+                    </div>
+                  ))}
+                </>
+              ) : (
+                <h4 style={{ marginLeft: '30px' }}>Выложи свое первое видео!</h4>
+              )}
             </Box>
           )}
         </div>
