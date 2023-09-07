@@ -27,13 +27,13 @@ const storage = multer.diskStorage({
 
 function fileFilter(req, file, cb) {
   if (
-    file.mimetype !== 'video/mp4'
-    && file.mimetype !== 'video/x-m4v'
-    && file.mimetype !== 'video/webm'
-    && file.mimetype !== 'video/mpeg'
-    && file.mimetype !== 'image/png'
-    && file.mimetype !== 'image/jpg'
-    && file.mimetype !== 'image/jpeg'
+    file.mimetype !== 'video/mp4' &&
+    file.mimetype !== 'video/x-m4v' &&
+    file.mimetype !== 'video/webm' &&
+    file.mimetype !== 'video/mpeg' &&
+    file.mimetype !== 'image/png' &&
+    file.mimetype !== 'image/jpg' &&
+    file.mimetype !== 'image/jpeg'
   ) {
     cb(null, false);
   } else cb(null, true);
@@ -72,7 +72,7 @@ uploadRouter.post(
           console.log('Screenshot taken!');
         })
         .screenshots({
-          folder: path.join(__dirname, '..', 'public', 'previews'),
+          folder: path.join(__dirname, '..', 'previews'),
           count: 1,
           filename: `thumbnail-${req.files.video[0].filename.split('.')[0]}.png`,
         });
@@ -85,8 +85,8 @@ uploadRouter.post(
       fileName: req.files.video[0].filename,
       channelId: user.Channel.id,
       preview: req.files.preview
-        ? `/previews/${req.files.preview[0].filename}`
-        : `/previews/thumbnail-${req.files.video[0].filename.split('.')[0]}.png`,
+        ? `${req.files.preview[0].filename}`
+        : `thumbnail-${req.files.video[0].filename.split('.')[0]}.png`,
     });
 
     const allVideos = await Video.findAll({

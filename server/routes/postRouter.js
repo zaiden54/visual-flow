@@ -1,5 +1,6 @@
 const router = require('express').Router;
 const { Op } = require('sequelize');
+const path = require('path');
 const { Video, Channel, sequelize, Subscription, Comment, Like, Report } = require('../db/models');
 
 const postRouter = router();
@@ -79,6 +80,14 @@ postRouter.get('/random', async (req, res) => {
   res.json(randomVids);
 });
 
+postRouter.get('/preview', (req, res) => {
+  const fileName = req.query.file;
+  const fullPath = path.join(__dirname, '..', 'previews', fileName);
+  console.log(fullPath);
+  res.sendFile(fullPath);
+  // res.sendStatus(200);
+});
+
 postRouter.get('/:link', async (req, res) => {
   const { link } = req.params;
   const comments = await Video.findOne({
@@ -137,23 +146,23 @@ postRouter.post('/search/:offset', async (req, res) => {
   return res.json({ rows, count });
 });
 
-postRouter.post('/search/:offset', async (req, res) => {
-  const { offset } = req.params;
-  const { searchString } = req.body;
-  console.log('offset', offset);
-  console.log('searchString', searchString);
-  const { rows, count } = await Video.findAndCountAll({
-    include: Channel,
-    where: {
-      title: {
-        [Op.substring]: searchString,
-      },
-    },
-    offset,
-    limit: 5,
-  });
-  return res.json({ rows, count });
-});
+// postRouter.post('/search/:offset', async (req, res) => {
+//   const { offset } = req.params;
+//   const { searchString } = req.body;
+//   console.log('offset', offset);
+//   console.log('searchString', searchString);
+//   const { rows, count } = await Video.findAndCountAll({
+//     include: Channel,
+//     where: {
+//       title: {
+//         [Op.substring]: searchString,
+//       },
+//     },
+//     offset,
+//     limit: 5,
+//   });
+//   return res.json({ rows, count });
+// });
 
 postRouter.post('/rep', async (req, res) => {
   console.log(req.body);
@@ -190,4 +199,5 @@ postRouter.get('/rep/all', async (req, res) => {
   console.log('BAAACKKKKK', allReps);
   res.json(allReps);
 });
+
 module.exports = postRouter;
