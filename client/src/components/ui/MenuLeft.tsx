@@ -86,7 +86,7 @@ export default function MenuLeft(): JSX.Element {
               </ListItemButton>
             </ListItem>
           </Link>
-          <Link style={{ textDecoration: 'none', color: 'white' }} to="/filler">
+          <Link style={{ textDecoration: 'none', color: 'white' }} to="/popular">
             <ListItem key={3} style={{ padding: '1px', alignItems: 'center' }} disablePadding>
               <ListItemButton
                 sx={{

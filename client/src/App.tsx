@@ -49,7 +49,7 @@ function App(): JSX.Element {
           <Route path="/watch/:link" element={<VideoPage />} />
           <Route path="/watch/info/:link" element={<Comments />} />
           <Route path="/rooms" element={<RoomsPage />} />
-          <Route path="/mostViewed" element={<MostViewedPage />} />
+          <Route path="/popular" element={<MostViewedPage />} />
           <Route path="/" element={<MainPage />} />
           <Route path="/subs" element={<SubscriptionsPage />} />
           <Route path="/search/:searchString" element={<SearchPage />} />
