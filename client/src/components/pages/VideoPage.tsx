@@ -72,16 +72,37 @@ export default function VideoPage(): JSX.Element {
   const channelId = video?.Channel.id;
 
   return (
-    <div>
+    <div style={{ display: 'flex', maxWidth: '70%' }}>
       <MenuLeft />
       <NavBar />
       <Stack
-        style={{ marginTop: 90, display: 'flex', alignContent: 'center', zIndex: -3 }}
+        style={{
+          marginTop: 90,
+          display: 'flex',
+          alignContent: 'center',
+          zIndex: 1,
+          flexWrap: 'wrap',
+          width: '100%',
+        }}
         spacing={1}
       >
-        <div>
-          <Card style={{ marginTop: 0 }}>
-            <CardContent style={{ display: 'flex', flexDirection: 'column', alignItems: 'start' }}>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            flexWrap: 'wrap',
+            width: '100%',
+          }}
+        >
+          <Card style={{ marginTop: 0, width: '100%', justifyContent: 'center' }}>
+            <CardContent
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'start',
+                flexWrap: 'wrap',
+              }}
+            >
               <video
                 id="videoPlayer"
                 style={{ alignSelf: 'center' }}
@@ -100,11 +121,12 @@ export default function VideoPage(): JSX.Element {
                   flexDirection: 'row',
                   justifyContent: 'space-between',
                   width: '100%',
-
+                  // flexWrap: 'wrap',
+                  // wordWrap: 'break-word'
                   alignItems: 'center',
                 }}
               >
-                <h4>{video?.title}</h4>
+                <h4 style={{ wordWrap: 'break-word' }}>{video?.title}</h4>
                 <div
                   style={{
                     display: 'flex',
@@ -120,7 +142,7 @@ export default function VideoPage(): JSX.Element {
                       <IconButton
                         aria-label="add to favorites"
                         onClick={() => {
-                         void dispatch(setLikeThunk({ videoId, userId }));
+                          void dispatch(setLikeThunk({ videoId, userId }));
                         }}
                       >
                         <FavoriteIcon />

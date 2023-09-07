@@ -10,8 +10,8 @@ const videoSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getSubVideoThunk.fulfilled, (state, action) => action.payload.reverse());
-    builder.addCase(getAllSubVideoThunk.fulfilled, (state, action) => action.payload);
+    builder.addCase(getSubVideoThunk.fulfilled, (state, action) => action.payload);
+    builder.addCase(getAllSubVideoThunk.fulfilled, (state, action) => action.payload.reverse());
     builder.addCase(reportThunk.fulfilled, (state, action) => {
       state.forEach((el) => {
         if (el.id === action.payload.videoId) {

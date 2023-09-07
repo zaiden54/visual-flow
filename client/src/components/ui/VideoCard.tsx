@@ -24,10 +24,12 @@ export default function VideoCard({ video }: VideoCardProps): JSX.Element {
       <Card
         sx={{
           display: 'flex',
+
           flexDirection: 'column',
           margin: 2,
           borderRadius: '10px',
-          minWidth: '350px',
+          minWidth: '360px',
+          maxWidth: '360px',
           maxHeight: '350px',
         }}
       >
@@ -37,7 +39,7 @@ export default function VideoCard({ video }: VideoCardProps): JSX.Element {
           image={`http://localhost:3001${video.preview}`}
           alt={video.title}
         />
-        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', flexWrap: 'wrap' }}>
           <CardContent sx={{ flex: '1 0 auto' }}>
             <Typography component="div" variant="h6">
               {video.title}
