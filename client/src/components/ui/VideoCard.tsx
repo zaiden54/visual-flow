@@ -49,7 +49,7 @@ export default function VideoCard({ video }: VideoCardProps): JSX.Element {
               </Stack>
             </Typography>
             <Typography variant="subtitle1" color="text.secondary" component="div">
-              <Stack direction="row">{video.views} views</Stack>
+              <Stack direction="row">{video.views} просмотров</Stack>
               <Stack direction="row">
                 {formatDistanceToNow(new Date(video.createdAt), { addSuffix: true, locale: ru })}
               </Stack>

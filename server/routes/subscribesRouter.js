@@ -5,7 +5,6 @@ const subRouter = router();
 
 subRouter.post('/', async (req, res) => {
   const { userId, channelId } = req.body;
-  //   console.log(req.body);
   if (userId === channelId) {
     return res.status(400).json({ message: 'нет.' });
   }
@@ -22,13 +21,8 @@ subRouter.post('/', async (req, res) => {
 
   if (!subbed) {
     await newSub.destroy();
-    console.log(JSON.stringify(newSub, null, 1));
     return res.json(newSub);
   }
-
-  console.log(JSON.stringify(sub, null, 1));
-
-
   return res.json(sub);
 });
 

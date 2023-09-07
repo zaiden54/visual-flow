@@ -90,7 +90,6 @@ postRouter.get('/:link', async (req, res) => {
       { model: Channel },
     ],
   });
-  console.log(comments);
   res.json(comments);
 });
 
@@ -122,8 +121,6 @@ postRouter.put('/like', async (req, res) => {
 postRouter.post('/search/:offset', async (req, res) => {
   const { offset } = req.params;
   const { searchString } = req.body;
-  console.log('offset', offset);
-  console.log('searchString', searchString);
   const { rows, count } = await Video.findAndCountAll({
     include: Channel,
     where: {
@@ -140,8 +137,6 @@ postRouter.post('/search/:offset', async (req, res) => {
 postRouter.post('/search/:offset', async (req, res) => {
   const { offset } = req.params;
   const { searchString } = req.body;
-  console.log('offset', offset);
-  console.log('searchString', searchString);
   const { rows, count } = await Video.findAndCountAll({
     include: Channel,
     where: {
@@ -156,7 +151,6 @@ postRouter.post('/search/:offset', async (req, res) => {
 });
 
 postRouter.post('/rep', async (req, res) => {
-  console.log(req.body);
   try {
     const { videoId } = req.body;
 
@@ -164,15 +158,12 @@ postRouter.post('/rep', async (req, res) => {
       where: { videoId },
       defaults: { videoId },
     });
-    console.log(newRep, rep);
     if (!newRep) {
       rep.reportCount += 1;
       await rep.save();
 
       return res.json(rep);
     }
-    // rep.reportCount += 1;
-    // await rep.save();
     return res.json(rep);
   } catch (err) {
     return res.status(404).json(err);
@@ -184,10 +175,8 @@ postRouter.get('/rep/all', async (req, res) => {
     include: {
       model: Video,
       include: Channel,
-      // include: Report,
     },
   });
-  console.log('BAAACKKKKK', allReps);
   res.json(allReps);
 });
 module.exports = postRouter;

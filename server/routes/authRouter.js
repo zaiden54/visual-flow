@@ -10,7 +10,6 @@ authRouter.get('/check', (req, res) => {
   if (!req.session.user) {
     return res.status(401).json({ message: 'no cookies' });
   }
-  console.log('?????????????????????????', req.session.user);
   return res.json(req.session.user);
 });
 
@@ -73,7 +72,6 @@ authRouter.post('/signin', async (req, res) => {
   }
 
   const user = await User.findOne({ where: { email } });
-  console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!', user);
   if (!user || !(await bcrypt.compare(password, user?.password))) {
     return res.status(400).json({ message: 'Неверная электронная почта или пароль' });
   }

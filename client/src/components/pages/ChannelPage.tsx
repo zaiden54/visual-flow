@@ -1,11 +1,10 @@
-import { Box, Card, Typography } from '@mui/material';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import { Box, Typography } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
-import IconButton from '@mui/material';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/reduxHooks';
@@ -13,11 +12,7 @@ import { deleteVideoThunk, getChannelThunk } from '../../redux/slices/channel/ch
 import CustomTabs from '../ui/CustomTabs';
 import MenuLeft from '../ui/MenuLeft';
 import NavBar from '../ui/NavBar';
-import VideoList from '../ui/VideoList';
-import { addSubThunk } from '../../redux/slices/subs/subThunk';
 import VideoCard from '../ui/VideoCard';
-// import useDeleteVideo from '../../redux/hooks/deleteVideoHook';
-// import useDeleteVide
 import { getAllReportedVideosThunk } from '../../redux/slices/video/videoThunk';
 
 function a11yProps(index: number): JSX.Element {
@@ -28,7 +23,6 @@ function a11yProps(index: number): JSX.Element {
 }
 
 export default function ChannelPage(): JSX.Element {
-  // const videos = useAppSelector((state) => state.videos);
   const channel = useAppSelector((state) => state.channel);
   const user = useAppSelector((state) => state.user.data);
 
@@ -50,9 +44,6 @@ export default function ChannelPage(): JSX.Element {
   const handleChange = (e: React.SyntheticEvent, newValue: number): void => {
     setValue(newValue);
   };
-  console.log('----------', allReps);
-
-  // const { deleteVideoHandler } = useDeleteVideo();
 
   return (
     <>
@@ -78,7 +69,6 @@ export default function ChannelPage(): JSX.Element {
             flexDirection: 'column',
             justifyContent: 'center',
             width: '100%',
-            // backgroundColor:'red'
           }}
         >
           <Stack
@@ -97,8 +87,8 @@ export default function ChannelPage(): JSX.Element {
               <Stack direction="column">{channel.name}</Stack>
 
               <Stack direction="row" spacing={2}>
-                <Stack direction="column">{channel.Subscriptions?.length} subscribers</Stack>
-                <Stack direction="column">{channel.Videos?.length} videos</Stack>
+                <Stack direction="column">{channel.Subscriptions?.length} подписчиков</Stack>
+                <Stack direction="column">{channel.Videos?.length} видео</Stack>
               </Stack>
             </Stack>
           </Stack>
@@ -113,14 +103,12 @@ export default function ChannelPage(): JSX.Element {
                     textColor="primary"
                     indicatorColor="primary"
                   >
-                    <Tab label="My Videos" {...a11yProps(0)} />
-                    <Tab label="Reports" {...a11yProps(1)} />
+                    <Tab label="Мои видео" {...a11yProps(0)} />
+                    <Tab label="Жалобы" {...a11yProps(1)} />
                   </Tabs>
                 </Box>
               </Box>
               <CustomTabs value={value} index={0}>
-                {/* <VideoList videos={channel?.Videos} />
-                 */}
                 <Box
                   sx={{
                     display: 'flex',
@@ -130,7 +118,6 @@ export default function ChannelPage(): JSX.Element {
                     marginBottom: '2rem',
                   }}
                 >
-                  {/* <VideoList videos={channel?.Videos} /> */}
                   {channel?.Videos?.map((el) => (
                     <div key={el.id} style={{ display: 'flex', flexDirection: 'column' }}>
                       <VideoCard video={el} />
@@ -158,7 +145,7 @@ export default function ChannelPage(): JSX.Element {
                   {allReps.map((el) => (
                     <div key={el.id} style={{ display: 'flex', flexDirection: 'column' }}>
                       <Typography style={{ display: 'flex', justifyContent: 'center' }}>
-                        {el.reportCount} report(s)
+                      Количество жалоб: {el.reportCount}
                       </Typography>
                       <VideoCard video={el.Video} />
                       <Button
@@ -174,7 +161,6 @@ export default function ChannelPage(): JSX.Element {
               </CustomTabs>
             </>
           ) : (
-            // <VideoList videos={channel?.Videos} />
             <Box
               sx={{
                 display: 'flex',
@@ -184,7 +170,6 @@ export default function ChannelPage(): JSX.Element {
                 marginBottom: '2rem',
               }}
             >
-              {/* <VideoList videos={channel?.Videos} /> */}
               {channel?.Videos?.map((el) => (
                 <div key={el.id} style={{ display: 'flex', flexDirection: 'column' }}>
                   <VideoCard video={el} />

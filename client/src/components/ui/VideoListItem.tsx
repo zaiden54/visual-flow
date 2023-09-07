@@ -9,6 +9,8 @@ import Typography from '@mui/material/Typography';
 
 import { Link } from 'react-router-dom';
 import type { VideoType } from '../../types/videotypes';
+import { formatDistanceToNow } from 'date-fns';
+import ru from 'date-fns/locale/ru';
 
 type VideoCardProps = {
   video: VideoType;
@@ -28,8 +30,8 @@ export default function VideoListItem({ video }: VideoCardProps): JSX.Element {
             <Typography component="div" variant="h5">
               {video.title}
             </Typography>
-            <Typography variant="subtitle1" color="text.secondary" component="div">
-              {video.views} views | {video.createdAt}
+            <Typography variant="просмотровsubtitle1" color="text.secondary" component="div">
+              {video.views} просмотров | {formatDistanceToNow(new Date(video.createdAt), { addSuffix: true, locale: ru })}
             </Typography>
             <Stack direction="row" spacing={2} style={{ padding: '1px', alignItems: 'center' }}>
               <Avatar alt={video.Channel.name} src="#" />
