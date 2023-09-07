@@ -204,12 +204,14 @@ export default function NavBar(): JSX.Element {
               variant="outlined"
               size="small"
             />
-            <Link to={`/search/${string}`}>
-            <Button variant="outlined" style={{ height: 40 }}>
+            {string !== '' 
+              ? (<Link to={`/search/${string}`}>
+              <Button variant="outlined" style={{ height: 40 }}>
               <SearchIcon />
             </Button>
-            </Link>
-          {/* </Box> */}
+            </Link>) :  (<Button variant="outlined" style={{ height: 40 }}>
+              <SearchIcon />
+            </Button>)}
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
             {user.status === 'logged' && (
               <IconButton type="button" onClick={() => dispatch(swapModal({ value: true }))}>

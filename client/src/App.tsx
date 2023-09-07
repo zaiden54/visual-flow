@@ -34,7 +34,6 @@ function App(): JSX.Element {
   const dispatch = useAppDispatch();
 
   const user = useAppSelector((state) => state.user);
-  console.log(user.data.status === 'logged');
 
   useEffect(() => {
     void dispatch(checkUserThunk());

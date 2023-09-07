@@ -25,3 +25,13 @@ export const getRandomVideoThunk = createAsyncThunk<VideoType[]>(
     return data;
   },
 );
+
+export const updateVideoThunk = createAsyncThunk<VideoType>(
+  '/videos/update',
+  async ({ newTitle, newDesc, videoId }): Promise<VideoType> => {
+    // console.log({newTitle, newDesc, videoId}, '----------------------------------------------------------------------')
+    const { data } = await apiService.patch<VideoType>('/videos/update', {newTitle, newDesc, videoId});
+    // console.log(data, '------------------------------------------')
+    return data;
+  },
+);

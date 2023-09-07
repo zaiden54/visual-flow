@@ -42,8 +42,6 @@ export default function MenuLeft(): JSX.Element {
     }
   }, [clicked]);
 
-  console.log(subs.rows);
-
   return (
     <Drawer
       variant="permanent"

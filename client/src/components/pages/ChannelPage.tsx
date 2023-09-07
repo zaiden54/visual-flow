@@ -1,21 +1,21 @@
 import { Box, Typography } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button'
+import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import useDeleteVideo from '../../redux/hooks/deleteVideoHook';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/reduxHooks';
 import { getChannelThunk } from '../../redux/slices/channel/channelThunk';
+import { swapEditModal } from '../../redux/slices/modals/modalSlice';
 import CustomTabs from '../ui/CustomTabs';
+import EditModalWindow from '../ui/EditModalWindow';
 import MenuLeft from '../ui/MenuLeft';
 import NavBar from '../ui/NavBar';
-import VideoList from '../ui/VideoList';
-import { addSubThunk } from '../../redux/slices/subs/subThunk';
 import VideoCard from '../ui/VideoCard';
-import useDeleteVideo from '../../redux/hooks/deleteVideoHook';
-
+import VideoList from '../ui/VideoList';
 
 function a11yProps(index: number): JSX.Element {
   return {
@@ -40,15 +40,14 @@ export default function ChannelPage(): JSX.Element {
   const handleChange = (e: React.SyntheticEvent, newValue: number): void => {
     setValue(newValue);
   };
-  console.log('----------',channel);
   
   const {deleteVideoHandler} = useDeleteVideo()
 
   return (
     <>
+      <EditModalWindow />
       <MenuLeft />
       <NavBar />
-
       <Box
         sx={{
           display: 'flex',
@@ -68,7 +67,6 @@ export default function ChannelPage(): JSX.Element {
             flexDirection: 'column',
             justifyContent: 'center',
             width: '100%',
-            // backgroundColor:'red'
           }}
         >
           <Stack
@@ -116,7 +114,6 @@ export default function ChannelPage(): JSX.Element {
               </CustomTabs>
             </>
           ) : (
-            // <VideoList videos={channel?.Videos} />
           <Box  sx={{
         display: 'flex',
         flexWrap: 'wrap',
@@ -124,9 +121,12 @@ export default function ChannelPage(): JSX.Element {
         marginTop: '2rem',
         marginBottom: '2rem',
       }}> 
-          {/* <VideoList videos={channel?.Videos} /> */}
-          {channel?.Videos?.map((el) => <div key={el.id}><VideoCard video={el} />
-          <Button onClick={(e) => deleteVideoHandler(e, el.id)} style={{alignSelf:'center'}}> huhu </Button> </div>)}
+          {channel?.Videos?.map((el) => 
+          <div key={el.id}>
+            <VideoCard video={el} />
+            <Button onClick={(e) => deleteVideoHandler(e, el.id)} style={{alignSelf:'center'}}>удалить</Button>
+            <Button onClick={() => dispatch(swapEditModal({value: true, video: el}))} style={{alignSelf:'center' }}>редактировать</Button> 
+          </div>)}
       </Box>
           )}
         </div>

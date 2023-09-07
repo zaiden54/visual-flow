@@ -154,4 +154,31 @@ postRouter.post('/report', async (req, res) => {
     return res.status(404).json({ message: 'Video not found' });
   }
 });
+
+postRouter.patch('/update', async (req, res) => {
+  const { newTitle, newDesc, videoId } = req.body;
+  console.log(newTitle, newDesc, videoId);
+  // const updatedVideo = await Video.update(
+  //   {
+  //     title: newTitle,
+  //     description: newDesc },
+  //   { where: {
+  //     id: videoId,
+  //   },
+  //   },
+  // );
+  // console.log(updatedVideo);
+
+  const updatedVideo = await Video.findOne({
+    where: { id: videoId },
+    include: Channel,
+  });
+
+  updatedVideo.title = newTitle;
+  updatedVideo.description = newDesc;
+
+  await updatedVideo.save();
+
+  return res.json(updatedVideo);
+});
 module.exports = postRouter;
