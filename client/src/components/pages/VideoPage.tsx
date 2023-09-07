@@ -34,9 +34,6 @@ export default function VideoPage(): JSX.Element {
   const [start, setStart] = useState(Date.now());
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [auth, setAuth] = React.useState(true);
-  // const handleChange = (event: React.ChangeEvent<HTMLInputElement>):void => {
-  //   setAuth(event.target.checked);
-  // };
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>): void => {
     setAnchorEl(event.currentTarget);
@@ -108,26 +105,6 @@ export default function VideoPage(): JSX.Element {
                 }}
               >
                 <h4>{video?.title}</h4>
-
-                {/* {video?.Likes.find((el) => el.userId === user.id) ? (
-                  <IconButton
-                    aria-label="add to favorites"
-                    onClick={() => {
-                      void void dispatch(setLikeThunk({ videoId, userId }));
-                    }}
-                  >
-                    <FavoriteIcon />
-                  </IconButton>
-                ) : (
-                  <IconButton
-                    aria-label="add to favorites"
-                    onClick={() => {
-                      void void dispatch(setLikeThunk({ videoId, userId }));
-                    }}
-                  >
-                    <FavoriteBorderIcon />
-                  </IconButton>
-                )} */}
                 <div
                   style={{
                     display: 'flex',
@@ -143,7 +120,7 @@ export default function VideoPage(): JSX.Element {
                       <IconButton
                         aria-label="add to favorites"
                         onClick={() => {
-                          void void dispatch(setLikeThunk({ videoId, userId }));
+                         void dispatch(setLikeThunk({ videoId, userId }));
                         }}
                       >
                         <FavoriteIcon />
@@ -152,7 +129,7 @@ export default function VideoPage(): JSX.Element {
                       <IconButton
                         aria-label="add to favorites"
                         onClick={() => {
-                          void void dispatch(setLikeThunk({ videoId, userId }));
+                          void dispatch(setLikeThunk({ videoId, userId }));
                         }}
                       >
                         <FavoriteBorderIcon />
@@ -169,26 +146,6 @@ export default function VideoPage(): JSX.Element {
                   >
                     Создать комнату +
                   </Button>
-                  {/* <IconButton
-                      aria-label="add to favorites"
-                      onClick={() => {
-                        void void dispatch(setLikeThunk({ videoId, userId }));
-                      }}
-                    >
-                      <FavoriteIcon />
-                    </IconButton>
-                    {video?.Likes.length}
-                  </div>
-
-                  <Button
-                    onClick={() => {
-                      if (video) {
-                        void dispatch(createRoomThunk(video));
-                      }
-                    }}
-                  >
-                    Создать комнату +
-                  </Button> */}
                   <div>
                     <IconButton
                       size="large"
@@ -225,7 +182,6 @@ export default function VideoPage(): JSX.Element {
                       >
                         Report
                       </MenuItem>
-                      {/* <MenuItem onClick={handleClose}>My account</MenuItem> */}
                     </Menu>
                   </div>
                 </div>
@@ -279,7 +235,6 @@ export default function VideoPage(): JSX.Element {
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
                     id="panel1a-header"
-                    // style={{ display: 'flex ' }}
                   >
                     <div style={{ display: 'flex', flexDirection: 'column' }}>
                       <Typography color="text.secondary">

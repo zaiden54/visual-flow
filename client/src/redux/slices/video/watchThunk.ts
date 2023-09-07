@@ -23,13 +23,6 @@ export const reportThunk = createAsyncThunk<ReportType, number>(
   '/videos/rep',
   async ({ videoId }): Promise<ReportType> => {
     const { data } = await apiService.post<ReportType>('/videos/rep', { videoId });
-    console.log(data);
-
     return data;
   },
 );
-
-// export const countViewsThunk = createAsyncThunk('/videos/view', async (link: string) => {
-//   const { data } = await apiService.put(`/watch/${link}`);
-//   return data;
-// });

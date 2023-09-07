@@ -48,8 +48,6 @@ export default function ModalWindow(): JSX.Element {
     transform: 'translate(-50%, -50%)',
     width: 400,
     bgcolor: 'background.paper',
-    // margin:'10px',
-    // border: '2px solid #000',
     boxShadow: 24,
     p: 4,
   };
@@ -69,7 +67,6 @@ export default function ModalWindow(): JSX.Element {
           style={{ display: 'flex', flexDirection: 'column', margin: 3 }}
           onSubmit={(e) => {
             submitHandler(e);
-            // void dispatch(getChannelThunk(user.id));
           }}
         >
           <TextField
@@ -88,21 +85,15 @@ export default function ModalWindow(): JSX.Element {
             variant="outlined"
             style={{marginTop:'10px'}} 
           />
-          {/* <TextField type="file" name="video" id="outlined-basic" variant="outlined" />
-          <TextField type="file" name="preview" id="outlined-basic" variant="outlined" /> */}
           <Button component="label" variant="outlined" style={{marginTop:'10px'}} startIcon={<CloudUploadIcon />}>
-            Upload video
+            Загрузить видео
             <VisuallyHiddenInput type="file" name="video" />
           </Button>
           <Button component="label" variant="outlined" style={{marginTop:'10px'}} startIcon={<CloudUploadIcon />}>
-            Upload preview
+            Загрузить превью
             <VisuallyHiddenInput type="file" name="preview" />
           </Button>
-          {/* <input type="text" name="title" placeholder="Введите название видео" />
-          <input type="text" name="description" placeholder="Введите описание" />
-          <input type="file" name="video" /> */}
-          <Button type="submit">Добавить</Button>
-          
+          <Button type="submit">Добавить</Button> 
         </form>
         <Button type="button" onClick={() => dispatch(swapModal({ value: false }))}>
           Закрыть
