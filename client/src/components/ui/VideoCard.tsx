@@ -28,8 +28,8 @@ export default function VideoCard({ video }: VideoCardProps): JSX.Element {
           flexDirection: 'column',
           margin: 2,
           borderRadius: '10px',
-          minWidth: '360px',
-          maxWidth: '360px',
+          minWidth: '380px',
+          maxWidth: '380px',
           maxHeight: '350px',
         }}
       >
