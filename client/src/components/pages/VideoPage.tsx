@@ -20,6 +20,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { formatDistanceToNow } from 'date-fns';
 import ru from 'date-fns/locale/ru';
+import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/reduxHooks';
@@ -29,7 +30,6 @@ import apiService from '../../services/config';
 import Comments from '../ui/Comments';
 import MenuLeft from '../ui/MenuLeft';
 import NavBar from '../ui/NavBar';
-import { SnackbarProvider, VariantType, useSnackbar } from 'notistack';
 
 export default function VideoPage(): JSX.Element {
   const [start, setStart] = useState(Date.now());
@@ -197,7 +197,7 @@ export default function VideoPage(): JSX.Element {
                       onClose={handleClose}
                     >
                       <MenuItem
-                        style={{ width: '100px' }}
+                        style={{ width: '150px' }}
                         onClick={() => {
                           void dispatch(reportThunk({ videoId }));
                           console.log(videoId);
@@ -205,7 +205,7 @@ export default function VideoPage(): JSX.Element {
                           enqueueSnackbar('Жалоба отправленна',{ variant: 'warning' });
                         }}
                       >
-                        Report
+                        Пожаловаться
                       </MenuItem>
                     </Menu>
                   </div>
