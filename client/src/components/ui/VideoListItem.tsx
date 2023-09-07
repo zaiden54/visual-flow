@@ -18,7 +18,7 @@ type VideoCardProps = {
 export default function VideoListItem({ video }: VideoCardProps): JSX.Element {
   return (
     <Link to={`/watch/${video.link}`} style={{ textDecoration: 'none', width: '100%' }}>
-      <Card sx={{ display: 'flex', width: '100%' }}>
+      <Card sx={{ display: 'flex', width: '100%', borderRadius: '10px' }}>
         <CardMedia
           component="img"
           sx={{ width: '400px', height: '200px', objectFit: 'cover' }}
@@ -31,7 +31,8 @@ export default function VideoListItem({ video }: VideoCardProps): JSX.Element {
               {video.title}
             </Typography>
             <Typography variant="просмотровsubtitle1" color="text.secondary" component="div">
-              {video.views} просмотров | {formatDistanceToNow(new Date(video.createdAt), { addSuffix: true, locale: ru })}
+              {video.views} просмотров |{' '}
+              {formatDistanceToNow(new Date(video.createdAt), { addSuffix: true, locale: ru })}
             </Typography>
             <Stack direction="row" spacing={2} style={{ padding: '1px', alignItems: 'center' }}>
               <Avatar alt={video.Channel.name} src="#" />

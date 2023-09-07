@@ -25,7 +25,7 @@ export default function VideosMap(): JSX.Element {
   return (
     <motion.div
       animate={{ y: 60 }}
-      transition={{ type: 'spring', stiffness: 40 }}
+      transition={{ type: 'spring', stiffness: 55 }}
       style={{
         display: 'flex',
         // marginTop: '5rem',

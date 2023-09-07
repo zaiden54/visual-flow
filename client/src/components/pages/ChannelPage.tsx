@@ -19,6 +19,7 @@ import VideoCard from '../ui/VideoCard';
 import { getAllReportedVideosThunk, updateVideoThunk } from '../../redux/slices/video/videoThunk';
 import { SnackbarProvider, VariantType, useSnackbar } from 'notistack';
 import { swapEditModal } from '../../redux/slices/modals/modalSlice';
+import { motion, useScroll } from 'framer-motion';
 
 function a11yProps(index: number): JSX.Element {
   return {
@@ -130,7 +131,12 @@ export default function ChannelPage(): JSX.Element {
                   {channel.Videos?.length ? (
                     <>
                       {channel?.Videos?.map((el) => (
-                        <div key={el.id} style={{ display: 'flex', flexDirection: 'column' }}>
+                        <motion.div
+                          key={el.id}
+                          style={{ display: 'flex', flexDirection: 'column' }}
+                          animate={{ y: 5 }}
+                          transition={{ type: 'spring', stiffness: 60 }}
+                        >
                           <VideoCard video={el} />
                           <Button
                             onClick={() => {
@@ -142,7 +148,7 @@ export default function ChannelPage(): JSX.Element {
                             {' '}
                             <DeleteOutlineIcon /> Удалить{' '}
                           </Button>{' '}
-                        </div>
+                        </motion.div>
                       ))}
                     </>
                   ) : (
@@ -161,7 +167,12 @@ export default function ChannelPage(): JSX.Element {
                   }}
                 >
                   {allReps.map((el) => (
-                    <div key={el.id} style={{ display: 'flex', flexDirection: 'column' }}>
+                    <motion.div
+                      key={el.id}
+                      style={{ display: 'flex', flexDirection: 'column' }}
+                      animate={{ y: 5 }}
+                      transition={{ type: 'spring', stiffness: 60 }}
+                    >
                       <Typography style={{ display: 'flex', justifyContent: 'center' }}>
                         Количество жалоб: {el.reportCount}
                       </Typography>
@@ -176,7 +187,7 @@ export default function ChannelPage(): JSX.Element {
                         {' '}
                         <DeleteOutlineIcon /> Удалить{' '}
                       </Button>{' '}
-                    </div>
+                    </motion.div>
                   ))}
                 </Box>
               </CustomTabs>
@@ -194,7 +205,12 @@ export default function ChannelPage(): JSX.Element {
               {channel.Videos?.length ? (
                 <>
                   {channel?.Videos?.map((el) => (
-                    <div key={el.id} style={{ display: 'flex', flexDirection: 'column' }}>
+                    <motion.div
+                      key={el.id}
+                      style={{ display: 'flex', flexDirection: 'column' }}
+                      animate={{ y: 5 }}
+                      transition={{ type: 'spring', stiffness: 60 }}
+                    >
                       <VideoCard video={el} />
                       {user.status === 'logged' && user.id === channel.userId && (
                         <>
@@ -215,7 +231,7 @@ export default function ChannelPage(): JSX.Element {
                           </Button>
                         </>
                       )}
-                    </div>
+                    </motion.div>
                   ))}
                 </>
               ) : user.status === 'logged' && user.id === channel.userId ? (

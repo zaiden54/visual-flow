@@ -6,6 +6,7 @@ import MenuLeft from '../ui/MenuLeft';
 import ModalWindow from '../ui/ModalWindow';
 import NavBar from '../ui/NavBar';
 import VideoListItem from '../ui/VideoListItem';
+import { motion, useScroll } from 'framer-motion';
 
 export default function SubscriptionsPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -16,7 +17,6 @@ export default function SubscriptionsPage(): JSX.Element {
 
   return (
     <>
-      <div>SUUUBS</div>
       <ModalWindow />
       <MenuLeft />
       <NavBar />
@@ -25,15 +25,19 @@ export default function SubscriptionsPage(): JSX.Element {
           display: 'flex',
           flexWrap: 'wrap',
           flexDirection: 'row',
-          marginTop: '2rem',
+          // marginTop: '2rem',
           marginBottom: '2rem',
           justifyContent: 'flex-start',
+          width: '100%',
         }}
       >
-        <div
+        <motion.div
+          animate={{ y: 20 }}
+          transition={{ type: 'spring', stiffness: 80 }}
           style={{
             display: 'flex',
-            marginTop: '5rem',
+            // marginTop: '5rem',
+            margin: 6,
             flexWrap: 'wrap',
             flexDirection: 'column',
             width: '100%',
@@ -53,7 +57,7 @@ export default function SubscriptionsPage(): JSX.Element {
               </ListItem>
             ))}
           </List>
-        </div>
+        </motion.div>
       </Box>
     </>
   );
