@@ -17,7 +17,7 @@ export default function VideoList({ videos }: VideoListProps): JSX.Element {
         justifyContent: 'flex-start',
       }}
     >
-      {videos?.map((el) => <VideoCard video={el} />)}
+      {videos?.map((el) => <VideoCard key={el.id} video={el} />)}
     </Box>
   );
 }

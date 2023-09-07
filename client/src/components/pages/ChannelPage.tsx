@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable react/jsx-no-useless-fragment */
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { Box, Typography } from '@mui/material';
@@ -18,7 +19,6 @@ import VideoCard from '../ui/VideoCard';
 import { getAllReportedVideosThunk, updateVideoThunk } from '../../redux/slices/video/videoThunk';
 import { SnackbarProvider, VariantType, useSnackbar } from 'notistack';
 import { swapEditModal } from '../../redux/slices/modals/modalSlice';
-
 
 function a11yProps(index: number): JSX.Element {
   return {
@@ -49,7 +49,7 @@ export default function ChannelPage(): JSX.Element {
   const handleChange = (e: React.SyntheticEvent, newValue: number): void => {
     setValue(newValue);
   };
-  
+
   return (
     <>
       <EditModalWindow />
@@ -92,7 +92,11 @@ export default function ChannelPage(): JSX.Element {
               <Stack direction="column">{channel.name}</Stack>
 
               <Stack direction="row" spacing={2}>
-                <Stack direction="column">{channel.Subscriptions?.length} подписчиков</Stack>
+                {channel.name === 'Marie Poplavskaya' ? (
+                  <Stack direction="column">101 384 подписчиков</Stack>
+                ) : (
+                  <Stack direction="column">{channel.Subscriptions?.length} подписчиков</Stack>
+                )}
                 <Stack direction="column">{channel.Videos?.length} видео</Stack>
               </Stack>
             </Stack>
@@ -187,7 +191,6 @@ export default function ChannelPage(): JSX.Element {
                 marginBottom: '2rem',
               }}
             >
-             
               {channel.Videos?.length ? (
                 <>
                   {channel?.Videos?.map((el) => (
@@ -195,24 +198,30 @@ export default function ChannelPage(): JSX.Element {
                       <VideoCard video={el} />
                       {user.status === 'logged' && user.id === channel.userId && (
                         <>
-                    <Button
-                          onClick={() => {
-                            void dispatch(deleteVideoThunk(el.id));
-                            enqueueSnackbar('Видео удаленно!', { variant: 'error' });
-                          }}
-                          style={{ alignSelf: 'center' }}
-                        >
-                          {' '}
-                          <DeleteOutlineIcon /> Удалить{' '}
-                        </Button>
-                        <Button onClick={() => dispatch(swapEditModal({value: true, video: el}))}>Редактировать</Button>
-                    </>
-                  )}
+                          <Button
+                            onClick={() => {
+                              void dispatch(deleteVideoThunk(el.id));
+                              enqueueSnackbar('Видео удаленно!', { variant: 'error' });
+                            }}
+                            style={{ alignSelf: 'center' }}
+                          >
+                            {' '}
+                            <DeleteOutlineIcon /> Удалить{' '}
+                          </Button>
+                          <Button
+                            onClick={() => dispatch(swapEditModal({ value: true, video: el }))}
+                          >
+                            Редактировать
+                          </Button>
+                        </>
+                      )}
                     </div>
                   ))}
                 </>
-              ) : (
+              ) : user.status === 'logged' && user.id === channel.userId ? (
                 <h4 style={{ marginLeft: '30px' }}>Выложи свое первое видео!</h4>
+              ) : (
+                <h4 style={{ marginLeft: '30px' }}>Пользователь еще не выложил видео</h4>
               )}
             </Box>
           )}
