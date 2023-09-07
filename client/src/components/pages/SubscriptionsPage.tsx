@@ -10,6 +10,7 @@ import { motion, useScroll } from 'framer-motion';
 
 export default function SubscriptionsPage(): JSX.Element {
   const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.user);
   const videos = useAppSelector((state) => state.videos);
   useEffect(() => {
     void dispatch(getAllSubVideoThunk());
@@ -20,45 +21,49 @@ export default function SubscriptionsPage(): JSX.Element {
       <ModalWindow />
       <MenuLeft />
       <NavBar />
-      <Box
-        sx={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          flexDirection: 'row',
-          // marginTop: '2rem',
-          marginBottom: '2rem',
-          justifyContent: 'flex-start',
-          width: '100%',
-        }}
-      >
-        <motion.div
-          animate={{ y: 20 }}
-          transition={{ type: 'spring', stiffness: 80 }}
-          style={{
+      {user.data.status === 'logged' ? (
+        <Box
+          sx={{
             display: 'flex',
-            // marginTop: '5rem',
-            margin: 6,
             flexWrap: 'wrap',
-            flexDirection: 'column',
+            flexDirection: 'row',
+            // marginTop: '2rem',
+            marginBottom: '2rem',
+            justifyContent: 'flex-start',
             width: '100%',
           }}
         >
-          <List
+          <motion.div
+            animate={{ y: 20 }}
+            transition={{ type: 'spring', stiffness: 80 }}
             style={{
-              width: '100%',
               display: 'flex',
+              // marginTop: '5rem',
+              margin: 6,
+              flexWrap: 'wrap',
               flexDirection: 'column',
-              marginTop: '70px',
+              width: '100%',
             }}
           >
-            {videos.map((el) => (
-              <ListItem key={el.id}>
-                <VideoListItem video={el} />
-              </ListItem>
-            ))}
-          </List>
-        </motion.div>
-      </Box>
+            <List
+              style={{
+                width: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+                marginTop: '70px',
+              }}
+            >
+              {videos.map((el) => (
+                <ListItem key={el.id}>
+                  <VideoListItem video={el} />
+                </ListItem>
+              ))}
+            </List>
+          </motion.div>
+        </Box>
+      ) : (
+        <div style={{ display: 'flex', marginTop: '7%' }}>Войдите в аккаунт</div>
+      )}
     </>
   );
 }
