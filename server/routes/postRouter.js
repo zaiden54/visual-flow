@@ -1,5 +1,6 @@
 const router = require('express').Router;
 const { Op } = require('sequelize');
+const path = require('path');
 const { Video, Channel, sequelize, Subscription, Comment, Like, Report } = require('../db/models');
 
 const postRouter = router();
@@ -79,6 +80,12 @@ postRouter.get('/random', async (req, res) => {
   res.json(randomVids);
 });
 
+postRouter.get('/preview', (req, res) => {
+  const fileName = req.query.file;
+  const fullPath = path.join(__dirname, '..', 'previews', fileName);
+  res.sendFile(fullPath);
+});
+
 postRouter.get('/:link', async (req, res) => {
   const { link } = req.params;
   const comments = await Video.findOne({
@@ -134,21 +141,6 @@ postRouter.post('/search/:offset', async (req, res) => {
   return res.json({ rows, count });
 });
 
-postRouter.post('/search/:offset', async (req, res) => {
-  const { offset } = req.params;
-  const { searchString } = req.body;
-  const { rows, count } = await Video.findAndCountAll({
-    include: Channel,
-    where: {
-      title: {
-        [Op.substring]: searchString,
-      },
-    },
-    offset,
-    limit: 5,
-  });
-  return res.json({ rows, count });
-});
 
 postRouter.post('/rep', async (req, res) => {
   try {
@@ -182,17 +174,6 @@ postRouter.get('/rep/all', async (req, res) => {
 
 postRouter.patch('/update', async (req, res) => {
   const { newTitle, newDesc, videoId } = req.body;
-  console.log(newTitle, newDesc, videoId);
-  // const updatedVideo = await Video.update(
-  //   {
-  //     title: newTitle,
-  //     description: newDesc },
-  //   { where: {
-  //     id: videoId,
-  //   },
-  //   },
-  // );
-  // console.log(updatedVideo);
 
   const updatedVideo = await Video.findOne({
     where: { id: videoId },
@@ -206,4 +187,5 @@ postRouter.patch('/update', async (req, res) => {
 
   return res.json(updatedVideo);
 });
+
 module.exports = postRouter;

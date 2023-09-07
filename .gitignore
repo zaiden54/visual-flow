@@ -47,6 +47,9 @@ test/
 
 *.mp4
 *.MP4
+*.png
+*.jpg
+*.jpeg
 
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/

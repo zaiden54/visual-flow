@@ -35,7 +35,7 @@ export default function VideoCard({ video }: VideoCardProps): JSX.Element {
         <CardMedia
           component="img"
           sx={{ width: '100%', height: '200px', objectFit: 'cover' }}
-          image={`http://localhost:3001${video.preview}`}
+          image={`http://localhost:3001/api/videos/preview?file=${video.preview}`}
           alt={video.title}
         />
         <Box sx={{ display: 'flex', flexDirection: 'column', flexWrap: 'wrap' }}>
