@@ -120,7 +120,7 @@ export default function ChannelPage(): JSX.Element {
                     marginBottom: '2rem',
                   }}
                 >
-                  {channel.Videos.length ? (
+                  {channel.Videos?.length ? (
                     <>
                       {channel?.Videos?.map((el) => (
                         <div key={el.id} style={{ display: 'flex', flexDirection: 'column' }}>
@@ -185,7 +185,7 @@ export default function ChannelPage(): JSX.Element {
               }}
             >
              
-              {channel.Videos.length ? (
+              {channel.Videos?.length ? (
                 <>
                   {channel?.Videos?.map((el) => (
                     <div key={el.id} style={{ display: 'flex', flexDirection: 'column' }}>
