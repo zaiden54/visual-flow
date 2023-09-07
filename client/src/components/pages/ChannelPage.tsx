@@ -92,7 +92,11 @@ export default function ChannelPage(): JSX.Element {
               <Stack direction="column">{channel.name}</Stack>
 
               <Stack direction="row" spacing={2}>
-                <Stack direction="column">{channel.Subscriptions?.length} подписчиков</Stack>
+                {channel.name === 'Marie Poplavskaya' ? (
+                  <Stack direction="column">101 384 подписчиков</Stack>
+                ) : (
+                  <Stack direction="column">{channel.Subscriptions?.length} подписчиков</Stack>
+                )}
                 <Stack direction="column">{channel.Videos?.length} видео</Stack>
               </Stack>
             </Stack>
