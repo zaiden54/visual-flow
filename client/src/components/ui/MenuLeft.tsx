@@ -70,22 +70,24 @@ export default function MenuLeft(): JSX.Element {
               </ListItemButton>
             </ListItem>
           </Link>
-          <Link style={{ textDecoration: 'none', color: 'white' }} to="/subs">
-            <ListItem key={2} style={{ padding: '1px', alignItems: 'center' }} disablePadding>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon>
-                  <AutoAwesomeMotionIcon />
-                </ListItemIcon>
-                <ListItemText primary="Подписки" />
-              </ListItemButton>
-            </ListItem>
-          </Link>
+          {user.data.status === 'logged' && (
+            <Link style={{ textDecoration: 'none', color: 'white' }} to="/subs">
+              <ListItem key={2} style={{ padding: '1px', alignItems: 'center' }} disablePadding>
+                <ListItemButton
+                  sx={{
+                    minHeight: 48,
+                    justifyContent: open ? 'initial' : 'center',
+                    px: 2.5,
+                  }}
+                >
+                  <ListItemIcon>
+                    <AutoAwesomeMotionIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Подписки" />
+                </ListItemButton>
+              </ListItem>
+            </Link>
+          )}
           <Link style={{ textDecoration: 'none', color: 'white' }} to="/popular">
             <ListItem key={3} style={{ padding: '1px', alignItems: 'center' }} disablePadding>
               <ListItemButton
