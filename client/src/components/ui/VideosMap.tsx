@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/reduxHooks';
 import { getSubVideoThunk, getRandomVideoThunk } from '../../redux/slices/video/videoThunk';
 import VideoList from './VideoList';
+import { motion, useScroll } from 'framer-motion';
 
 export default function VideosMap(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -22,10 +23,12 @@ export default function VideosMap(): JSX.Element {
   }, []);
 
   return (
-    <div
+    <motion.div
+      animate={{ y: 60 }}
+      transition={{ type: 'spring', stiffness: 40 }}
       style={{
         display: 'flex',
-        marginTop: '5rem',
+        // marginTop: '5rem',
         flexWrap: 'wrap',
         flexDirection: 'column',
         justifyContent: 'center',
@@ -63,6 +66,6 @@ export default function VideosMap(): JSX.Element {
         <h4>Рекомендации</h4>
       </div>
       <VideoList videos={random} />
-    </div>
+    </motion.div>
   );
 }

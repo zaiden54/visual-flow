@@ -21,6 +21,7 @@ type VideoCardProps = {
 export default function VideoCard({ video }: VideoCardProps): JSX.Element {
   return (
     <Link to={`/watch/${video.link}`} style={{ textDecoration: 'none' }}>
+      
       <Card
         sx={{
           display: 'flex',
