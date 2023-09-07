@@ -130,7 +130,7 @@ export default function MenuLeft(): JSX.Element {
                       {subs.count - subs.rows.length} more
                     </Button>
                   ) : (
-                    subs.rows.length >= 3 && (
+                    subs.rows.length > 3 && (
                       <Button
                         type="button"
                         onClick={() => {
