@@ -83,7 +83,7 @@ postRouter.get('/random', async (req, res) => {
 postRouter.get('/preview', (req, res) => {
   const fileName = req.query.file;
   const fullPath = path.join(__dirname, '..', 'previews', fileName);
-  console.log(fullPath);
+  // console.log(fullPath);
   res.sendFile(fullPath);
   // res.sendStatus(200);
 });

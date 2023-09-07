@@ -46,7 +46,7 @@ authRouter.post('/signup', async (req, res) => {
     return res.status(400).json({ message: 'Такой пользователь уже существует' });
   }
 
-  await sendActivationMail(email, `${process.env.API_URL}/api/auth/activate/${activationLink}`);
+  // await sendActivationMail(email, `${process.env.API_URL}/api/auth/activate/${activationLink}`);
 
   req.session.user = {
     id: user.id,

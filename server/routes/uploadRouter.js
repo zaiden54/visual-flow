@@ -14,7 +14,7 @@ const storage = multer.diskStorage({
         cb(null, 'uploads');
         break;
       case 'preview':
-        cb(null, 'public/previews');
+        cb(null, 'previews');
         break;
       default:
         break;
