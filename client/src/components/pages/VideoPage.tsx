@@ -72,7 +72,7 @@ export default function VideoPage(): JSX.Element {
   const channelId = video?.Channel.id;
 
   return (
-    <div style={{ display: 'flex', width: '55%', justifyContent: 'center' }}>
+    <div style={{ display: 'flex', width: '70%', justifyContent: 'center' }}>
       <MenuLeft />
       <NavBar />
       <Stack
@@ -126,7 +126,7 @@ export default function VideoPage(): JSX.Element {
                   alignItems: 'center',
                 }}
               >
-                <h4 style={{ wordWrap: 'break-word' }}>{video?.title}</h4>
+                <h4 style={{ wordWrap: 'break-word',marginLeft:"20px" }}>{video?.title}</h4>
                 <div
                   style={{
                     display: 'flex',
