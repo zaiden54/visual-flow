@@ -225,7 +225,7 @@ export default function VideoPage(): JSX.Element {
                     }}
                   >
                     <ListItemAvatar>
-                      <Avatar alt="Remy Sharp" src="" />
+                      <Avatar alt={video?.Channel.name} src="#" />
                     </ListItemAvatar>
                     <ListItemText>
                       <Typography>{video && video.Channel.name}</Typography>

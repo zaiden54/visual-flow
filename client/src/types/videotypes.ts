@@ -68,7 +68,7 @@ export type CommentsType = {
   userId: number;
   videoId: number;
   message: string;
-  Users: {
+  User: {
     name: string;
   };
 };
