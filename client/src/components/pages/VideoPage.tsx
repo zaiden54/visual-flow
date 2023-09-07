@@ -72,7 +72,7 @@ export default function VideoPage(): JSX.Element {
   const channelId = video?.Channel.id;
 
   return (
-    <div style={{ display: 'flex', maxWidth: '70%' }}>
+    <div style={{ display: 'flex', width: '55%', justifyContent: 'center' }}>
       <MenuLeft />
       <NavBar />
       <Stack
