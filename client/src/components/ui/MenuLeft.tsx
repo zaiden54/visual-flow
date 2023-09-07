@@ -86,7 +86,7 @@ export default function MenuLeft(): JSX.Element {
               </ListItemButton>
             </ListItem>
           </Link>
-          <Link style={{ textDecoration: 'none', color: 'white' }} to="/filler">
+          <Link style={{ textDecoration: 'none', color: 'white' }} to="/popular">
             <ListItem key={3} style={{ padding: '1px', alignItems: 'center' }} disablePadding>
               <ListItemButton
                 sx={{
@@ -106,7 +106,14 @@ export default function MenuLeft(): JSX.Element {
           {user.data.status === 'logged' && (
             <div>
               {subs.rows && (
-                <List>
+                <List
+                  style={{
+                    justifyContent: 'center',
+
+                    display: 'flex',
+                    flexDirection: 'column',
+                  }}
+                >
                   {subs.rows.map((el) => (
                     <Link
                       key={el.id}
@@ -122,6 +129,7 @@ export default function MenuLeft(): JSX.Element {
                   ))}
                   {subs.count - subs.rows.length > 0 ? (
                     <Button
+                      style={{ marginTop: 2 }}
                       type="button"
                       onClick={() => {
                         setClick(false);
@@ -133,6 +141,7 @@ export default function MenuLeft(): JSX.Element {
                   ) : (
                     subs.rows.length > 3 && (
                       <Button
+                        style={{ marginTop: 2 }}
                         type="button"
                         onClick={() => {
                           void dispatch(getSubChannelThunk(subs.rows.length));

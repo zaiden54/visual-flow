@@ -4,6 +4,14 @@ const path = require('path');
 const { Video, Channel, sequelize, Subscription, Comment, Like, Report } = require('../db/models');
 
 const postRouter = router();
+postRouter.get('/popular', async (req, res) => {
+  const popVideos = await Video.findAll({
+    order: [['views', 'DESC']],
+    limit: 10,
+    include: Channel,
+  });
+  res.json(popVideos);
+});
 
 postRouter.get('/subs/channels/:offset', async (req, res) => {
   const { offset } = req.params;
@@ -38,9 +46,9 @@ postRouter.get('/subs', async (req, res) => {
       model: Channel,
       include: {
         model: Video,
+        order: [['createdAt', 'DESC']],
         include: Channel,
         limit: 8,
-        order: [['createdAt', 'DESC']],
       },
     },
   });
@@ -57,11 +65,11 @@ postRouter.get('/subs/all', async (req, res) => {
 
   const videos = await Subscription.findAll({
     where: { userId },
-    order: [['createdAt', 'DESC']],
     include: {
       model: Channel,
       include: {
         model: Video,
+        order: [['createdAt', 'DESC']],
         include: Channel,
       },
     },
@@ -140,7 +148,6 @@ postRouter.post('/search/:offset', async (req, res) => {
   });
   return res.json({ rows, count });
 });
-
 
 postRouter.post('/rep', async (req, res) => {
   try {

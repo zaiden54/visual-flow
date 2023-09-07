@@ -40,7 +40,7 @@ export default function VideosMap(): JSX.Element {
             style={{
               display: 'flex',
               flexDirection: 'column',
-              alignContent: 'center',
+              // alignContent: 'center',
               alignItems: 'center',
             }}
           >
@@ -48,8 +48,8 @@ export default function VideosMap(): JSX.Element {
           </div>
           <VideoList videos={videos.slice(0, 8)} />
           {videos.length > 8 && (
-            <Link to="/subs">
-              <Button type="button">ЕЩЕ</Button>
+            <Link to="/subs" style={{ display: 'flex', width: '100%' }}>
+              <Button style={{ display: 'flex', width: '100%' }} type="button">ЕЩЕ</Button>
             </Link>
           )}
           <Divider />
