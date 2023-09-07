@@ -33,7 +33,8 @@ function fileFilter(req, file, cb) {
     file.mimetype !== 'video/mpeg' &&
     file.mimetype !== 'image/png' &&
     file.mimetype !== 'image/jpg' &&
-    file.mimetype !== 'image/jpeg'
+    file.mimetype !== 'image/jpeg' &&
+    file.mimetype !== 'video/quicktime'
   ) {
     cb(null, false);
   } else cb(null, true);
