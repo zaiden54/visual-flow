@@ -14,7 +14,7 @@ import ModalWindow from './components/ui/ModalWindow';
 import { useAppDispatch, useAppSelector } from './redux/hooks/reduxHooks';
 import { checkUserThunk } from './redux/slices/user/userThunks';
 import Comments from './components/ui/Comments';
-import MiniDrawer from './components/ui/ButtonMenuLeftTest';
+import FillerPage from './components/pages/FillerPage';
 import AdminPage from './components/pages/AdminPage';
 import SearchPage from './components/pages/SearchPage';
 
@@ -38,6 +38,8 @@ function App(): JSX.Element {
   useEffect(() => {
     void dispatch(checkUserThunk());
   }, []);
+
+  
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -67,8 +69,7 @@ function App(): JSX.Element {
             <Route path="/admin" element={<AdminPage />} />
           </Route>
           <Route path="/channel/:id" element={<ChannelPage />} />
-          <Route path="/ololo" element={<MiniDrawer />} />
-          <Route path="/chat" element={<TestChatPage />} />
+          <Route path="/filler" element={<FillerPage />} />
         </Routes>
       </div>
     </ThemeProvider>

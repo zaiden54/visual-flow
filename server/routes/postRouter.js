@@ -90,7 +90,6 @@ postRouter.get('/:link', async (req, res) => {
       { model: Channel },
     ],
   });
-  console.log(comments);
   res.json(comments);
 });
 
@@ -135,24 +134,50 @@ postRouter.post('/search/:offset', async (req, res) => {
   return res.json({ rows, count });
 });
 
-postRouter.post('/report', async (req, res) => {
+postRouter.post('/search/:offset', async (req, res) => {
+  const { offset } = req.params;
+  const { searchString } = req.body;
+  const { rows, count } = await Video.findAndCountAll({
+    include: Channel,
+    where: {
+      title: {
+        [Op.substring]: searchString,
+      },
+    },
+    offset,
+    limit: 5,
+  });
+  return res.json({ rows, count });
+});
+
+postRouter.post('/rep', async (req, res) => {
   try {
     const { videoId } = req.body;
+
     const [rep, newRep] = await Report.findOrCreate({
       where: { videoId },
       defaults: { videoId },
     });
     if (!newRep) {
-      newRep.reportCount += 1;
-      await newRep.save();
-      return res.json(newRep);
+      rep.reportCount += 1;
+      await rep.save();
+
+      return res.json(rep);
     }
-    rep.reportCount += 1;
-    await rep.save();
     return res.json(rep);
-  } catch {
-    return res.status(404).json({ message: 'Video not found' });
+  } catch (err) {
+    return res.status(404).json(err);
   }
+});
+
+postRouter.get('/rep/all', async (req, res) => {
+  const allReps = await Report.findAll({
+    include: {
+      model: Video,
+      include: Channel,
+    },
+  });
+  res.json(allReps);
 });
 
 postRouter.patch('/update', async (req, res) => {

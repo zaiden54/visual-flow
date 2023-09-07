@@ -9,7 +9,7 @@ import VideoListItem from '../ui/VideoListItem';
 
 export default function SubscriptionsPage(): JSX.Element {
   const dispatch = useAppDispatch();
-  const subVideos = useAppSelector((state) => state.subVideos);
+  const videos = useAppSelector((state) => state.videos);
   useEffect(() => {
     void dispatch(getAllSubVideoThunk());
   }, []);
@@ -47,7 +47,7 @@ export default function SubscriptionsPage(): JSX.Element {
               marginTop: '70px',
             }}
           >
-            {subVideos.map((el) => (
+            {videos.map((el) => (
               <ListItem key={el.id}>
                 <VideoListItem video={el} />
               </ListItem>

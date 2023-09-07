@@ -32,6 +32,8 @@ function fileFilter(req, file, cb) {
     && file.mimetype !== 'video/webm'
     && file.mimetype !== 'video/mpeg'
     && file.mimetype !== 'image/png'
+    && file.mimetype !== 'image/jpg'
+    && file.mimetype !== 'image/jpeg'
   ) {
     cb(null, false);
   } else cb(null, true);
@@ -91,8 +93,6 @@ uploadRouter.post(
       where: { channelId: user.Channel.id },
       include: { model: Channel },
     });
-
-    // res.sendStatus(200);
     res.json(allVideos);
   },
 );

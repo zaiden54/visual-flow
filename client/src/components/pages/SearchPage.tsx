@@ -14,7 +14,6 @@ export default function SearchPage(): JSX.Element {
 
   const searchString = useParams();
   const dispatch = useAppDispatch();
-  console.log(searchString)
   const searchVideos = useAppSelector((state) => state.search);
   
   useEffect(() => {

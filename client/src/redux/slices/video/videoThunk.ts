@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import apiService from '../../../services/config';
-import type { VideoType } from '../../../types/videotypes';
+import type { ReportType, VideoType } from '../../../types/videotypes';
 
 export const getSubVideoThunk = createAsyncThunk<VideoType[]>(
   '/videos/subs',
@@ -13,7 +13,7 @@ export const getSubVideoThunk = createAsyncThunk<VideoType[]>(
 export const getAllSubVideoThunk = createAsyncThunk<VideoType[]>(
   '/videos/subs/all',
   async (): Promise<VideoType[]> => {
-    const { data } = await apiService<VideoType[]>('/videos/subs/all');    
+    const { data } = await apiService<VideoType[]>('/videos/subs/all');
     return data;
   },
 );
@@ -26,12 +26,19 @@ export const getRandomVideoThunk = createAsyncThunk<VideoType[]>(
   },
 );
 
+export const getAllReportedVideosThunk = createAsyncThunk<ReportType[]>(
+  '/videos/repAll',
+  async (): Promise<ReportType[]> => {
+    const { data } = await apiService.get<ReportType[]>('/videos/rep/all');
+    return data;
+  },
+);
+
+
 export const updateVideoThunk = createAsyncThunk<VideoType>(
   '/videos/update',
   async ({ newTitle, newDesc, videoId }): Promise<VideoType> => {
-    // console.log({newTitle, newDesc, videoId}, '----------------------------------------------------------------------')
     const { data } = await apiService.patch<VideoType>('/videos/update', {newTitle, newDesc, videoId});
-    // console.log(data, '------------------------------------------')
     return data;
   },
 );

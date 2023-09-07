@@ -2,8 +2,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import apiService from '../../../services/config';
 import type { SubscriptionsType } from '../../../types/videotypes';
-// import { unsubFromChannel } from '../subChannels/subChannelSlice';
-// import { useAppDispatch } from '../../hooks/reduxHooks';
 
 export const addSubThunk = createAsyncThunk<SubscriptionsType, SubscriptionsType>(
   'sub/add',
@@ -12,9 +10,6 @@ export const addSubThunk = createAsyncThunk<SubscriptionsType, SubscriptionsType
       userId,
       channelId,
     });
-
-    // console.log(data)
-
     return data;
   },
 );

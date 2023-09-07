@@ -1,3 +1,4 @@
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { Box, Typography } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -6,16 +7,16 @@ import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import useDeleteVideo from '../../redux/hooks/deleteVideoHook';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/reduxHooks';
-import { getChannelThunk } from '../../redux/slices/channel/channelThunk';
-import { swapEditModal } from '../../redux/slices/modals/modalSlice';
+import { deleteVideoThunk, getChannelThunk } from '../../redux/slices/channel/channelThunk';
 import CustomTabs from '../ui/CustomTabs';
 import EditModalWindow from '../ui/EditModalWindow';
 import MenuLeft from '../ui/MenuLeft';
 import NavBar from '../ui/NavBar';
 import VideoCard from '../ui/VideoCard';
-import VideoList from '../ui/VideoList';
+import { getAllReportedVideosThunk, updateVideoThunk } from '../../redux/slices/video/videoThunk';
+import { swapEditModal } from '../../redux/slices/modals/modalSlice';
+
 
 function a11yProps(index: number): JSX.Element {
   return {
@@ -28,6 +29,8 @@ export default function ChannelPage(): JSX.Element {
   const channel = useAppSelector((state) => state.channel);
   const user = useAppSelector((state) => state.user.data);
 
+  const allReps = useAppSelector((state) => state.allReps);
+
   const { id } = useParams();
 
   const dispatch = useAppDispatch();
@@ -35,14 +38,16 @@ export default function ChannelPage(): JSX.Element {
     void dispatch(getChannelThunk(id));
   }, [id]);
 
+  useEffect(() => {
+    void dispatch(getAllReportedVideosThunk());
+  }, []);
+
   const [value, setValue] = useState(0);
 
   const handleChange = (e: React.SyntheticEvent, newValue: number): void => {
     setValue(newValue);
   };
   
-  const {deleteVideoHandler} = useDeleteVideo()
-
   return (
     <>
       <EditModalWindow />
@@ -85,8 +90,8 @@ export default function ChannelPage(): JSX.Element {
               <Stack direction="column">{channel.name}</Stack>
 
               <Stack direction="row" spacing={2}>
-                <Stack direction="column">{channel.Subscriptions?.length} subscribers</Stack>
-                <Stack direction="column">{channel.Videos?.length} videos</Stack>
+                <Stack direction="column">{channel.Subscriptions?.length} подписчиков</Stack>
+                <Stack direction="column">{channel.Videos?.length} видео</Stack>
               </Stack>
             </Stack>
           </Stack>
@@ -101,33 +106,91 @@ export default function ChannelPage(): JSX.Element {
                     textColor="primary"
                     indicatorColor="primary"
                   >
-                    <Tab label="My Videos" {...a11yProps(0)} />
-                    <Tab label="Reports" {...a11yProps(1)} />
+                    <Tab label="Мои видео" {...a11yProps(0)} />
+                    <Tab label="Жалобы" {...a11yProps(1)} />
                   </Tabs>
                 </Box>
               </Box>
               <CustomTabs value={value} index={0}>
-                <VideoList videos={channel?.Videos} />
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    flexDirection: 'row',
+                    marginTop: '2rem',
+                    marginBottom: '2rem',
+                  }}
+                >
+                  {channel?.Videos?.map((el) => (
+                    <div key={el.id} style={{ display: 'flex', flexDirection: 'column' }}>
+                      <VideoCard video={el} />
+                      <Button
+                        onClick={() => void dispatch(deleteVideoThunk(el.id))}
+                        style={{ alignSelf: 'center' }}
+                      >
+                        {' '}
+                        <DeleteOutlineIcon /> Удалить{' '}
+                      </Button>{' '}
+                    </div>
+                  ))}
+                </Box>
               </CustomTabs>
               <CustomTabs value={value} index={1}>
-                <Typography>hiiii</Typography>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    flexDirection: 'row',
+                    marginTop: '2rem',
+                    marginBottom: '2rem',
+                  }}
+                >
+                  {allReps.map((el) => (
+                    <div key={el.id} style={{ display: 'flex', flexDirection: 'column' }}>
+                      <Typography style={{ display: 'flex', justifyContent: 'center' }}>
+                      Количество жалоб: {el.reportCount}
+                      </Typography>
+                      <VideoCard video={el.Video} />
+                      <Button
+                        onClick={() => void dispatch(deleteVideoThunk(el.videoId))}
+                        style={{ alignSelf: 'center' }}
+                      >
+                        {' '}
+                        <DeleteOutlineIcon /> Удалить{' '}
+                      </Button>{' '}
+                    </div>
+                  ))}
+                </Box>
               </CustomTabs>
             </>
           ) : (
-          <Box  sx={{
-        display: 'flex',
-        flexWrap: 'wrap',
-        flexDirection: 'row',
-        marginTop: '2rem',
-        marginBottom: '2rem',
-      }}> 
-          {channel?.Videos?.map((el) => 
-          <div key={el.id}>
-            <VideoCard video={el} />
-            <Button onClick={(e) => deleteVideoHandler(e, el.id)} style={{alignSelf:'center'}}>удалить</Button>
-            <Button onClick={() => dispatch(swapEditModal({value: true, video: el}))} style={{alignSelf:'center' }}>редактировать</Button> 
-          </div>)}
-      </Box>
+            <Box
+              sx={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                flexDirection: 'row',
+                marginTop: '2rem',
+                marginBottom: '2rem',
+              }}
+            >
+              {channel?.Videos?.map((el) => (
+                <div key={el.id} style={{ display: 'flex', flexDirection: 'column' }}>
+                  <VideoCard video={el} />
+                  {user.status === 'logged' && user.id === channel.userId && (
+                    <>
+                    <Button
+                      onClick={(e) => void dispatch(deleteVideoThunk(el.id))}
+                      style={{ alignSelf: 'center' }}
+                    >
+                      {' '}
+                      <DeleteOutlineIcon /> Удалить{' '}
+                    </Button>
+                    <Button onClick={() => dispatch(swapEditModal({value: true, video: el}))}>Редактировать</Button>
+                    </>
+                  )}
+                </div>
+              ))}
+            </Box>
           )}
         </div>
       </Box>

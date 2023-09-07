@@ -23,10 +23,12 @@ export default function VideoCard({ video }: VideoCardProps): JSX.Element {
       <Card
         sx={{
           display: 'flex',
+
           flexDirection: 'column',
           margin: 2,
           borderRadius: '10px',
-          minWidth: '350px',
+          minWidth: '380px',
+          maxWidth: '380px',
           maxHeight: '350px',
         }}
       >
@@ -36,10 +38,14 @@ export default function VideoCard({ video }: VideoCardProps): JSX.Element {
           image={`http://localhost:3001${video.preview}`}
           alt={video.title}
         />
-        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', flexWrap: 'wrap' }}>
           <CardContent sx={{ flex: '1 0 auto' }}>
-            <Typography component="div" variant="h6">
-              {video.title}
+            <Typography
+              component="div"
+              variant="h6"
+              style={{ display: 'flex', flexWrap: 'wrap', overflow: 'hidden' }}
+            >
+              {video.title.length > 23 ? video.title.substring(0, 23) + '...' : video.title}
             </Typography>
             <Typography variant="subtitle1" color="text.secondary" component="div">
               <Stack direction="row" spacing={2} style={{ padding: '1px', alignItems: 'center' }}>
@@ -48,7 +54,7 @@ export default function VideoCard({ video }: VideoCardProps): JSX.Element {
               </Stack>
             </Typography>
             <Typography variant="subtitle1" color="text.secondary" component="div">
-              <Stack direction="row">{video.views} views</Stack>
+              <Stack direction="row">{video.views} просмотров</Stack>
               <Stack direction="row">
                 {formatDistanceToNow(new Date(video.createdAt), { addSuffix: true, locale: ru })}
               </Stack>

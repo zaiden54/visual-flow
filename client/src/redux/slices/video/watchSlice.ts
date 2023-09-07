@@ -42,7 +42,7 @@ const watchSlice = createSlice({
       }
     });
     builder.addCase(reportThunk.fulfilled, (state, action) => {
-      return (state.reports += 1);
+      state.reports = action.payload;
     });
   },
 });

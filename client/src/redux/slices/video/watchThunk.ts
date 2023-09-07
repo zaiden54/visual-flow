@@ -20,16 +20,9 @@ export const setLikeThunk = createAsyncThunk(
 );
 
 export const reportThunk = createAsyncThunk<ReportType, number>(
-  '/video/report',
-  async (videoId): Promise<ReportType> => {
-    const { data } = await apiService.post<ReportType>('/videos/report', videoId);
-    console.log(data);
-    
+  '/videos/rep',
+  async ({ videoId }): Promise<ReportType> => {
+    const { data } = await apiService.post<ReportType>('/videos/rep', { videoId });
     return data;
   },
 );
-
-// export const countViewsThunk = createAsyncThunk('/videos/view', async (link: string) => {
-//   const { data } = await apiService.put(`/watch/${link}`);
-//   return data;
-// });
