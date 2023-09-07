@@ -1,14 +1,15 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import apiService from '../../../services/config';
 import type {
   UserLoginFormType,
   UserModelType,
   UserSignUpFormType,
 } from '../../../types/userTypes';
-import apiService from '../../../services/config';
 
 export const checkUserThunk = createAsyncThunk<UserModelType>('user/checkUser', async () => {
   const { data } = await apiService<UserModelType>('/auth/check');
+  console.log('---------',data);
+  
   return data;
 });
 

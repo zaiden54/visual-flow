@@ -1,5 +1,4 @@
 import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
 import React from 'react';
 import type { VideoType } from '../../types/videotypes';
 import VideoCard from './VideoCard';
@@ -12,18 +11,13 @@ export default function VideoList({ videos }: VideoListProps): JSX.Element {
       sx={{
         display: 'flex',
         flexWrap: 'wrap',
-        // flexGrow: 1,
+        flexDirection: 'row',
         marginTop: '2rem',
         marginBottom: '2rem',
+        justifyContent: 'flex-start',
       }}
     >
-      <Grid container spacing={2}>
-        {videos.map((el) => (
-          <Grid key={el.id} item xs={3} md={3}>
-            <VideoCard video={el} />
-          </Grid>
-        ))}
-      </Grid>
+      {videos?.map((el) => <VideoCard video={el} />)}
     </Box>
   );
 }

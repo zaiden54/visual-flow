@@ -1,5 +1,6 @@
 import AutoAwesomeMotionIcon from '@mui/icons-material/AutoAwesomeMotion';
 import HomeIcon from '@mui/icons-material/Home';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import LeaderboardIcon from '@mui/icons-material/Leaderboard';
 import { Button, Divider } from '@mui/material';
 import Box from '@mui/material/Box';
@@ -40,6 +41,8 @@ export default function MenuLeft(): JSX.Element {
       void dispatch(getFirstSubChannelThunk(0));
     }
   }, [clicked]);
+
+  console.log(subs.rows);
 
   return (
     <Drawer
@@ -86,6 +89,24 @@ export default function MenuLeft(): JSX.Element {
               </ListItemButton>
             </ListItem>
           </Link>
+          {/* {(user.data.status==='logged'&&user.data.roleId===1)&&
+          <Link style={{ textDecoration: 'none', color: 'white' }} to="/admin">
+            <ListItem key={2} style={{ padding: '1px', alignItems: 'center' }} disablePadding>
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? 'initial' : 'center',
+                  px: 2.5,
+                }}
+              >
+                <ListItemIcon>
+                  <AdminPanelSettingsIcon />
+                </ListItemIcon>
+                <ListItemText primary="Admin" />
+              </ListItemButton>
+            </ListItem>
+          </Link>
+          } */}
           <Link style={{ textDecoration: 'none', color: 'white' }} to="/mostViewed">
             <ListItem key={3} style={{ padding: '1px', alignItems: 'center' }} disablePadding>
               <ListItemButton
@@ -108,11 +129,16 @@ export default function MenuLeft(): JSX.Element {
               {subs.rows && (
                 <List>
                   {subs.rows.map((el) => (
-                    <ListItem key={el.id} disablePadding>
-                      <ListItemButton>
-                        <Subscribes name={el.name} />
-                      </ListItemButton>
-                    </ListItem>
+                    <Link
+                      to={`/channel/${el.id}`}
+                      style={{ textDecoration: 'none', color: 'white' }}
+                    >
+                      <ListItem key={el.id} disablePadding>
+                        <ListItemButton>
+                          <Subscribes name={el.name} />
+                        </ListItemButton>
+                      </ListItem>
+                    </Link>
                   ))}
                   {subs.count - subs.rows.length > 0 ? (
                     <Button
@@ -125,15 +151,17 @@ export default function MenuLeft(): JSX.Element {
                       {subs.count - subs.rows.length} more
                     </Button>
                   ) : (
-                    <Button
-                      type="button"
-                      onClick={() => {
-                        void dispatch(getSubChannelThunk(subs.rows.length));
-                        setClick(true);
-                      }}
-                    >
-                      hide
-                    </Button>
+                    subs.rows.length >= 3 && (
+                      <Button
+                        type="button"
+                        onClick={() => {
+                          void dispatch(getSubChannelThunk(subs.rows.length));
+                          setClick(true);
+                        }}
+                      >
+                        hide
+                      </Button>
+                    )
                   )}
                 </List>
               )}

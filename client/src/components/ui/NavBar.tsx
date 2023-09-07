@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
@@ -20,12 +20,14 @@ import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/reduxHooks';
 import { swapModal } from '../../redux/slices/modals/modalSlice';
 import { logoutUserThunk } from '../../redux/slices/user/userThunks';
+import { getChannelThunk } from '../../redux/slices/channel/channelThunk';
+import searchThunk from '../../redux/slices/search/searchThunk';
 
 export default function NavBar(): JSX.Element {
   const user = useAppSelector((state) => state.user.data);
-  // console.log(user);
+  const dispatch = useAppDispatch()
 
-  const dispatch = useAppDispatch();
+  const [string, setString] = useState('')
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -49,6 +51,18 @@ export default function NavBar(): JSX.Element {
   const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>): void => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
+
+  // const searchHandler = async (e) => {
+  //   e.preventDefault()
+  //   const formData = Object.fromEntries(new FormData(e.currentTarget))
+  //   console.log(formData)
+  //   dispatch(searchThunk(formData))
+  // }
+
+  const inputControl = async (e) => {
+    await setString(e.currentTarget.value)
+  }
+
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
@@ -66,7 +80,7 @@ export default function NavBar(): JSX.Element {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <Box sx={{ display: 'flex', flexDirection: 'column' }} alignItems="center">
+      <Box sx={{ display: 'flex', flexDirection: 'column', width: '13vw' }} alignItems="center">
         <Avatar style={{ marginTop: '3vh' }} alt="avatar" title="userpic" />
         {user.status === 'logged' ? (
           <>
@@ -74,12 +88,18 @@ export default function NavBar(): JSX.Element {
               <Typography gutterBottom variant="h5" component="div">
                 {user.name}
               </Typography>
-              <Typography variant="body2" color="text.secondary">
-                много подпешникафф
-              </Typography>
             </CardContent>
             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-              <ListItemButton onClick={handleMenuClose}>My Channel</ListItemButton>
+              <Link style={{ textDecoration: 'none', color: 'white' }} to={`/channel/${user.id}`}>
+                <ListItemButton
+                  onClick={() => {
+                    void dispatch(getChannelThunk(user.id));
+                    handleMenuClose();
+                  }}
+                >
+                  My Channel
+                </ListItemButton>
+              </Link>
               <Button
                 onClick={() => {
                   void dispatch(logoutUserThunk());
@@ -90,39 +110,28 @@ export default function NavBar(): JSX.Element {
             </Box>
           </>
         ) : (
-          <>
-            {/* <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                User/Channel Name
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                много подпешникафф
-              </Typography>
-            </CardContent> */}
-            <CardActions>
-              <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                {/* <ListItemButton onClick={handleMenuClose}>My Channel</ListItemButton> */}
-                <Link to="/auth/signin">
-                  <Button
-                    onClick={() => {
-                      void dispatch(logoutUserThunk());
-                    }}
-                  >
-                    Sign In
-                  </Button>
-                </Link>
-                <Link to="/auth/signup">
-                  <Button
-                    onClick={() => {
-                      void dispatch(logoutUserThunk());
-                    }}
-                  >
-                    Sign Up
-                  </Button>
-                </Link>
-              </Box>
-            </CardActions>
-          </>
+          <CardActions>
+            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+              <Link to="/auth/signin">
+                <Button
+                  onClick={() => {
+                    void dispatch(logoutUserThunk());
+                  }}
+                >
+                  Sign In
+                </Button>
+              </Link>
+              <Link to="/auth/signup">
+                <Button
+                  onClick={() => {
+                    void dispatch(logoutUserThunk());
+                  }}
+                >
+                  Sign Up
+                </Button>
+              </Link>
+            </Box>
+          </CardActions>
         )}
       </Box>
     </Menu>
@@ -157,12 +166,14 @@ export default function NavBar(): JSX.Element {
         </IconButton>
         <p>Profile</p>
       </MenuItem>
-      <MenuItem onClick={() => dispatch(swapModal({ value: true }))}>
-        <IconButton>
-          <AddCircleOutlinedIcon />
-        </IconButton>
-        <p>Add video</p>
-      </MenuItem>
+      {user.status === 'logged' && (
+        <MenuItem onClick={() => dispatch(swapModal({ value: true }))}>
+          <IconButton>
+            <AddCircleOutlinedIcon />
+          </IconButton>
+          <p>Add video</p>
+        </MenuItem>
+      )}
     </Menu>
   );
 
@@ -173,32 +184,38 @@ export default function NavBar(): JSX.Element {
           sx={{ display: 'flex', justifyContent: 'space-between' }}
           style={{ flexWrap: 'nowrap' }}
         >
-          <Link to="/" style={{textDecoration: 'none', color: 'white'}}>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ display: { xs: 'none', sm: 'block' } }}
-          >
-            Kinda Logo/Visual Flow
-          </Typography>
+          <Link to="/" style={{ textDecoration: 'none', color: 'white' }}>
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{ display: { xs: 'none', sm: 'block' } }}
+            >
+              Visual Flow
+            </Typography>
           </Link>
-          <Box component="form">
+          {/* <Box component="form" onSubmit={searchHandler}> */}
             <TextField
+              onChange={inputControl}
+              value={string}
+              name="searchString"
               id="outlined-basic"
               sx={{ width: '50vw', height: 40 }}
               variant="outlined"
-              style={{}}
               size="small"
             />
-            <Button variant="outlined" style={{ height: 40 }} type="submit">
+            <Link to={`/search/${string}`}>
+            <Button variant="outlined" style={{ height: 40 }}>
               <SearchIcon />
             </Button>
-          </Box>
+            </Link>
+          {/* </Box> */}
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-            <IconButton type="button" onClick={() => dispatch(swapModal({ value: true }))}>
-              <AddCircleOutlinedIcon />
-            </IconButton>
+            {user.status === 'logged' && (
+              <IconButton type="button" onClick={() => dispatch(swapModal({ value: true }))}>
+                <AddCircleOutlinedIcon />
+              </IconButton>
+            )}
             <IconButton
               size="large"
               edge="end"
