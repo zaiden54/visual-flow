@@ -52,7 +52,16 @@ export default function VideosMap(): JSX.Element {
           <Divider />
         </>
       )}
-      <h4>Рекомендации</h4>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <h4>Рекомендации</h4>
+      </div>
       <VideoList videos={random} />
     </div>
   );
