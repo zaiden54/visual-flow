@@ -138,7 +138,7 @@ export default function MenuLeft(): JSX.Element {
                         void dispatch(getSubChannelThunk(subs.rows.length));
                       }}
                     >
-                      {subs.count - subs.rows.length} more
+                      еще {subs.count - subs.rows.length}
                     </Button>
                   ) : (
                     subs.rows.length > 3 && (
@@ -150,7 +150,7 @@ export default function MenuLeft(): JSX.Element {
                           setClick(true);
                         }}
                       >
-                        hide
+                        скрыть
                       </Button>
                     )
                   )}

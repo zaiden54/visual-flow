@@ -35,9 +35,9 @@ export default function AuthPage(): JSX.Element {
           py={5}
           onSubmit={submitHandler}
         >
-        <div style={{marginBottom: "30px"}}>
+        {/* <div style={{marginBottom: "30px"}}>
           <img style={{width: "70px"}} alt='error' src="../../../pngwing.com.png"/>
-        </div>
+        </div> */}
           {auth === 'signup' && (
             <TextField
               sx={{ mb: 4}}

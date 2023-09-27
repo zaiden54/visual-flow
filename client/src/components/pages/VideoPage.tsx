@@ -52,6 +52,7 @@ export default function VideoPage(): JSX.Element {
     console.log(start)
     return () => {
       if (Date.now() - start > 15 * 1000 && video) {
+        console.log((Date.now() - start) / 1000, 'views++')
         apiService
           .put(`/watch/${video?.link}`)
           .catch((err) => console.error(err));

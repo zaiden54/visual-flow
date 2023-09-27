@@ -110,6 +110,11 @@ postRouter.get('/:link', async (req, res) => {
 
 postRouter.put('/like', async (req, res) => {
   const { videoId, userId } = req.body;
+
+  if (!userId || !videoId) {
+    return res.sendStatus(401);
+  }
+
   const liked = await Like.findOne({
     where: {
       videoId,
