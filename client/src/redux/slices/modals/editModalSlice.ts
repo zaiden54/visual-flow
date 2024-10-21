@@ -3,25 +3,25 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { WatchType } from '../../../types/videotypes';
 
 type SwapModalType = {
-  value: boolean,
-  video: WatchType
+  value: boolean;
+  video: WatchType | null;
 };
 
 const initialState: SwapModalType = {
   value: false,
-  video: {}
+  video: null,
 };
 
 const editModalSlice = createSlice({
   name: 'modal',
   initialState,
   reducers: {
-    swapEditModal(state, action: PayloadAction<SwapModalType>) {
-      return action.payload
-    }
-  }
+    swapEditModal(_state, action: PayloadAction<SwapModalType>) {
+      return action.payload;
+    },
+  },
 });
 
 export default editModalSlice.reducer;
 
-export const { swapEditModal} = editModalSlice.actions
+export const { swapEditModal } = editModalSlice.actions;

@@ -1,12 +1,10 @@
-import { Divider, Button } from '@mui/material';
-// import Button from '@mui/material-next/Button';
-
+import { Button, Divider } from '@mui/material';
+import { motion } from 'framer-motion';
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/reduxHooks';
-import { getSubVideoThunk, getRandomVideoThunk } from '../../redux/slices/video/videoThunk';
+import { getRandomVideoThunk, getSubVideoThunk } from '../../redux/slices/video/videoThunk';
 import VideoList from './VideoList';
-import { motion, useScroll } from 'framer-motion';
 
 export default function VideosMap(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -28,19 +26,17 @@ export default function VideosMap(): JSX.Element {
       transition={{ type: 'spring', stiffness: 55 }}
       style={{
         display: 'flex',
-        // marginTop: '5rem',
         flexWrap: 'wrap',
         flexDirection: 'column',
         justifyContent: 'center',
       }}
     >
-      {user.data.status === 'logged' && (
+      {user.status === 'logged' && (
         <>
           <div
             style={{
               display: 'flex',
               flexDirection: 'column',
-              // alignContent: 'center',
               alignItems: 'center',
             }}
           >
@@ -49,7 +45,9 @@ export default function VideosMap(): JSX.Element {
           <VideoList videos={videos.slice(0, 8)} />
           {videos.length > 8 && (
             <Link to="/subs" style={{ display: 'flex', width: '100%' }}>
-              <Button style={{ display: 'flex', width: '100%' }} type="button">ЕЩЕ</Button>
+              <Button style={{ display: 'flex', width: '100%' }} type="button">
+                ЕЩЕ
+              </Button>
             </Link>
           )}
           <Divider />

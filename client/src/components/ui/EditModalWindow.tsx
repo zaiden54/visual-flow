@@ -1,48 +1,39 @@
 import { Box, Button, Modal, TextField, Typography } from '@mui/material';
-import { styled } from '@mui/material/styles';
 import React, { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/reduxHooks';
-import { setVideos } from '../../redux/slices/channel/channelSlice';
 import { swapEditModal } from '../../redux/slices/modals/modalSlice';
-import apiService from '../../services/config';
 import { updateVideoThunk } from '../../redux/slices/video/videoThunk';
 
-const VisuallyHiddenInput = styled('input')`
-  clip: rect(0 0 0 0);
-  clip-path: inset(50%);
-  height: 1px;
-  overflow: hidden;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  white-space: nowrap;
-  width: 1px;
-`;
-
 export default function EditModalWindow(): JSX.Element {
-
   const editModal = useAppSelector((state) => state.editModal);
-  // console.log(editModal.video)
   const dispatch = useAppDispatch();
 
-  const [desc, setDesc] = useState('')
-  const [title, setTitle] = useState('')
+  const [_desc, setDesc] = useState('');
+  const [_title, setTitle] = useState('');
 
-  const inputControlDesc = (e) => {
-    setDesc(e.currentTarget.value)
-  }
+  const inputControlDesc: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+    setDesc(event.currentTarget.value);
+  };
 
-  const inputControlTitle = (e) => {
-    setTitle(e.currentTarget.value)
-  }
+  const inputControlTitle: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+    setTitle(event.currentTarget.value);
+  };
 
-  const submitHandler = (e) => {
-    e.preventDefault()
-    const formData = Object.fromEntries(new FormData(e.currentTarget))
-    // console.log(formData)
-    void dispatch(updateVideoThunk({newTitle: formData.title, newDesc: formData.description, videoId: editModal.video.id}))
-    dispatch(swapEditModal({ value: false }))
-  }
+  const submitHandler: React.ChangeEventHandler<HTMLFormElement> = (event) => {
+    event.preventDefault();
+
+    const formData = Object.fromEntries(new FormData(event.currentTarget));
+
+    void dispatch(
+      updateVideoThunk({
+        newTitle: formData.title.toString(),
+        newDesc: formData.description.toString(),
+        videoId: editModal!.video!.id.toString(),
+      }),
+    );
+
+    dispatch(swapEditModal({ value: false }));
+  };
 
   const style = {
     position: 'absolute',
@@ -61,7 +52,7 @@ export default function EditModalWindow(): JSX.Element {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box sx={style} style={{ display: 'flex', flexDirection: 'column', }}>
+      <Box sx={style} style={{ display: 'flex', flexDirection: 'column' }}>
         <Typography id="modal-modal-title" variant="h6" component="h2">
           Редактирование
         </Typography>
@@ -76,7 +67,7 @@ export default function EditModalWindow(): JSX.Element {
             id="outlined-basic"
             label="Название"
             variant="outlined"
-            style={{marginTop:'10px'}}
+            style={{ marginTop: '10px' }}
             defaultValue={editModal?.video?.title}
           />
           <TextField
@@ -86,12 +77,15 @@ export default function EditModalWindow(): JSX.Element {
             id="outlined-basic"
             label="Описание"
             variant="outlined"
-            style={{marginTop:'10px'}}
+            style={{ marginTop: '10px' }}
             defaultValue={editModal?.video?.description}
           />
-          <Button type="submit" 
-          // onClick={() => dispatch(swapEditModal({ value: false }))}
-          >Сохранить</Button>
+          <Button
+            type="submit"
+            // onClick={() => dispatch(swapEditModal({ value: false }))}
+          >
+            Сохранить
+          </Button>
         </form>
         <Button type="button" onClick={() => dispatch(swapEditModal({ value: false }))}>
           Закрыть

@@ -1,18 +1,21 @@
 import { Box, Button, List, ListItem } from '@mui/material';
+import { motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/reduxHooks';
+import { addSearchThunk, searchThunk } from '../../redux/slices/search/searchThunk';
 import MenuLeft from '../ui/MenuLeft';
 import ModalWindow from '../ui/ModalWindow';
 import NavBar from '../ui/NavBar';
 import VideoListItem from '../ui/VideoListItem';
-import { addSearchThunk, searchThunk } from '../../redux/slices/search/searchThunk';
-import { motion, useScroll } from 'framer-motion';
 
 export default function SearchPage(): JSX.Element {
-  const [offset, setOffset] = useState(0);
+  const [offset, _setOffset] = useState(0);
 
-  const searchString = useParams();
+  const { searchString } = useParams();
+
+  console.log('🚀 ~ SearchPage ~ searchString:', searchString);
+
   const dispatch = useAppDispatch();
   const searchVideos = useAppSelector((state) => state.search);
 
@@ -30,7 +33,6 @@ export default function SearchPage(): JSX.Element {
           display: 'flex',
           flexWrap: 'wrap',
           flexDirection: 'row',
-          // marginTop: '2rem',
           marginBottom: '2rem',
           justifyContent: 'flex-start',
           width: '100%',
@@ -41,7 +43,6 @@ export default function SearchPage(): JSX.Element {
           transition={{ type: 'spring', stiffness: 80 }}
           style={{
             display: 'flex',
-            // marginTop: '5rem',
             margin: 6,
             flexWrap: 'wrap',
             flexDirection: 'column',

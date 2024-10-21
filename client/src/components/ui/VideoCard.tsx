@@ -9,7 +9,6 @@ import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
 import { formatDistanceToNow } from 'date-fns';
 import ru from 'date-fns/locale/ru';
-import { useAppSelector } from '../../redux/hooks/reduxHooks';
 import type { VideoType } from '../../types/videotypes';
 
 type VideoCardProps = {
@@ -50,8 +49,8 @@ export default function VideoCard({ video }: VideoCardProps): JSX.Element {
             </Typography>
             <Typography variant="subtitle1" color="text.secondary" component="div">
               <Stack direction="row" spacing={2} style={{ padding: '1px', alignItems: 'center' }}>
-                <Avatar sx={{ width: 24, height: 24 }} alt={video.Channel.name} src="#" />
-                <Stack direction="column">{video.Channel.name}</Stack>
+                <Avatar sx={{ width: 24, height: 24 }} alt={video.Channel?.name} src="#" />
+                <Stack direction="column">{video.Channel?.name}</Stack>
               </Stack>
             </Typography>
             <Typography variant="subtitle1" color="text.secondary" component="div">

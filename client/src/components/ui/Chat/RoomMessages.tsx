@@ -3,13 +3,17 @@ import React from 'react';
 import type { MessageType } from '../../../types/chatTypes';
 import Message from './Message';
 
-const messages = [
+const messages: MessageType[] = [
   {
     id: 1,
     text: 'first message',
     User: {
       id: 1,
       name: 'DEN',
+      email: 'german@gmail.com',
+      roleId: 1,
+      status: 'logged',
+      username: 'german',
     },
   },
   {
@@ -18,6 +22,10 @@ const messages = [
     User: {
       id: 2,
       name: 'GERA',
+      email: 'german@gmail.com',
+      roleId: 1,
+      status: 'logged',
+      username: 'german',
     },
   },
   {
@@ -26,6 +34,10 @@ const messages = [
     User: {
       id: 3,
       name: 'GERMAN2',
+      email: 'german@gmail.com',
+      roleId: 1,
+      status: 'logged',
+      username: 'german',
     },
   },
   {
@@ -34,6 +46,10 @@ const messages = [
     User: {
       id: 4,
       name: 'GERMAN3',
+      email: 'german@gmail.com',
+      roleId: 1,
+      status: 'logged',
+      username: 'german',
     },
   },
   {
@@ -42,6 +58,10 @@ const messages = [
     User: {
       id: 5,
       name: 'GERMAN5',
+      email: 'german@gmail.com',
+      roleId: 1,
+      status: 'logged',
+      username: 'german',
     },
   },
   {
@@ -50,13 +70,13 @@ const messages = [
     User: {
       id: 6,
       name: 'GERMAN6',
+      email: 'german@gmail.com',
+      roleId: 1,
+      status: 'logged',
+      username: 'german',
     },
   },
 ];
-
-type RoomMessagesPropsType = {
-  messages: MessageType[];
-};
 
 export default function RoomMessages(): JSX.Element {
   return (

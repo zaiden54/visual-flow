@@ -3,6 +3,7 @@ import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
 import AutoAwesomeMotionIcon from '@mui/icons-material/AutoAwesomeMotion';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import HomeIcon from '@mui/icons-material/Home';
 import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
@@ -11,8 +12,6 @@ import { Box } from '@mui/material';
 import type { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import MuiAppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
 import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import MuiDrawer from '@mui/material/Drawer';
@@ -22,20 +21,15 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import Menu from '@mui/material/Menu';
 import TextField from '@mui/material/TextField';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import type { CSSObject, Theme } from '@mui/material/styles';
 import { styled, useTheme } from '@mui/material/styles';
 import React from 'react';
-// import AppBar from '@mui/material/AppBar';
-import HomeIcon from '@mui/icons-material/Home';
-import Avatar from '@mui/material/Avatar';
 import { Link } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks/reduxHooks';
+import { useAppDispatch } from '../../redux/hooks/reduxHooks';
 import { swapModal } from '../../redux/slices/modals/modalSlice';
-import { logoutUserThunk } from '../../redux/slices/user/userThunks';
 
 const drawerWidth = 240;
 
@@ -107,87 +101,14 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 export default function MiniDrawer(): JSX.Element {
-  const user = useAppSelector((state) => state.user.data);
   const dispatch = useAppDispatch();
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-
-  const isMenuOpen = Boolean(anchorEl);
+  const [_anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>): void => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleMenuClose = (): void => {
-    setAnchorEl(null);
-  };
-
   const menuId = 'primary-search-account-menu';
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <Box sx={{ display: 'flex', flexDirection: 'column' }} alignItems="center">
-        <Avatar style={{ marginTop: '3vh' }} alt="avatar" title="userpic" />
-        {user.status === 'logged' ? (
-          <>
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                {user.name}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                много подпешникафф
-              </Typography>
-            </CardContent>
-            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-              <ListItemButton onClick={handleMenuClose}>My Channel</ListItemButton>
-              <Button
-                onClick={() => {
-                  void dispatch(logoutUserThunk());
-                }}
-              >
-                Log Out
-              </Button>
-            </Box>
-          </>
-        ) : (
-          <CardActions>
-            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-              <Link to="/auth/signin">
-                <Button
-                  onClick={() => {
-                    void dispatch(logoutUserThunk());
-                  }}
-                >
-                  Sign In
-                </Button>
-              </Link>
-              <Link to="/auth/signup">
-                <Button
-                  onClick={() => {
-                    void dispatch(logoutUserThunk());
-                  }}
-                >
-                  Sign Up
-                </Button>
-              </Link>
-            </Box>
-          </CardActions>
-        )}
-      </Box>
-    </Menu>
-  );
 
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
