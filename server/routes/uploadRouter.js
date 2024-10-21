@@ -94,6 +94,7 @@ uploadRouter.post(
       where: { channelId: user.Channel.id },
       include: { model: Channel },
     });
+
     res.json(allVideos);
   },
 );

@@ -1,12 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { VideoType } from '../../../types/videotypes';
-import {
-  getAllSubVideoThunk,
-  getPopularVideos,
-  getPopularVideosThunk,
-  getSubVideoThunk,
-  updateVideoThunk,
-} from './videoThunk';
+import { getAllSubVideoThunk, getPopularVideosThunk, getSubVideoThunk } from './videoThunk';
 import { reportThunk } from './watchThunk';
 
 const initialState: VideoType[] = [];
@@ -16,8 +10,8 @@ const videoSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getSubVideoThunk.fulfilled, (state, action) => action.payload);
-    builder.addCase(getAllSubVideoThunk.fulfilled, (state, action) => action.payload.reverse());
+    builder.addCase(getSubVideoThunk.fulfilled, (_, action) => action.payload);
+    builder.addCase(getAllSubVideoThunk.fulfilled, (_, action) => action.payload.reverse());
     builder.addCase(reportThunk.fulfilled, (state, action) => {
       state.forEach((el) => {
         if (el.id === action.payload.videoId) {
@@ -25,8 +19,7 @@ const videoSlice = createSlice({
         }
       });
     });
-    builder.addCase(getPopularVideosThunk.fulfilled, (state, action) => action.payload);
-    // builder.addCase(updateVideoThunk.fulfilled, (state, action) => action.payload);
+    builder.addCase(getPopularVideosThunk.fulfilled, (_, action) => action.payload);
   },
 });
 

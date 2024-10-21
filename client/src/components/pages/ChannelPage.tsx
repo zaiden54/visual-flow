@@ -7,22 +7,23 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
+import { motion } from 'framer-motion';
+import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/reduxHooks';
 import { deleteVideoThunk, getChannelThunk } from '../../redux/slices/channel/channelThunk';
+import { swapEditModal } from '../../redux/slices/modals/modalSlice';
+import { getAllReportedVideosThunk } from '../../redux/slices/video/videoThunk';
 import CustomTabs from '../ui/CustomTabs';
 import EditModalWindow from '../ui/EditModalWindow';
 import MenuLeft from '../ui/MenuLeft';
 import NavBar from '../ui/NavBar';
 import VideoCard from '../ui/VideoCard';
-import { getAllReportedVideosThunk, updateVideoThunk } from '../../redux/slices/video/videoThunk';
-import { SnackbarProvider, VariantType, useSnackbar } from 'notistack';
-import { swapEditModal } from '../../redux/slices/modals/modalSlice';
-import { motion, useScroll } from 'framer-motion';
 
 function a11yProps(index: number): JSX.Element {
   return {
+    //@ts-ignore
     id: `simple-tab-${index}`,
     'aria-controls': `simple-tabpanel-${index}`,
   };
@@ -30,7 +31,7 @@ function a11yProps(index: number): JSX.Element {
 
 export default function ChannelPage(): JSX.Element {
   const channel = useAppSelector((state) => state.channel);
-  const user = useAppSelector((state) => state.user.data);
+  const user = useAppSelector((state) => state.user);
   const { enqueueSnackbar } = useSnackbar();
   const allReps = useAppSelector((state) => state.allReps);
 
@@ -38,7 +39,7 @@ export default function ChannelPage(): JSX.Element {
 
   const dispatch = useAppDispatch();
   useEffect(() => {
-    void dispatch(getChannelThunk(id));
+    id && void dispatch(getChannelThunk(id));
   }, [id]);
 
   useEffect(() => {
@@ -47,7 +48,7 @@ export default function ChannelPage(): JSX.Element {
 
   const [value, setValue] = useState(0);
 
-  const handleChange = (e: React.SyntheticEvent, newValue: number): void => {
+  const handleChange = (_event: React.SyntheticEvent, newValue: number): void => {
     setValue(newValue);
   };
 
@@ -102,7 +103,7 @@ export default function ChannelPage(): JSX.Element {
               </Stack>
             </Stack>
           </Stack>
-          {user.status === 'logged' && user.roleId === 1 && user.id === channel.userId ? (
+          {user.status === 'logged' && user.data.roleId === 1 && user.data.id === channel.userId ? (
             <>
               <Box sx={{ width: '100%' }}>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -212,7 +213,7 @@ export default function ChannelPage(): JSX.Element {
                       transition={{ type: 'spring', stiffness: 60 }}
                     >
                       <VideoCard video={el} />
-                      {user.status === 'logged' && user.id === channel.userId && (
+                      {user.status === 'logged' && user.data.id === channel.userId && (
                         <>
                           <Button
                             onClick={() => {
@@ -224,9 +225,7 @@ export default function ChannelPage(): JSX.Element {
                             {' '}
                             <DeleteOutlineIcon /> Удалить{' '}
                           </Button>
-                          <Button
-                            onClick={() => dispatch(swapEditModal({ value: true, video: el }))}
-                          >
+                          <Button onClick={() => dispatch(swapEditModal({ value: true }))}>
                             Редактировать
                           </Button>
                         </>
@@ -234,7 +233,7 @@ export default function ChannelPage(): JSX.Element {
                     </motion.div>
                   ))}
                 </>
-              ) : user.status === 'logged' && user.id === channel.userId ? (
+              ) : user.status === 'logged' && user.data.id === channel.userId ? (
                 <h4 style={{ marginLeft: '30px' }}>Выложи свое первое видео!</h4>
               ) : (
                 <h4 style={{ marginLeft: '30px' }}>Пользователь еще не выложил видео</h4>

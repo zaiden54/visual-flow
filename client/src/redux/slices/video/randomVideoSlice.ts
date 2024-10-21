@@ -9,7 +9,7 @@ const randomVideoSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getRandomVideoThunk.fulfilled, (state, action) => action.payload);
+    builder.addCase(getRandomVideoThunk.fulfilled, (_, action) => action.payload);
   },
 });
 

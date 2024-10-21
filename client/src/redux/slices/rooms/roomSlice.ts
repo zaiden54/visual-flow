@@ -1,4 +1,3 @@
-import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 import type { RoomType } from '../../../types/roomTypes';
 import createRoomThunk from './roomThunk';
@@ -17,4 +16,3 @@ const roomsSlice = createSlice({
 });
 
 export default roomsSlice.reducer;
-// export const { addOneRoom } = roomsSlice.actions;

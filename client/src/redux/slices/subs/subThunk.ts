@@ -3,9 +3,14 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import apiService from '../../../services/config';
 import type { SubscriptionsType } from '../../../types/videotypes';
 
-export const addSubThunk = createAsyncThunk<SubscriptionsType, SubscriptionsType>(
+export type AddSubThunkType = {
+  userId: number;
+  channelId: number;
+};
+
+export const addSubThunk = createAsyncThunk<SubscriptionsType, AddSubThunkType>(
   'sub/add',
-  async ({ userId, channelId }): Promise<SubscriptionsType> => {
+  async ({ userId, channelId }) => {
     const { data } = await apiService.post<SubscriptionsType>('/subscription', {
       userId,
       channelId,

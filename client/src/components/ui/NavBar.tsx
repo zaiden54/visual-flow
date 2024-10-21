@@ -23,10 +23,10 @@ import { swapModal } from '../../redux/slices/modals/modalSlice';
 import { logoutUserThunk } from '../../redux/slices/user/userThunks';
 
 export default function NavBar(): JSX.Element {
-  const user = useAppSelector((state) => state.user.data);
-  const dispatch = useAppDispatch()
+  const user = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
 
-  const [string, setString] = useState('')
+  const [string, setString] = useState('');
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -51,9 +51,9 @@ export default function NavBar(): JSX.Element {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
-  const inputControl = async (e) => {
-    await setString(e.currentTarget.value)
-  }
+  const inputControl = async (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    await setString(e.currentTarget.value);
+  };
 
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
@@ -78,14 +78,17 @@ export default function NavBar(): JSX.Element {
           <>
             <CardContent>
               <Typography gutterBottom variant="h5" component="div">
-                {user.name}
+                {user.data.name}
               </Typography>
             </CardContent>
             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-              <Link style={{ textDecoration: 'none', color: 'white' }} to={`/channel/${user.id}`}>
+              <Link
+                style={{ textDecoration: 'none', color: 'white' }}
+                to={`/channel/${user.data.id}`}
+              >
                 <ListItemButton
                   onClick={() => {
-                    void dispatch(getChannelThunk(user.id));
+                    void dispatch(getChannelThunk(`${user.data.id}`));
                     handleMenuClose();
                   }}
                 >
@@ -95,7 +98,7 @@ export default function NavBar(): JSX.Element {
               <Button
                 onClick={() => {
                   void dispatch(logoutUserThunk());
-                  handleMenuClose()
+                  handleMenuClose();
                 }}
               >
                 Выйти
@@ -187,25 +190,28 @@ export default function NavBar(): JSX.Element {
               Visual Flow
             </Typography>
           </Link>
-            <div>
-              <TextField
-                onChange={inputControl}
-                value={string}
-                name="searchString"
-                id="outlined-basic"
-                sx={{ width: '50vw', height: 40 }}
-                variant="outlined"
-                size="small"
-              />
-              {string !== ''
-                ? (<Link to={`/search/${string}`}>
+          <div>
+            <TextField
+              onChange={inputControl}
+              value={string}
+              name="searchString"
+              id="outlined-basic"
+              sx={{ width: '50vw', height: 40 }}
+              variant="outlined"
+              size="small"
+            />
+            {string !== '' ? (
+              <Link to={`/search/${string}`}>
                 <Button variant="outlined" style={{ height: 40 }}>
+                  <SearchIcon />
+                </Button>
+              </Link>
+            ) : (
+              <Button variant="outlined" style={{ height: 40 }}>
                 <SearchIcon />
               </Button>
-              </Link>) :  (<Button variant="outlined" style={{ height: 40 }}>
-                <SearchIcon />
-              </Button>)}
-            </div>
+            )}
+          </div>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
             {user.status === 'logged' && (
               <IconButton type="button" onClick={() => dispatch(swapModal({ value: true }))}>

@@ -30,7 +30,7 @@ export default function MenuLeft(): JSX.Element {
   const [clicked, setClick] = useState(false);
 
   useEffect(() => {
-    if (user.data.status === 'logged') {
+    if (user.status === 'logged') {
       void dispatch(getFirstSubChannelThunk(0));
     }
   }, [user]);
@@ -59,7 +59,6 @@ export default function MenuLeft(): JSX.Element {
               <ListItemButton
                 sx={{
                   minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
                   px: 2.5,
                 }}
               >
@@ -70,13 +69,12 @@ export default function MenuLeft(): JSX.Element {
               </ListItemButton>
             </ListItem>
           </Link>
-          {user.data.status === 'logged' && (
+          {user.status === 'logged' && (
             <Link style={{ textDecoration: 'none', color: 'white' }} to="/subs">
               <ListItem key={2} style={{ padding: '1px', alignItems: 'center' }} disablePadding>
                 <ListItemButton
                   sx={{
                     minHeight: 48,
-                    justifyContent: open ? 'initial' : 'center',
                     px: 2.5,
                   }}
                 >
@@ -93,7 +91,6 @@ export default function MenuLeft(): JSX.Element {
               <ListItemButton
                 sx={{
                   minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
                   px: 2.5,
                 }}
               >
@@ -105,7 +102,7 @@ export default function MenuLeft(): JSX.Element {
             </ListItem>
           </Link>
           <Divider />
-          {user.data.status === 'logged' && (
+          {user.status === 'logged' && (
             <div>
               {subs.rows && (
                 <List

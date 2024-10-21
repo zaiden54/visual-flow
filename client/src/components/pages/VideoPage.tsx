@@ -24,6 +24,7 @@ import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/reduxHooks';
+import createRoomThunk from '../../redux/slices/rooms/roomThunk';
 import { addSubThunk } from '../../redux/slices/subs/subThunk';
 import { getWatchThunk, reportThunk, setLikeThunk } from '../../redux/slices/video/watchThunk';
 import apiService from '../../services/config';
@@ -32,9 +33,8 @@ import MenuLeft from '../ui/MenuLeft';
 import NavBar from '../ui/NavBar';
 
 export default function VideoPage(): JSX.Element {
-  const [start, setStart] = useState(Date.now());
+  const [start, _setStart] = useState(Date.now());
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [auth, setAuth] = React.useState(true);
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -45,19 +45,15 @@ export default function VideoPage(): JSX.Element {
   const handleClose = (): void => {
     setAnchorEl(null);
   };
-  const user = useAppSelector((state) => state.user.data);
+  const user = useAppSelector((state) => state.user);
   const video = useAppSelector((state) => state.currentVideo);
 
   useEffect(() => {
-    console.log(start)
     return () => {
       if (Date.now() - start > 15 * 1000 && video) {
-        console.log((Date.now() - start) / 1000, 'views++')
-        apiService
-          .put(`/watch/${video?.link}`)
-          .catch((err) => console.error(err));
+        apiService.put(`/watch/${video?.link}`).catch((err) => console.error(err));
       }
-    }
+    };
   }, []);
 
   const dispatch = useAppDispatch();
@@ -69,10 +65,6 @@ export default function VideoPage(): JSX.Element {
       void dispatch(getWatchThunk(link));
     }
   }, []);
-
-  const videoId = video?.id;
-  const userId = user.id;
-  const channelId = video?.Channel.id;
 
   return (
     <div style={{ display: 'flex', width: '70%', justifyContent: 'center', marginBottom: '20px' }}>
@@ -124,8 +116,6 @@ export default function VideoPage(): JSX.Element {
                   flexDirection: 'row',
                   justifyContent: 'space-between',
                   width: '100%',
-                  // flexWrap: 'wrap',
-                  // wordWrap: 'break-word'
                   alignItems: 'center',
                 }}
               >
@@ -141,11 +131,11 @@ export default function VideoPage(): JSX.Element {
                   }}
                 >
                   <div style={{ alignItems: 'center', display: 'flex', marginRight: '5%' }}>
-                    {video?.Likes.find((el) => el.userId === user.id) ? (
+                    {video?.Likes?.find((el) => el.userId === user.data.id) ? (
                       <IconButton
                         aria-label="add to favorites"
                         onClick={() => {
-                          void dispatch(setLikeThunk({ videoId, userId }));
+                          void dispatch(setLikeThunk({ videoId: video!.id, userId: user.data.id }));
                         }}
                       >
                         <FavoriteIcon />
@@ -154,13 +144,13 @@ export default function VideoPage(): JSX.Element {
                       <IconButton
                         aria-label="add to favorites"
                         onClick={() => {
-                          void dispatch(setLikeThunk({ videoId, userId }));
+                          void dispatch(setLikeThunk({ videoId: video!.id, userId: user.data.id }));
                         }}
                       >
                         <FavoriteBorderIcon />
                       </IconButton>
                     )}
-                    {video?.Likes.length}
+                    {video?.Likes?.length}
                   </div>
                   <Button
                     onClick={() => {
@@ -200,10 +190,9 @@ export default function VideoPage(): JSX.Element {
                       <MenuItem
                         style={{ width: '150px' }}
                         onClick={() => {
-                          void dispatch(reportThunk({ videoId }));
-                          console.log(videoId);
+                          void dispatch(reportThunk(video!.id));
                           handleClose();
-                          enqueueSnackbar('Жалоба отправленна',{ variant: 'warning' });
+                          enqueueSnackbar('Жалоба отправленна', { variant: 'warning' });
                         }}
                       >
                         Пожаловаться
@@ -216,7 +205,7 @@ export default function VideoPage(): JSX.Element {
               <div style={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
                 <ListItem>
                   <Link
-                    to={`/channel/${video?.Channel.id}`}
+                    to={`/channel/${video?.Channel?.id}`}
                     style={{
                       textDecoration: 'none',
                       color: 'white',
@@ -226,34 +215,32 @@ export default function VideoPage(): JSX.Element {
                     }}
                   >
                     <ListItemAvatar>
-                      <Avatar alt={video?.Channel.name} src="#" />
+                      <Avatar alt={video?.Channel?.name} src="#" />
                     </ListItemAvatar>
                     <ListItemText>
-                      <Typography>{video && video.Channel.name}</Typography>
-                      {video?.Channel.name==='Marie Poplavskaya'?(
-
-                      <Typography color="text.secondary">
-                        101 348 подписчиков
-                      </Typography>
-                      ):(
+                      <Typography>{video && video?.Channel?.name}</Typography>
+                      {video?.Channel?.name === 'Marie Poplavskaya' ? (
+                        <Typography color="text.secondary">101 348 подписчиков</Typography>
+                      ) : (
                         <Typography color="text.secondary">
-                        {video && video.Channel.Subscriptions.length} подписчиков
-                      </Typography>
-                      )
-                    }
+                          {video && video?.Channel?.Subscriptions.length} подписчиков
+                        </Typography>
+                      )}
                     </ListItemText>
                   </Link>
-                  {user.id !== video?.channelId ? (
+                  {user.data.id !== video?.channelId ? (
                     <Button
                       style={{ width: '100px', height: '30px', fontSize: '11px' }}
                       variant="contained"
                       onClick={() => {
                         if (user.status === 'logged') {
-                          void dispatch(addSubThunk({ userId, channelId }));
+                          void dispatch(
+                            addSubThunk({ userId: user.data.id, channelId: video!.Channel?.id }),
+                          );
                         }
                       }}
                     >
-                      {video?.Channel.Subscriptions.find((el) => el.userId === user.id)
+                      {video?.Channel?.Subscriptions.find((el) => el.userId === user.data.id)
                         ? 'Отписаться'
                         : 'Подписаться'}
                     </Button>
@@ -273,7 +260,7 @@ export default function VideoPage(): JSX.Element {
                     <div style={{ display: 'flex', flexDirection: 'column' }}>
                       <Typography color="text.secondary">
                         {video?.views} просмотров |{' '}
-                        {video &&
+                        {video?.createdAt &&
                           formatDistanceToNow(new Date(video?.createdAt), {
                             addSuffix: true,
                             locale: ru,

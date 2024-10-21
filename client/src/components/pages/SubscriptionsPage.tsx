@@ -1,4 +1,5 @@
 import { Box, List, ListItem } from '@mui/material';
+import { motion } from 'framer-motion';
 import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/reduxHooks';
 import { getAllSubVideoThunk } from '../../redux/slices/video/videoThunk';
@@ -6,7 +7,6 @@ import MenuLeft from '../ui/MenuLeft';
 import ModalWindow from '../ui/ModalWindow';
 import NavBar from '../ui/NavBar';
 import VideoListItem from '../ui/VideoListItem';
-import { motion, useScroll } from 'framer-motion';
 
 export default function SubscriptionsPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -21,7 +21,7 @@ export default function SubscriptionsPage(): JSX.Element {
       <ModalWindow />
       <MenuLeft />
       <NavBar />
-      {user.data.status === 'logged' ? (
+      {user.status === 'logged' ? (
         <Box
           sx={{
             display: 'flex',

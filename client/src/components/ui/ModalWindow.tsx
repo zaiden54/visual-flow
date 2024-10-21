@@ -22,8 +22,7 @@ const VisuallyHiddenInput = styled('input')`
 export default function ModalWindow(): JSX.Element {
   const modal = useAppSelector((state) => state.modal);
   const dispatch = useAppDispatch();
-  const channel = useAppSelector((state) => state.channel);
-  const user = useAppSelector((state) => state.user.data);
+
   const submitHandler = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
 
@@ -58,7 +57,7 @@ export default function ModalWindow(): JSX.Element {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box sx={style} style={{ display: 'flex', flexDirection: 'column', }}>
+      <Box sx={style} style={{ display: 'flex', flexDirection: 'column' }}>
         <Typography id="modal-modal-title" variant="h6" component="h2">
           Добавьте видео
         </Typography>
@@ -75,7 +74,7 @@ export default function ModalWindow(): JSX.Element {
             id="outlined-basic"
             label="Название"
             variant="outlined"
-            style={{marginTop:'10px'}} 
+            style={{ marginTop: '10px' }}
           />
           <TextField
             type="text"
@@ -83,17 +82,27 @@ export default function ModalWindow(): JSX.Element {
             id="outlined-basic"
             label="Описание"
             variant="outlined"
-            style={{marginTop:'10px'}} 
+            style={{ marginTop: '10px' }}
           />
-          <Button component="label" variant="outlined" style={{marginTop:'10px'}} startIcon={<CloudUploadIcon />}>
+          <Button
+            component="label"
+            variant="outlined"
+            style={{ marginTop: '10px' }}
+            startIcon={<CloudUploadIcon />}
+          >
             Загрузить видео
             <VisuallyHiddenInput type="file" name="video" />
           </Button>
-          <Button component="label" variant="outlined" style={{marginTop:'10px'}} startIcon={<CloudUploadIcon />}>
+          <Button
+            component="label"
+            variant="outlined"
+            style={{ marginTop: '10px' }}
+            startIcon={<CloudUploadIcon />}
+          >
             Загрузить превью
             <VisuallyHiddenInput type="file" name="preview" />
           </Button>
-          <Button type="submit">Добавить</Button> 
+          <Button type="submit">Добавить</Button>
         </form>
         <Button type="button" onClick={() => dispatch(swapModal({ value: false }))}>
           Закрыть
