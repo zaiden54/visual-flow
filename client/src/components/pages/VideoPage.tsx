@@ -188,14 +188,14 @@ export default function VideoPage(): JSX.Element {
                       onClose={handleClose}
                     >
                       <MenuItem
-                        style={{ width: '100px' }}
+                        style={{ width: '150px' }}
                         onClick={() => {
                           void dispatch(reportThunk(video!.id));
                           handleClose();
                           enqueueSnackbar('Жалоба отправленна', { variant: 'warning' });
                         }}
                       >
-                        Report
+                        Пожаловаться
                       </MenuItem>
                     </Menu>
                   </div>
