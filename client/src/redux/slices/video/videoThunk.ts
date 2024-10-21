@@ -10,6 +10,14 @@ export const getSubVideoThunk = createAsyncThunk<VideoType[]>(
   },
 );
 
+export const getPopularVideosThunk = createAsyncThunk<VideoType[]>(
+  'videos/popular',
+  async (): Promise<VideoType[]> => {
+    const { data } = await apiService<VideoType[]>('/videos/popular');
+    return data;
+  },
+);
+
 export const getAllSubVideoThunk = createAsyncThunk<VideoType[]>(
   '/videos/subs/all',
   async (): Promise<VideoType[]> => {
@@ -30,6 +38,24 @@ export const getAllReportedVideosThunk = createAsyncThunk<ReportType[]>(
   '/videos/repAll',
   async (): Promise<ReportType[]> => {
     const { data } = await apiService.get<ReportType[]>('/videos/rep/all');
+    return data;
+  },
+);
+
+export type UpdateVideoThunkType = {
+  newTitle: string;
+  newDesc: string;
+  videoId: string;
+};
+
+export const updateVideoThunk = createAsyncThunk<VideoType, UpdateVideoThunkType>(
+  '/videos/update',
+  async ({ newTitle, newDesc, videoId }): Promise<VideoType> => {
+    const { data } = await apiService.patch<VideoType>('/videos/update', {
+      newTitle,
+      newDesc,
+      videoId,
+    });
     return data;
   },
 );

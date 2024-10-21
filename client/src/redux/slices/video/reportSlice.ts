@@ -10,7 +10,7 @@ const allRepSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getAllReportedVideosThunk.fulfilled, (state, action) => action.payload);
+    builder.addCase(getAllReportedVideosThunk.fulfilled, (_, action) => action.payload);
 
     builder.addCase(deleteVideoThunk.fulfilled, (state, action) =>
       state.filter((report) => report.videoId !== action.payload.id),

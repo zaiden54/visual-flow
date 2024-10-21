@@ -1,8 +1,17 @@
 const router = require('express').Router;
 const { Op } = require('sequelize');
+const path = require('path');
 const { Video, Channel, sequelize, Subscription, Comment, Like, Report } = require('../db/models');
 
 const postRouter = router();
+postRouter.get('/popular', async (req, res) => {
+  const popVideos = await Video.findAll({
+    order: [['views', 'DESC']],
+    limit: 10,
+    include: Channel,
+  });
+  res.json(popVideos);
+});
 
 postRouter.get('/subs/channels/:offset', async (req, res) => {
   const { offset } = req.params;
@@ -37,9 +46,9 @@ postRouter.get('/subs', async (req, res) => {
       model: Channel,
       include: {
         model: Video,
+        order: [['createdAt', 'DESC']],
         include: Channel,
         limit: 8,
-        order: [['createdAt', 'DESC']],
       },
     },
   });
@@ -56,11 +65,11 @@ postRouter.get('/subs/all', async (req, res) => {
 
   const videos = await Subscription.findAll({
     where: { userId },
-    order: [['createdAt', 'DESC']],
     include: {
       model: Channel,
       include: {
         model: Video,
+        order: [['createdAt', 'DESC']],
         include: Channel,
       },
     },
@@ -79,6 +88,12 @@ postRouter.get('/random', async (req, res) => {
   res.json(randomVids);
 });
 
+postRouter.get('/preview', (req, res) => {
+  const fileName = req.query.file;
+  const fullPath = path.join(__dirname, '..', 'previews', fileName);
+  res.sendFile(fullPath);
+});
+
 postRouter.get('/:link', async (req, res) => {
   const { link } = req.params;
   const comments = await Video.findOne({
@@ -90,7 +105,6 @@ postRouter.get('/:link', async (req, res) => {
       { model: Channel },
     ],
   });
-  console.log(comments);
   res.json(comments);
 });
 
@@ -122,26 +136,6 @@ postRouter.put('/like', async (req, res) => {
 postRouter.post('/search/:offset', async (req, res) => {
   const { offset } = req.params;
   const { searchString } = req.body;
-  console.log('offset', offset);
-  console.log('searchString', searchString);
-  const { rows, count } = await Video.findAndCountAll({
-    include: Channel,
-    where: {
-      title: {
-        [Op.substring]: searchString,
-      },
-    },
-    offset,
-    limit: 5,
-  });
-  return res.json({ rows, count });
-});
-
-postRouter.post('/search/:offset', async (req, res) => {
-  const { offset } = req.params;
-  const { searchString } = req.body;
-  console.log('offset', offset);
-  console.log('searchString', searchString);
   const { rows, count } = await Video.findAndCountAll({
     include: Channel,
     where: {
@@ -156,7 +150,6 @@ postRouter.post('/search/:offset', async (req, res) => {
 });
 
 postRouter.post('/rep', async (req, res) => {
-  console.log(req.body);
   try {
     const { videoId } = req.body;
 
@@ -164,15 +157,12 @@ postRouter.post('/rep', async (req, res) => {
       where: { videoId },
       defaults: { videoId },
     });
-    console.log(newRep, rep);
     if (!newRep) {
       rep.reportCount += 1;
       await rep.save();
 
       return res.json(rep);
     }
-    // rep.reportCount += 1;
-    // await rep.save();
     return res.json(rep);
   } catch (err) {
     return res.status(404).json(err);
@@ -184,10 +174,25 @@ postRouter.get('/rep/all', async (req, res) => {
     include: {
       model: Video,
       include: Channel,
-      // include: Report,
     },
   });
-  console.log('BAAACKKKKK', allReps);
   res.json(allReps);
 });
+
+postRouter.patch('/update', async (req, res) => {
+  const { newTitle, newDesc, videoId } = req.body;
+
+  const updatedVideo = await Video.findOne({
+    where: { id: videoId },
+    include: Channel,
+  });
+
+  updatedVideo.title = newTitle;
+  updatedVideo.description = newDesc;
+
+  await updatedVideo.save();
+
+  return res.json(updatedVideo);
+});
+
 module.exports = postRouter;

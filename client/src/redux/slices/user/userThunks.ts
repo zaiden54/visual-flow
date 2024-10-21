@@ -8,8 +8,6 @@ import type {
 
 export const checkUserThunk = createAsyncThunk<UserModelType>('user/checkUser', async () => {
   const { data } = await apiService<UserModelType>('/auth/check');
-  console.log('---------',data);
-  
   return data;
 });
 

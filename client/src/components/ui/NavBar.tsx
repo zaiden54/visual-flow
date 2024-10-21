@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import MoreIcon from '@mui/icons-material/MoreVert';
 import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
+import MoreIcon from '@mui/icons-material/MoreVert';
 import SearchIcon from '@mui/icons-material/Search';
+import AppBar from '@mui/material/AppBar';
+import Avatar from '@mui/material/Avatar';
+import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -13,21 +15,18 @@ import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Avatar from '@mui/material/Avatar';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/reduxHooks';
+import { getChannelThunk } from '../../redux/slices/channel/channelThunk';
 import { swapModal } from '../../redux/slices/modals/modalSlice';
 import { logoutUserThunk } from '../../redux/slices/user/userThunks';
-import { getChannelThunk } from '../../redux/slices/channel/channelThunk';
-import searchThunk from '../../redux/slices/search/searchThunk';
 
 export default function NavBar(): JSX.Element {
-  const user = useAppSelector((state) => state.user.data);
-  const dispatch = useAppDispatch()
+  const user = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
 
-  const [string, setString] = useState('')
+  const [string, setString] = useState('');
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -52,16 +51,9 @@ export default function NavBar(): JSX.Element {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
-  // const searchHandler = async (e) => {
-  //   e.preventDefault()
-  //   const formData = Object.fromEntries(new FormData(e.currentTarget))
-  //   console.log(formData)
-  //   dispatch(searchThunk(formData))
-  // }
-
-  const inputControl = async (e) => {
-    await setString(e.currentTarget.value)
-  }
+  const inputControl = async (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    await setString(e.currentTarget.value);
+  };
 
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
@@ -86,26 +78,30 @@ export default function NavBar(): JSX.Element {
           <>
             <CardContent>
               <Typography gutterBottom variant="h5" component="div">
-                {user.name}
+                {user.data.name}
               </Typography>
             </CardContent>
             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-              <Link style={{ textDecoration: 'none', color: 'white' }} to={`/channel/${user.id}`}>
+              <Link
+                style={{ textDecoration: 'none', color: 'white' }}
+                to={`/channel/${user.data.id}`}
+              >
                 <ListItemButton
                   onClick={() => {
-                    void dispatch(getChannelThunk(user.id));
+                    void dispatch(getChannelThunk(`${user.data.id}`));
                     handleMenuClose();
                   }}
                 >
-                  My Channel
+                  Мой канал
                 </ListItemButton>
               </Link>
               <Button
                 onClick={() => {
                   void dispatch(logoutUserThunk());
+                  handleMenuClose();
                 }}
               >
-                Log Out
+                Выйти
               </Button>
             </Box>
           </>
@@ -118,7 +114,7 @@ export default function NavBar(): JSX.Element {
                     void dispatch(logoutUserThunk());
                   }}
                 >
-                  Sign In
+                  Войти
                 </Button>
               </Link>
               <Link to="/auth/signup">
@@ -127,7 +123,7 @@ export default function NavBar(): JSX.Element {
                     void dispatch(logoutUserThunk());
                   }}
                 >
-                  Sign Up
+                  Зарегистрироваться
                 </Button>
               </Link>
             </Box>
@@ -164,14 +160,14 @@ export default function NavBar(): JSX.Element {
         >
           <AccountCircle />
         </IconButton>
-        <p>Profile</p>
+        <p>Профиль</p>
       </MenuItem>
       {user.status === 'logged' && (
         <MenuItem onClick={() => dispatch(swapModal({ value: true }))}>
           <IconButton>
             <AddCircleOutlinedIcon />
           </IconButton>
-          <p>Add video</p>
+          <p>Добавить видео</p>
         </MenuItem>
       )}
     </Menu>
@@ -194,7 +190,7 @@ export default function NavBar(): JSX.Element {
               Visual Flow
             </Typography>
           </Link>
-          {/* <Box component="form" onSubmit={searchHandler}> */}
+          <div>
             <TextField
               onChange={inputControl}
               value={string}
@@ -204,12 +200,18 @@ export default function NavBar(): JSX.Element {
               variant="outlined"
               size="small"
             />
-            <Link to={`/search/${string}`}>
-            <Button variant="outlined" style={{ height: 40 }}>
-              <SearchIcon />
-            </Button>
-            </Link>
-          {/* </Box> */}
+            {string !== '' ? (
+              <Link to={`/search/${string}`}>
+                <Button variant="outlined" style={{ height: 40 }}>
+                  <SearchIcon />
+                </Button>
+              </Link>
+            ) : (
+              <Button variant="outlined" style={{ height: 40 }}>
+                <SearchIcon />
+              </Button>
+            )}
+          </div>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
             {user.status === 'logged' && (
               <IconButton type="button" onClick={() => dispatch(swapModal({ value: true }))}>
@@ -228,7 +230,6 @@ export default function NavBar(): JSX.Element {
               <AccountCircle />
             </IconButton>
           </Box>
-
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"

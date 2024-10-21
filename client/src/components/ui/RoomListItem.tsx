@@ -1,15 +1,12 @@
-import React from 'react';
-import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import React from 'react';
 
-import { Link } from 'react-router-dom';
 import { formatDistanceToNow } from 'date-fns';
 import ru from 'date-fns/locale/ru';
+import { Link } from 'react-router-dom';
 import type { RoomType } from '../../types/roomTypes';
 
 type RoomCardProps = {

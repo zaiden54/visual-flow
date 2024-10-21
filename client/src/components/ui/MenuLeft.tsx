@@ -1,6 +1,5 @@
 import AutoAwesomeMotionIcon from '@mui/icons-material/AutoAwesomeMotion';
 import HomeIcon from '@mui/icons-material/Home';
-import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import LeaderboardIcon from '@mui/icons-material/Leaderboard';
 import { Button, Divider } from '@mui/material';
 import Box from '@mui/material/Box';
@@ -31,7 +30,7 @@ export default function MenuLeft(): JSX.Element {
   const [clicked, setClick] = useState(false);
 
   useEffect(() => {
-    if (user.data.status === 'logged') {
+    if (user.status === 'logged') {
       void dispatch(getFirstSubChannelThunk(0));
     }
   }, [user]);
@@ -41,8 +40,6 @@ export default function MenuLeft(): JSX.Element {
       void dispatch(getFirstSubChannelThunk(0));
     }
   }, [clicked]);
-
-  console.log(subs.rows);
 
   return (
     <Drawer
@@ -57,91 +54,81 @@ export default function MenuLeft(): JSX.Element {
       <Toolbar />
       <Box sx={{ overflow: 'auto' }}>
         <List>
-          <Link style={{ textDecoration: 'none', color: 'white' }} to="/rooms">
+          <Link style={{ textDecoration: 'none', color: 'white' }} to="/filler">
             <ListItem key={1} style={{ padding: '1px', alignItems: 'center' }} disablePadding>
               <ListItemButton
                 sx={{
                   minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
                   px: 2.5,
                 }}
               >
                 <ListItemIcon>
                   <HomeIcon />
                 </ListItemIcon>
-                <ListItemText primary="Rooms" />
+                <ListItemText primary="Комнаты" />
               </ListItemButton>
             </ListItem>
           </Link>
-          <Link style={{ textDecoration: 'none', color: 'white' }} to="/subs">
-            <ListItem key={2} style={{ padding: '1px', alignItems: 'center' }} disablePadding>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon>
-                  <AutoAwesomeMotionIcon />
-                </ListItemIcon>
-                <ListItemText primary="Subscribes" />
-              </ListItemButton>
-            </ListItem>
-          </Link>
-          {/* {(user.data.status==='logged'&&user.data.roleId===1)&&
-          <Link style={{ textDecoration: 'none', color: 'white' }} to="/admin">
-            <ListItem key={2} style={{ padding: '1px', alignItems: 'center' }} disablePadding>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon>
-                  <AdminPanelSettingsIcon />
-                </ListItemIcon>
-                <ListItemText primary="Admin" />
-              </ListItemButton>
-            </ListItem>
-          </Link>
-          } */}
-          <Link style={{ textDecoration: 'none', color: 'white' }} to="/mostViewed">
+          {user.status === 'logged' && (
+            <Link style={{ textDecoration: 'none', color: 'white' }} to="/subs">
+              <ListItem key={2} style={{ padding: '1px', alignItems: 'center' }} disablePadding>
+                <ListItemButton
+                  sx={{
+                    minHeight: 48,
+                    px: 2.5,
+                  }}
+                >
+                  <ListItemIcon>
+                    <AutoAwesomeMotionIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Подписки" />
+                </ListItemButton>
+              </ListItem>
+            </Link>
+          )}
+          <Link style={{ textDecoration: 'none', color: 'white' }} to="/popular">
             <ListItem key={3} style={{ padding: '1px', alignItems: 'center' }} disablePadding>
               <ListItemButton
                 sx={{
                   minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
                   px: 2.5,
                 }}
               >
                 <ListItemIcon>
                   <LeaderboardIcon />
                 </ListItemIcon>
-                <ListItemText primary="Most viewed" />
+                <ListItemText primary="Популярное" />
               </ListItemButton>
             </ListItem>
           </Link>
           <Divider />
-          {user.data.status === 'logged' && (
+          {user.status === 'logged' && (
             <div>
               {subs.rows && (
-                <List>
+                <List
+                  style={{
+                    justifyContent: 'center',
+
+                    display: 'flex',
+                    flexDirection: 'column',
+                  }}
+                >
                   {subs.rows.map((el) => (
                     <Link
+                      key={el.id}
                       to={`/channel/${el.id}`}
                       style={{ textDecoration: 'none', color: 'white' }}
                     >
                       <ListItem key={el.id} disablePadding>
                         <ListItemButton>
-                          <Subscribes name={el.name} />
+                          <Subscribes key={el.id} name={el.name} />
                         </ListItemButton>
                       </ListItem>
                     </Link>
                   ))}
                   {subs.count - subs.rows.length > 0 ? (
                     <Button
+                      style={{ marginTop: 2 }}
                       type="button"
                       onClick={() => {
                         setClick(false);
@@ -151,8 +138,9 @@ export default function MenuLeft(): JSX.Element {
                       {subs.count - subs.rows.length} more
                     </Button>
                   ) : (
-                    subs.rows.length >= 3 && (
+                    subs.rows.length > 3 && (
                       <Button
+                        style={{ marginTop: 2 }}
                         type="button"
                         onClick={() => {
                           void dispatch(getSubChannelThunk(subs.rows.length));

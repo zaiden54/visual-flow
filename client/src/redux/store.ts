@@ -10,9 +10,11 @@ import searchReducer from './slices/search/searchSlice';
 import allRepReducer from './slices/video/reportSlice';
 import videoReducer from './slices/video/videoSlice';
 import currentVideoReducer from './slices/video/watchSlice';
+import editModalReducer from './slices/modals/editModalSlice'
 
 export const store = configureStore({
   reducer: {
+    editModal: editModalReducer,
     search: searchReducer,
     user: userReducer,
     modal: modalReducer,

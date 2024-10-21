@@ -27,7 +27,7 @@ export type ChannelType = {
   Subscriptions: SubscriptionsType[];
 };
 
-export type VideoPageType = WatchType | null;
+export type VideoPageType = WatchType;
 
 export type WatchType = {
   id: number;
@@ -68,7 +68,9 @@ export type CommentsType = {
   userId: number;
   videoId: number;
   message: string;
-  Users: {
+  createdAt: string;
+  updatedAt: string;
+  User: {
     name: string;
   };
 };
@@ -78,7 +80,7 @@ export type CommentFormType = {
 };
 
 export type ReportType = {
-  id:number
+  id: number;
   videoId: number;
   reportCount: number;
   Video: VideoType;

@@ -8,17 +8,13 @@ import type { MessageType } from '../../../types/chatTypes';
 export type MessagePropsType = {
   message: MessageType;
 };
-export default function Message({ message }: MessagePropsType): JSX.Element {
+export default function Message({ message }: MessagePropsType) {
+  if (message.User.status !== 'logged') return;
+
   return (
-    //   <ListItem key={message.id} disablePadding>
-    //     <Stack direction="row" spacing={2} style={{ padding: '1px', alignItems: 'center' }}>
-    //       <Avatar alt={message.User.name} src="#" />
-    //       <Stack direction="column">{message.message}</Stack>
-    //     </Stack>
-    //   </ListItem>
     <ListItem alignItems="flex-start">
       <ListItemAvatar>
-        <Avatar  alt={message.User.name} src="#" />
+        <Avatar alt={message.User.name} src="#" />
       </ListItemAvatar>
       <ListItemText primary={message.User.name} secondary={message.text} />
     </ListItem>
