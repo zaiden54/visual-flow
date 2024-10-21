@@ -2,21 +2,20 @@ import { CssBaseline, ThemeProvider, createTheme, useMediaQuery } from '@mui/mat
 import React, { useEffect, useMemo } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import PrivateRouter from './components/PrivateRouter';
+import AdminPage from './components/pages/AdminPage';
 import AuthPage from './components/pages/AuthPage';
 import ChannelPage from './components/pages/ChannelPage';
+import FillerPage from './components/pages/FillerPage';
 import MainPage from './components/pages/MainPage';
 import MostViewedPage from './components/pages/MostViewedPage';
 import RoomsPage from './components/pages/RoomsPage';
+import SearchPage from './components/pages/SearchPage';
 import SubscriptionsPage from './components/pages/SubscriptionsPage';
 import VideoPage from './components/pages/VideoPage';
-import TestChatPage from './components/pages/TestChatPage';
+import Comments from './components/ui/Comments';
 import ModalWindow from './components/ui/ModalWindow';
 import { useAppDispatch, useAppSelector } from './redux/hooks/reduxHooks';
 import { checkUserThunk } from './redux/slices/user/userThunks';
-import Comments from './components/ui/Comments';
-import FillerPage from './components/pages/FillerPage';
-import AdminPage from './components/pages/AdminPage';
-import SearchPage from './components/pages/SearchPage';
 
 function App(): JSX.Element {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
@@ -39,7 +38,6 @@ function App(): JSX.Element {
     void dispatch(checkUserThunk());
   }, []);
 
-  
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -53,16 +51,14 @@ function App(): JSX.Element {
           <Route path="/" element={<MainPage />} />
           <Route path="/subs" element={<SubscriptionsPage />} />
           <Route path="/search/:searchString" element={<SearchPage />} />
-          <Route
-            element={<PrivateRouter redirectTo="/" isAllowed={user.data.status !== 'logged'} />}
-          >
+          <Route element={<PrivateRouter redirectTo="/" isAllowed={user.status !== 'logged'} />}>
             <Route path="/auth/:auth" element={<AuthPage />} />
           </Route>
           <Route
             element={
               <PrivateRouter
                 redirectTo="/subs"
-                isAllowed={user.data.status === 'logged' && user.data.roleId === 1}
+                isAllowed={user.status === 'logged' && user.data.roleId === 1}
               />
             }
           >

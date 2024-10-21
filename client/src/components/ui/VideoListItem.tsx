@@ -30,13 +30,13 @@ export default function VideoListItem({ video }: VideoCardProps): JSX.Element {
             <Typography component="div" variant="h5">
               {video.title}
             </Typography>
-            <Typography variant="просмотровsubtitle1" color="text.secondary" component="div">
+            <Typography variant="subtitle1" color="text.secondary" component="div">
               {video.views} просмотров |{' '}
               {formatDistanceToNow(new Date(video.createdAt), { addSuffix: true, locale: ru })}
             </Typography>
             <Stack direction="row" spacing={2} style={{ padding: '1px', alignItems: 'center' }}>
-              <Avatar alt={video.Channel.name} src="#" />
-              <Stack direction="column">{video.Channel.name}</Stack>
+              <Avatar alt={video.Channel?.name} src="#" />
+              <Stack direction="column">{video.Channel?.name}</Stack>
             </Stack>
             <Typography variant="subtitle1" color="text.secondary" component="div">
               {video.description}
